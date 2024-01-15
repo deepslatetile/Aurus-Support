@@ -4,7 +4,7 @@
 
 
 
-
+#
 # All files must be in the same folder // Все файлы должны храниться в одной папке
 
 
@@ -17,7 +17,7 @@ Bot's folder // Папка с ботом
   ∟ schedule.txt
 
 
-
+#
 
 # Required packages // Требуемые библиотеки:
 
@@ -67,7 +67,7 @@ Bot's folder // Папка с ботом
 ∟ zipp (v3.17.0)
 
 
-
+#
 # Setup Guide // Гайд по установке
 
 1. Create new Pycharm project // Создайте новый проект Pycharm
