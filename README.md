@@ -65,3 +65,19 @@ Bot's folder // Папка с ботом
 ∟ yarl (v1.9.4)
 
 ∟ zipp (v3.17.0)
+
+
+
+# Setup Guide // Гайд по установке
+
+1. Create new Pycharm project // Создайте новый проект Pycharm
+
+2. Copy main.py from GitHub to Pycharm // Скопируйте main.py с GitHub в Pycharm
+
+3. Create schedule.txt file // Создайте файл schedule.txt
+
+4. Create token.txt file and paste bot tokeb there // Создайте token.txt и вставьте в него токен бота
+
+5. Install all libraries // Установите все библиотеки
+
+6. Run your bot // Запустите вашего бота
