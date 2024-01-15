@@ -5,6 +5,8 @@
 
 All files must be in the same folder // Все файлы должны храниться в одной папке
 
+
+
 Bot's folder // Папка с ботом
 
   ∟ main.py
