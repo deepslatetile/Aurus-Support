@@ -15,6 +15,8 @@ Bot's folder // Папка с ботом
   ∟ token.txt
   
   ∟ schedule.txt
+  
+  ∟ consolas.ttf
 
 
 #
@@ -82,4 +84,6 @@ Bot's folder // Папка с ботом
 
 5. Install all libraries // Установите все библиотеки
 
-6. Run your bot // Запустите вашего бота
+6. Install consolas.ttf font // Скачайте consolas.ttf шрифт
+
+7. Run your bot // Запустите вашего бота
