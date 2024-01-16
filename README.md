@@ -50,6 +50,8 @@ Bot's folder // Папка с ботом
 
 ∟ multidict (v6.0.4)
 
+∟ pillow (v10.2.0)
+
 ∟ pip (v23.3.2)
 
 ∟ segno (v1.6.0)
