@@ -2,6 +2,15 @@
 # Made entirely by @_deepslate
 # Coded specifically for Aurus Virtual Airline
 
+
+
+
+
+
+# Aurus Support
+# Made entirely by @_deepslate
+# Coded specifically for Aurus Virtual Airline
+
 import discord
 import asyncio
 import segno
@@ -20,7 +29,7 @@ bot = commands.Bot(command_prefix=prefix)
 
 @bot.event
 async def on_ready():
-    await bot.change_presence(activity=discord.Game(name="Aeroflot AI"))
+    await bot.change_presence(activity=discord.Game(name="Aurus Support"))
     print('Bot active')
 
 
@@ -30,7 +39,7 @@ async def on_message(ctx):
     if ctx.author != bot.user:
         channel = bot.get_channel(1190520793453572107)
         if ctx.channel == channel and not ctx.author.bot:
-            # if ctx.content[0] == '!':
+            if ctx.content[0] != '>':
 
 
 
@@ -304,9 +313,55 @@ async def on_message(ctx):
 
                 elif 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
+
+
+
                     schedule = fl.read()
+
+                    if schedule == 'nothing scheduled':
+                        await ctx.reply('```nothing scheduled```')
+                    else:
+                        flight1, flight2, flight3, flight4 = schedule.split(' __ # __ ')
+
+                        fl1_clsgn, fl1_deparpt, fl1_arrarpt, fl1_deptime, fl1_gate, fl1_status, fl1_game = flight1.split(' __ ')
+                        fl2_clsgn, fl2_deparpt, fl2_arrarpt, fl2_deptime, fl2_gate, fl2_status, fl2_game = flight2.split(' __ ')
+                        fl3_clsgn, fl3_deparpt, fl3_arrarpt, fl3_deptime, fl3_gate, fl3_status, fl3_game = flight3.split(' __ ')
+                        fl4_clsgn, fl4_deparpt, fl4_arrarpt, fl4_deptime, fl4_gate, fl4_status, fl4_game = flight4.split(' __ ')
+
+                        schedule1 = str(f"{format(fl1_clsgn)}" + ' ' + '  ' + f"{format(fl1_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_deptime)}" + ' ' + '  ' + f"{format(fl1_gate)}" + ' ' + ' ' + '  ' + f"{format(fl1_status)}" + ' ' + '  ' + f"{format(fl1_game)}" + ' ')
+                        schedule2 = str(f"{format(fl2_clsgn)}" + ' ' + '  ' + f"{format(fl2_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_deptime)}" + ' ' + '  ' + f"{format(fl2_gate)}" + ' ' + ' ' + '  ' + f"{format(fl2_status)}" + ' ' + '  ' + f"{format(fl2_game)}" + ' ')
+                        schedule3 = str(f"{format(fl3_clsgn)}" + ' ' + '  ' + f"{format(fl3_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl3_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl3_deptime)}" + ' ' + '  ' + f"{format(fl3_gate)}" + ' ' + ' ' + '  ' + f"{format(fl3_status)}" + ' ' + '  ' + f"{format(fl3_game)}" + ' ')
+                        schedule4 = str(f"{format(fl4_clsgn)}" + ' ' + '  ' + f"{format(fl4_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_deptime)}" + ' ' + '  ' + f"{format(fl4_gate)}" + ' ' + ' ' + '  ' + f"{format(fl4_status)}" + ' ' + '  ' + f"{format(fl4_game)}" + ' ')
+
+                        schedule = "Flight From   To     Time    Gate  Status    Game" + '\n' + '\n' + schedule1 + "\n" + '\n' + schedule2 + "\n" + '\n' + schedule3 + "\n" + '\n' + schedule4
+
+                        from PIL import Image
+                        from PIL import ImageDraw
+                        from PIL import ImageFont
+
+                        fontname = 'Consolas.ttf'
+                        fontsize = 36
+                        text = schedule
+
+                        colorText = "#FFC36A"
+                        colorOutline = "white"
+
+                        font = ImageFont.truetype(fontname, fontsize)
+                        width, height = 1200, 576
+                        img = Image.new('RGB', (width + 4, height + 4), '#0D2064')
+                        d = ImageDraw.Draw(img)
+                        d.text((65, height - 440), text, fill=colorText, font=font)
+                        d.rectangle((0, 0, width + 3, height + 3), outline=colorOutline)
+
+                        img.save("schedule.png")
+
+                        await ctx.reply(file=discord.File('schedule.png'))
+
+
+
+                        # await ctx.reply(f"```{schedule}```")
+
                     fl.close()
-                    await ctx.reply(f"```{schedule}```")
 
 
 
