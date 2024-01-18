@@ -277,7 +277,7 @@ async def on_message(ctx):
                     await ctx.reply('Our merch will be available soon...')
 
 
-
+                
                 elif ctx.content == '!schupd':
 
                     user = ctx.author
@@ -293,7 +293,7 @@ async def on_message(ctx):
                                                          timeout=60.0)
                             flsched = message.content
                             fl = message.content
-                            flf = open('schedule.txt', 'w')
+                            flf = open('schedule.txt', 'w+')
                             flf.write(fl)
                             flf.close()
                             await ctx.reply('Saved')
@@ -315,6 +315,14 @@ async def on_message(ctx):
                     await ctx.reply("""We currently have 2 airlines in Aurus Group:
                         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
                         Siberian Regional - Aeronautica (Roblox)""")
+                        
+                        
+                        
+                elif 'ping' in ctx.content:
+                    await ctx.reply(f'Pong {bot.latency}')
+                    
+                    
+                    
                 elif 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
 
@@ -376,7 +384,7 @@ async def on_message(ctx):
 
 
 
-bottoken = 'MTE4OTI2MzkxMjUzNzk2ODczMQ.G-PI96.Mjv9KmUum7gxWdGahqzPYwvaLEQNKowOKSdyqQ'
+bottoken = 'MTE4OTI2MzkxMjUzNzk2ODczMQ.GMlV46.cnbXwhaNnHn7zSSSSpgL8wjcJ3e_qV69yuO1fE'
 #bottoken = open('token.txt')
 #bottoken = bottoken.read()
 bot.run(f'{bottoken}')
