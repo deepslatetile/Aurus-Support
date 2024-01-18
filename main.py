@@ -311,6 +311,10 @@ async def on_message(ctx):
 
 
 
+                elif 'airline' in ctx.content:
+                    await ctx.reply("""We currently have 2 airlines in Aurus Group:
+                        Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
+                        Siberian Regional - Aeronautica (Roblox)""")
                 elif 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
 
@@ -372,7 +376,7 @@ async def on_message(ctx):
 
 
 
-
-bottoken = open('token.txt')
-bottoken = bottoken.read()
+bottoken = 'MTE4OTI2MzkxMjUzNzk2ODczMQ.G-PI96.Mjv9KmUum7gxWdGahqzPYwvaLEQNKowOKSdyqQ'
+#bottoken = open('token.txt')
+#bottoken = bottoken.read()
 bot.run(f'{bottoken}')
