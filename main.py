@@ -368,7 +368,7 @@ async def on_message(ctx):
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
 
-                    jobReq = username + '  ' + job + '  ' + airline + '  ' + username
+                    jobReq = username + '  ' + job + '  ' + airline + '  ' + username + '\n'
                     jobFile = open('jobs.txt', 'w+')
                     jobFile.write(jobReq)
                     await ctx.reply('Form filled, we will contact you soon')
