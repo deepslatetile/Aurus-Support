@@ -239,6 +239,82 @@ async def on_message(ctx):
 
 
 
+                if 'partner' in ctx.content:
+                    await ctx.reply('Opening partnership application')
+                    await ctx.reply('type "cancel" to cancel')
+
+                    await ctx.reply('Your username')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        username = message.content
+                        if username == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+
+                    await ctx.reply('Your company name')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        company = message.content
+                        if company == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+
+                    await ctx.reply('What your company do (airline, alliance, etc.)')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        deyateln = message.content
+                        if deyateln == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+
+                    await ctx.reply('Link to discord server')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        link = message.content
+                        if link == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+
+                    await ctx.reply('Why should you be our partner')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        reason = message.content
+                        if reason == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+
+                    partnerFile = username + '   ' + company + '   ' + deyateln + '   ' + link + '   ' + reason + '\n'
+                    partnerFile = open('partner.txt', 'w+')
+                    partnerFile.write(partnerFile)
+                    await ctx.reply('Form filled, we will contact you soon')
+
+
+
                 if 'site' in ctx.content:
                     await ctx.reply('~~Our website [here]()~~ NOT AVAILABLE :(')
 
@@ -290,10 +366,10 @@ async def on_message(ctx):
 
 
 
-                if 'airline' in ctx.content:
-                    await ctx.reply("""We currently have 2 airlines in Aurus Group:
-                        Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
-                        Siberian Regional - Aeronautica (Roblox)""")
+                # if 'airline' in ctx.content:
+                #     await ctx.reply("""We currently have 2 airlines in Aurus Group:
+                #         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
+                #         Siberian Regional - Aeronautica (Roblox)""")
 
 
 
