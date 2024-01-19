@@ -1,33 +1,16 @@
 # Aurus Support
 # Made entirely by @_deepslate
-# Coded specifically for Aurus 
-
-
-
-
-
-
-
-
-
-
-
+# Coded specifically for Aurus
 
 
 import discord
 import asyncio
 import segno
 from discord.ext import commands
+
 prefix = ""
 
 bot = commands.Bot(command_prefix=prefix)
-
-
-
-
-
-
-
 
 
 @bot.event
@@ -36,23 +19,27 @@ async def on_ready():
     print('Bot active')
 
 
-
 @bot.event
 async def on_message(ctx):
     if ctx.author != bot.user:
         channel1 = bot.get_channel(1190520793453572107)
         channel2 = bot.get_channel(1197626715875311747)
-        
+
         if ctx.channel == channel1 or ctx.channel == channel2:
             if ctx.content[0] != '>' and ctx.author != bot.user:
+
+
+
+                if ctx.content == '!help':
+                    await ctx.reply("""Special commands for best perfomance
+                    !report - reports user
+                    """)
 
 
 
                 if 'book' in ctx.content or 'checkin' in ctx.content or 'check-in' in ctx.content or 'reg' in ctx.content:
                     await ctx.reply('Starting booking..')
                     await ctx.reply("Type 'cancel' anytime to cancel ")
-
-
 
                     await ctx.reply('Your local ID:')
 
@@ -67,9 +54,7 @@ async def on_message(ctx):
                         if lid == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'LID: {lid}')
-
-
+                    # await ctx.reply(f'LID: {lid}')
 
                     await ctx.reply('Discord name:')
 
@@ -84,9 +69,7 @@ async def on_message(ctx):
                         if disname == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'Discord: {disname}')
-
-
+                    # await ctx.reply(f'Discord: {disname}')
 
                     await ctx.reply('Date of flight:')
 
@@ -101,9 +84,7 @@ async def on_message(ctx):
                         if dof == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'DOF: {dof}')
-
-
+                    # await ctx.reply(f'DOF: {dof}')
 
                     await ctx.reply('Departure time:')
 
@@ -118,9 +99,7 @@ async def on_message(ctx):
                         if dept == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'Dep. Time: {dept}')
-
-
+                    # await ctx.reply(f'Dep. Time: {dept}')
 
                     await ctx.reply('Flight number:')
 
@@ -135,9 +114,7 @@ async def on_message(ctx):
                         if flnum == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'Flight: {flnum}')
-
-
+                    # await ctx.reply(f'Flight: {flnum}')
 
                     await ctx.reply('''Class:
                     2 - First
@@ -156,9 +133,7 @@ async def on_message(ctx):
                         if clss == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'Class: {clss}')
-
-
+                    # await ctx.reply(f'Class: {clss}')
 
                     await ctx.reply('''Rank:
                     3 - Nickel
@@ -178,9 +153,7 @@ async def on_message(ctx):
                         if rank == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'Rank: {rank}')
-
-
+                    # await ctx.reply(f'Rank: {rank}')
 
                     await ctx.reply('Departure airport:')
 
@@ -195,9 +168,7 @@ async def on_message(ctx):
                         if deparpt == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'Origin: {deparpt}')
-
-
+                    # await ctx.reply(f'Origin: {deparpt}')
 
                     await ctx.reply('Destination: ')
 
@@ -212,9 +183,7 @@ async def on_message(ctx):
                         if dest == 'cancel':
                             await ctx.reply('Cancelled booking')
                             asyncio.as_completed()
-                    #await ctx.reply(f'Dest.: {dest}')
-
-
+                    # await ctx.reply(f'Dest.: {dest}')
 
                     await ctx.reply(f'''Filling ticket with following data...
                     LID: {lid}
@@ -259,11 +228,11 @@ async def on_message(ctx):
                     await ctx.reply('''
         Our airline have special programme which can give passengers discounts
         It has 3 levels:
-            3 - Nickel (50000). Best level, but makes your flights free and provides you access to all lounges
-            2 - Platinum (25000). Discounts and some lounges included
-            1 - Silver (10000). Discounts only included
-            0 - Iron (0). Every passenger gets it on first check-in. No discounts provided
-        This ranks are represented by different cards.
+            3 - :blue_heart: Nickel (50000). Best level, but makes your flights free and provides you access to all lounges
+            2 - :green_heart: Platinum (25000). Discounts and some lounges included
+            1 - :grey_heart: Silver (10000). Discounts only included
+            0 - :brown_heart: Bronze (0). Every passenger gets it on first check-in. No discounts provided
+        This ranks are represented by different cards in your Aurus Profile
         ''')
 
 
@@ -282,7 +251,7 @@ async def on_message(ctx):
                     await ctx.reply('Our merch will be available soon...')
 
 
-                
+
                 elif ctx.content == '!schupd':
 
                     user = ctx.author
@@ -323,18 +292,18 @@ async def on_message(ctx):
                     await ctx.reply("""We currently have 2 airlines in Aurus Group:
                         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
                         Siberian Regional - Aeronautica (Roblox)""")
-                        
-                        
-                        
+
+
+
                 elif 'ping' in ctx.content:
                     await ctx.reply(f'Pong {bot.latency}')
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
                 elif 'job' in ctx.content or 'work' in ctx.content:
-                    
+
                     await ctx.reply('Your username')
                     try:
                         message = await bot.wait_for("message",
@@ -347,12 +316,13 @@ async def on_message(ctx):
                         if username == 'cancel':
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
-                            
-                            
-                    
-                    await ctx.reply("""Airline
-                    Aurus - PTFS, X-Plane, MSFS
-                    Siberian Regional - Aeronautica""")
+
+                    await ctx.reply("""Department:
+                    - Discord
+                    - PTFS (Aurus)
+                    - X-Plane (Aurus)
+                    - MSFS (Aurus)
+                    - Aeronautica (Siberian Regional)""")
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -364,15 +334,13 @@ async def on_message(ctx):
                         if airline == 'cancel':
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
-                    
-                    
+
                     await ctx.reply("""Choose your job from the list:
-                        Pilot / Copilot
-                        Cabin crew
-                        Gate & check-in agent
-                        ATC
-                        Airport Staff
-                        Moderation""")
+                        - Pilot / Copilot
+                        - Cabin crew
+                        - Gate & check-in agent
+                        - ~~ATC~~
+                        - ~~Moderation~~""")
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -384,9 +352,7 @@ async def on_message(ctx):
                         if job == 'cancel':
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
-                    
-                    
-                    
+
                     await ctx.reply('Why should we choose you?')
                     try:
                         message = await bot.wait_for("message",
@@ -399,18 +365,17 @@ async def on_message(ctx):
                         if reason == 'cancel':
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
-                    
+
                     jobReq = username + '  ' + job + '  ' + airline + '  ' + username
                     jobFile = open('jobs.txt', 'w+')
                     jobFile.write(jobReq)
                     await ctx.reply('Form filled, we will contact you soon')
-                    
-                    
-                    
+
+
+
                 elif ctx.content == '!report':
                     await ctx.reply('Filling your report')
-                    
-                    
+
                     await ctx.reply('Your username')
                     try:
                         message = await bot.wait_for("message",
@@ -423,9 +388,7 @@ async def on_message(ctx):
                         if Rusername == 'cancel':
                             await ctx.reply('Cancelled reporting')
                             asyncio.as_completed()
-                            
-                            
-                            
+
                     await ctx.reply('Who are you reporting (username)')
                     try:
                         message = await bot.wait_for("message",
@@ -438,9 +401,7 @@ async def on_message(ctx):
                         if username == 'cancel':
                             await ctx.reply('Cancelled reporting')
                             asyncio.as_completed()
-                            
-                            
-                    
+
                     await ctx.reply('Who are you reporting (user id)')
                     try:
                         message = await bot.wait_for("message",
@@ -453,9 +414,7 @@ async def on_message(ctx):
                         if userid == 'cancel':
                             await ctx.reply('Cancelled reporting')
                             asyncio.as_completed()
-                            
-                            
-                            
+
                     await ctx.reply('Reason')
                     try:
                         message = await bot.wait_for("message",
@@ -468,9 +427,7 @@ async def on_message(ctx):
                         if reason == 'cancel':
                             await ctx.reply('Cancelled reporting')
                             asyncio.as_completed()
-                    
-                    
-                    
+
                     await ctx.reply('Proof (links only allowed)')
                     try:
                         message = await bot.wait_for("message",
@@ -483,22 +440,19 @@ async def on_message(ctx):
                         if proof == 'cancel':
                             await ctx.reply('Cancelled reporting')
                             asyncio.as_completed()
-                    
-                    
+
                     report_f = Rusername + '  ' + username + '  ' + userid + '  ' + reason + '  ' + proof + '\n'
-                    
+
                     reportFile = open('reports.txt', 'w+')
                     reportFile.write(report_f)
                     reportFile.close
                     await ctx.reply('Reported.')
-                    
-                    
-                    
-                    
+
+
+
+
                 elif 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
-
-
 
                     schedule = fl.read()
 
@@ -512,10 +466,14 @@ async def on_message(ctx):
                         fl3_clsgn, fl3_deparpt, fl3_arrarpt, fl3_deptime, fl3_gate, fl3_status, fl3_game = flight3.split(' __ ')
                         fl4_clsgn, fl4_deparpt, fl4_arrarpt, fl4_deptime, fl4_gate, fl4_status, fl4_game = flight4.split(' __ ')
 
-                        schedule1 = str(f"{format(fl1_clsgn)}" + ' ' + '  ' + f"{format(fl1_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_deptime)}" + ' ' + '  ' + f"{format(fl1_gate)}" + ' ' + ' ' + '  ' + f"{format(fl1_status)}" + ' ' + '  ' + f"{format(fl1_game)}" + ' ')
-                        schedule2 = str(f"{format(fl2_clsgn)}" + ' ' + '  ' + f"{format(fl2_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_deptime)}" + ' ' + '  ' + f"{format(fl2_gate)}" + ' ' + ' ' + '  ' + f"{format(fl2_status)}" + ' ' + '  ' + f"{format(fl2_game)}" + ' ')
-                        schedule3 = str(f"{format(fl3_clsgn)}" + ' ' + '  ' + f"{format(fl3_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl3_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl3_deptime)}" + ' ' + '  ' + f"{format(fl3_gate)}" + ' ' + ' ' + '  ' + f"{format(fl3_status)}" + ' ' + '  ' + f"{format(fl3_game)}" + ' ')
-                        schedule4 = str(f"{format(fl4_clsgn)}" + ' ' + '  ' + f"{format(fl4_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_deptime)}" + ' ' + '  ' + f"{format(fl4_gate)}" + ' ' + ' ' + '  ' + f"{format(fl4_status)}" + ' ' + '  ' + f"{format(fl4_game)}" + ' ')
+                        schedule1 = str(
+                            f"{format(fl1_clsgn)}" + ' ' + '  ' + f"{format(fl1_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_deptime)}" + ' ' + '  ' + f"{format(fl1_gate)}" + ' ' + ' ' + '  ' + f"{format(fl1_status)}" + ' ' + '  ' + f"{format(fl1_game)}" + ' ')
+                        schedule2 = str(
+                            f"{format(fl2_clsgn)}" + ' ' + '  ' + f"{format(fl2_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_deptime)}" + ' ' + '  ' + f"{format(fl2_gate)}" + ' ' + ' ' + '  ' + f"{format(fl2_status)}" + ' ' + '  ' + f"{format(fl2_game)}" + ' ')
+                        schedule3 = str(
+                            f"{format(fl3_clsgn)}" + ' ' + '  ' + f"{format(fl3_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl3_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl3_deptime)}" + ' ' + '  ' + f"{format(fl3_gate)}" + ' ' + ' ' + '  ' + f"{format(fl3_status)}" + ' ' + '  ' + f"{format(fl3_game)}" + ' ')
+                        schedule4 = str(
+                            f"{format(fl4_clsgn)}" + ' ' + '  ' + f"{format(fl4_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_deptime)}" + ' ' + '  ' + f"{format(fl4_gate)}" + ' ' + ' ' + '  ' + f"{format(fl4_status)}" + ' ' + '  ' + f"{format(fl4_game)}" + ' ')
 
                         schedule = "Flight From   To     Time    Gate  Status    Game" + '\n' + '\n' + schedule1 + "\n" + '\n' + schedule2 + "\n" + '\n' + schedule3 + "\n" + '\n' + schedule4
 
@@ -541,20 +499,13 @@ async def on_message(ctx):
 
                         await ctx.reply(file=discord.File('schedule.png'))
 
-
-
                         # await ctx.reply(f"```{schedule}```")
 
                     fl.close()
 
 
-
 #                else:
 #                    await ctx.reply("<@926763178925379604> <@1068917271168299179> Can't find a neat answer :(")
-
-
-
-
 
 
 bottoken = open('token.txt')
