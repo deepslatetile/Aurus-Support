@@ -1,15 +1,18 @@
 # Aurus Support
 # Made entirely by @_deepslate
-# Coded specifically for Aurus Virtual Airline
+# Coded specifically for Aurus 
 
 
 
 
 
 
-# Aurus Support
-# Made entirely by @_deepslate
-# Coded specifically for Aurus Virtual Airline
+
+
+
+
+
+
 
 import discord
 import asyncio
@@ -37,9 +40,11 @@ async def on_ready():
 @bot.event
 async def on_message(ctx):
     if ctx.author != bot.user:
-        channel = bot.get_channel(1190520793453572107)
-        if ctx.channel == channel and not ctx.author.bot:
-            if ctx.content[0] != '>':
+        channel1 = bot.get_channel(1190520793453572107)
+        channel2 = bot.get_channel(1197626715875311747)
+        
+        if ctx.channel == channel1 or ctx.channel == channel2:
+            if ctx.content[0] != '>' and ctx.author != bot.user:
 
 
 
@@ -239,7 +244,7 @@ async def on_message(ctx):
                     print(link)
                     await ctx.reply(f'''
         Your ticket is here:
-        Send the following link to your personal account to validate by staff
+        Send the following link to your personal account to validate by staff. If you do not have it, ping *Deepslate* here.
         See you on flight!
         https://api.qrserver.com/v1/create-qr-code/?size=450x450&data={link}''')
 
@@ -311,6 +316,9 @@ async def on_message(ctx):
 
 
 
+
+
+
                 elif 'airline' in ctx.content:
                     await ctx.reply("""We currently have 2 airlines in Aurus Group:
                         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
@@ -320,6 +328,170 @@ async def on_message(ctx):
                         
                 elif 'ping' in ctx.content:
                     await ctx.reply(f'Pong {bot.latency}')
+                    
+                    
+                    
+                    
+                    
+                elif 'job' in ctx.content or 'work' in ctx.content:
+                    
+                    await ctx.reply('Your username')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        username = message.content
+                        if username == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                            
+                            
+                    
+                    await ctx.reply("""Airline
+                    Aurus - PTFS, X-Plane, MSFS
+                    Siberian Regional - Aeronautica""")
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        airline = message.content
+                        if airline == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                    
+                    
+                    await ctx.reply("""Choose your job from the list:
+                        Pilot / Copilot
+                        Cabin crew
+                        Gate & check-in agent
+                        ATC
+                        Airport Staff
+                        Moderation""")
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        job = message.content
+                        if job == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                    
+                    
+                    
+                    await ctx.reply('Why should we choose you?')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        reason = message.content
+                        if reason == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                    
+                    jobReq = username + '  ' + job + '  ' + airline + '  ' + username
+                    jobFile = open('jobs.txt', 'w+')
+                    jobFile.write(jobReq)
+                    await ctx.reply('Form filled, we will contact you soon')
+                    
+                    
+                    
+                elif ctx.content == '!report':
+                    await ctx.reply('Filling your report')
+                    
+                    
+                    await ctx.reply('Your username')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        Rusername = message.content
+                        if Rusername == 'cancel':
+                            await ctx.reply('Cancelled reporting')
+                            asyncio.as_completed()
+                            
+                            
+                            
+                    await ctx.reply('Who are you reporting (username)')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        username = message.content
+                        if username == 'cancel':
+                            await ctx.reply('Cancelled reporting')
+                            asyncio.as_completed()
+                            
+                            
+                    
+                    await ctx.reply('Who are you reporting (user id)')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        userid = message.content
+                        if userid == 'cancel':
+                            await ctx.reply('Cancelled reporting')
+                            asyncio.as_completed()
+                            
+                            
+                            
+                    await ctx.reply('Reason')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        reason = message.content
+                        if reason == 'cancel':
+                            await ctx.reply('Cancelled reporting')
+                            asyncio.as_completed()
+                    
+                    
+                    
+                    await ctx.reply('Proof (links only allowed)')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        proof = message.content
+                        if proof == 'cancel':
+                            await ctx.reply('Cancelled reporting')
+                            asyncio.as_completed()
+                    
+                    
+                    report_f = Rusername + '  ' + username + '  ' + userid + '  ' + reason + '  ' + proof + '\n'
+                    
+                    reportFile = open('reports.txt', 'w+')
+                    reportFile.write(report_f)
+                    reportFile.close
+                    await ctx.reply('Reported.')
+                    
                     
                     
                     
@@ -377,14 +549,14 @@ async def on_message(ctx):
 
 
 
-                else:
-                    await ctx.reply("<@926763178925379604> <@1068917271168299179> Can't find a neat answer :(")
+#                else:
+#                    await ctx.reply("<@926763178925379604> <@1068917271168299179> Can't find a neat answer :(")
 
 
 
 
 
-bottoken = 'MTE4OTI2MzkxMjUzNzk2ODczMQ.GMlV46.cnbXwhaNnHn7zSSSSpgL8wjcJ3e_qV69yuO1fE'
-#bottoken = open('token.txt')
-#bottoken = bottoken.read()
+
+bottoken = open('token.txt')
+bottoken = bottoken.read()
 bot.run(f'{bottoken}')
