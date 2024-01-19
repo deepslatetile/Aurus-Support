@@ -33,6 +33,8 @@ async def on_message(ctx):
                 if ctx.content == '!help':
                     await ctx.reply("""Special commands for best perfomance
                     !report - reports user
+                    !jobs - shows pending job applications
+                    !ping - shows bot latency
                     """)
 
 
@@ -219,12 +221,12 @@ async def on_message(ctx):
 
 
 
-                elif 'hi' in ctx.content or 'hello' in ctx.content or 'sup' in ctx.content or 'helo' in ctx.content:
+                if ('hi' in ctx.content and len(ctx.content) == 2) or 'hello' in ctx.content or 'sup' in ctx.content or 'helo' in ctx.content:
                     await ctx.reply('Hello, how may I help you?')
 
 
 
-                elif 'rank' in ctx.content or 'silver' in ctx.content or 'platinum' in ctx.content or 'nickel' in ctx.content or 'loyal' in ctx.content or 'card' in ctx.content:
+                if 'rank' in ctx.content or 'silver' in ctx.content or 'platinum' in ctx.content or 'nickel' in ctx.content or 'loyal' in ctx.content or 'card' in ctx.content:
                     await ctx.reply('''
         Our airline have special programme which can give passengers discounts
         It has 3 levels:
@@ -237,22 +239,22 @@ async def on_message(ctx):
 
 
 
-                elif 'site' in ctx.content:
+                if 'site' in ctx.content:
                     await ctx.reply('~~Our website [here]()~~ NOT AVAILABLE :(')
 
 
 
-                elif 'game' in ctx.content:
+                if 'game' in ctx.content:
                     await ctx.reply('~~We are flying in PTFS, Aeronautica, FlightLine, X-Plane and MSFS~~ FREEZED FOR REVAMP :(')
 
 
 
-                elif 'merch' in ctx.content:
+                if 'merch' in ctx.content:
                     await ctx.reply('Our merch will be available soon...')
 
 
 
-                elif ctx.content == '!schupd':
+                if ctx.content == '!schupd':
 
                     user = ctx.author
                     role = discord.utils.find(lambda r: r.name == 'Schedule Editor', user.roles)
@@ -288,21 +290,21 @@ async def on_message(ctx):
 
 
 
-                elif 'airline' in ctx.content:
+                if 'airline' in ctx.content:
                     await ctx.reply("""We currently have 2 airlines in Aurus Group:
                         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
                         Siberian Regional - Aeronautica (Roblox)""")
 
 
 
-                elif 'ping' in ctx.content:
+                if ctx.content == '!ping':
                     await ctx.reply(f'Pong {bot.latency}')
 
 
 
 
 
-                elif 'job' in ctx.content or 'work' in ctx.content:
+                if 'job' in ctx.content or 'work' in ctx.content:
 
                     await ctx.reply('Your username')
                     try:
@@ -318,11 +320,11 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply("""Department:
-                    - Discord
-                    - PTFS (Aurus)
-                    - X-Plane (Aurus)
-                    - MSFS (Aurus)
-                    - Aeronautica (Siberian Regional)""")
+                    Discord
+                    PTFS (Aurus)
+                    X-Plane (Aurus)
+                    MSFS (Aurus)
+                    Aeronautica (Siberian Regional)""")
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -336,11 +338,11 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply("""Choose your job from the list:
-                        - Pilot / Copilot
-                        - Cabin crew
-                        - Gate & check-in agent
-                        - ~~ATC~~
-                        - ~~Moderation~~""")
+                        Pilot / Copilot
+                        Cabin crew
+                        Gate & check-in agent
+                        ~~ATC~~
+                        ~~Moderation~~""")
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -373,7 +375,7 @@ async def on_message(ctx):
 
 
 
-                elif ctx.content == '!report':
+                if ctx.content == '!report':
                     await ctx.reply('Filling your report')
 
                     await ctx.reply('Your username')
@@ -450,8 +452,15 @@ async def on_message(ctx):
 
 
 
+                if ctx.content == '!jobs':
+                    jobs = open('jobs.txt')
+                    jobs = jobs.read()
+                    await ctx.reply(jobs)
 
-                elif 'sched' in ctx.content or 'flight' in ctx.content:
+
+
+
+                if 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
 
                     schedule = fl.read()
