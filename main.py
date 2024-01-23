@@ -1,6 +1,9 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
+# Beta 0.4.1
+
+
 
 
 import discord
@@ -24,8 +27,9 @@ async def on_message(ctx):
     if ctx.author != bot.user:
         channel1 = bot.get_channel(1190520793453572107)
         channel2 = bot.get_channel(1197626715875311747)
+        channel3 = bot.get_channel(1198600734413951036)
 
-        if ctx.channel == channel1 or ctx.channel == channel2:
+        if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
             if ctx.content[0] != '>' and ctx.author != bot.user:
 
 
@@ -141,7 +145,7 @@ async def on_message(ctx):
                     3 - Nickel
                     2 - Platinum
                     1 - Silver
-                    0 - Iron
+                    0 - Bronze
                     ''')
 
                     try:
@@ -308,9 +312,9 @@ async def on_message(ctx):
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
 
-                    partnerFile = username + '   ' + company + '   ' + deyateln + '   ' + link + '   ' + reason + '\n'
-                    partnerFile = open('partner.txt', 'w+')
-                    partnerFile.write(partnerFile)
+                    partnert = username + '   ' + company + '   ' + deyateln + '   ' + link + '   ' + reason + '\n'
+                    partnerfile = open('partner.txt', 'w+')
+                    partnerfile.write(partnert)
                     await ctx.reply('Form filled, we will contact you soon')
 
 
@@ -552,7 +556,7 @@ async def on_message(ctx):
                         fl4_clsgn, fl4_deparpt, fl4_arrarpt, fl4_deptime, fl4_gate, fl4_status, fl4_game = flight4.split(' __ ')
 
                         schedule1 = str(
-                            f"{format(fl1_clsgn)}" + ' ' + '  ' + f"{format(fl1_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_deptime)}" + ' ' + '  ' + f"{format(fl1_gate)}" + ' ' + ' ' + '  ' + f"{format(fl1_status)}" + ' ' + '  ' + f"{format(fl1_game)}" + ' ')
+                            f"{format(fl1_clsgn)}" + ' ' + '  ' + f"{format(fl1_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_deptime)}" + ' ' + '  ' + f"{format(fl1_gate)}" + ' ' + '' + '  ' + f"{format(fl1_status)}" + ' ' + '  ' + f"{format(fl1_game)}" + ' ')
                         schedule2 = str(
                             f"{format(fl2_clsgn)}" + ' ' + '  ' + f"{format(fl2_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_deptime)}" + ' ' + '  ' + f"{format(fl2_gate)}" + ' ' + ' ' + '  ' + f"{format(fl2_status)}" + ' ' + '  ' + f"{format(fl2_game)}" + ' ')
                         schedule3 = str(
@@ -560,7 +564,7 @@ async def on_message(ctx):
                         schedule4 = str(
                             f"{format(fl4_clsgn)}" + ' ' + '  ' + f"{format(fl4_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_deptime)}" + ' ' + '  ' + f"{format(fl4_gate)}" + ' ' + ' ' + '  ' + f"{format(fl4_status)}" + ' ' + '  ' + f"{format(fl4_game)}" + ' ')
 
-                        schedule = "Flight From   To     Time    Gate  Status    Game" + '\n' + '\n' + schedule1 + "\n" + '\n' + schedule2 + "\n" + '\n' + schedule3 + "\n" + '\n' + schedule4
+                        schedule = "Flight  From   To     Time    Gate  Status    Game" + '\n' +  '\n' + schedule1 + "\n" + '\n' + schedule2 + "\n" + '\n' + schedule3 + "\n" + '\n' + schedule4
 
                         from PIL import Image
                         from PIL import ImageDraw
