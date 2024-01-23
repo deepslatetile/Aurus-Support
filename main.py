@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Beta 0.4.1
+# Beta 0.5
 
 
 
@@ -320,12 +320,12 @@ async def on_message(ctx):
 
 
                 if 'site' in ctx.content:
-                    await ctx.reply('~~Our website [here]()~~ NOT AVAILABLE :(')
+                    await ctx.reply('~~[Our website here](https://sites.google.com/view/aurus-va/aurus)')
 
 
 
                 if 'game' in ctx.content:
-                    await ctx.reply('~~We are flying in PTFS, Aeronautica, FlightLine, X-Plane and MSFS~~ FREEZED FOR REVAMP :(')
+                    await ctx.reply('~~We are flying in PTFS, Aeronautica, FlightLine, X-Plane and MSFS')
 
 
 
@@ -540,6 +540,129 @@ async def on_message(ctx):
 
 
 
+
+
+
+
+
+                if ctx.content = '!fileflt':
+                    
+                    await ctx.reply('Flight number')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        flnum = message.content
+                        if flnum == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                    
+                    
+                    
+                    await ctx.reply('Route (DME-LED)')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        rte = message.content
+                        if rte == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                        
+                        
+                        
+                    await ctx.reply('Airplane (RA-83003)')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        acft = message.content
+                        if acft == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                    
+                    
+                    
+                    await ctx.reply('Actual departure/arrival time (11:15-12:35')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        acttime = message.content
+                        if acttime == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                    
+                    
+                   
+                   
+                   await ctx.reply('Planned departure/arrival time (11:15-12:35')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        plantime = message.content
+                        if plantime == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                   
+                   
+                   
+                   await ctx.reply('IVAO VID')
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                    else:
+                        ivaovid = message.content
+                        if ivaovid == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                   
+                   flightreport = flnum + '  ' + rte + '  ' + acft + '  ' + acttime + '  ' + plantime + '  ' + ivaovid + '\n' + '\n'
+                   flrep = open('flights.txt', 'w+')
+                   flrep.write(flightreport)
+                   await ctx.reply('Flight saved')
+                   
+                   
+                   
+                if ctx.content == '!fltrep':
+                    fltreps = open('flights.txt')
+                    flights = fltreps.read()
+                    await ctx.reply(f'```{flights}```')
+                  
+               if ctx.content == '!applicj':
+                    jobappl = open('jobs.txt')
+                    jobapplc = jobappl.read()
+                    await ctx.reply(f'```{jobapplc}```')
+                   
+               if ctx.content == '!applicpart':
+                        partappl = open('partners.txt')
+                        partapplc = partappl.read()
+                        await ctx.reply(f'```{partapplc}```')
+                        
+                        
+                        
+                   
+                   
+                    
                 if 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
 
