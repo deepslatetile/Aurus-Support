@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Beta 0.7
+# Release 1.0
 
 
 import discord
@@ -9,7 +9,7 @@ import asyncio
 import segno
 from discord.ext import commands
 from deep_translator import GoogleTranslator
-from langdetect import detect
+import langid
 
 
 prefix = ""
@@ -33,7 +33,9 @@ async def on_message(ctx):
 
         if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
-                lang = 'en'
+                lang = langid.classify(ctx.content)[0]
+                if lang == 'mk' or lang == 'bg':
+                    lang = 'ru'
                 ctx.content = GoogleTranslator(source='auto', target='en').translate(text=ctx.content)
                 ctx.content = ctx.content.lower()
             if ctx.content[0] != '>' and ctx.author != bot.user:
@@ -754,4 +756,4 @@ async def on_message(ctx):
 
 bottoken = open('token.txt')
 bottoken = bottoken.read()
-bot.run(f'{bottoken}')
+bot.run(f'{bottoken}') 
