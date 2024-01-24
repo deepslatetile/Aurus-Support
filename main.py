@@ -1,19 +1,22 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Beta 0.6.2
+# Beta 0.7
 
 
 import discord
 import asyncio
 import segno
 from discord.ext import commands
-from googletrans import Translator
+from deep_translator import GoogleTranslator
+from langdetect import detect
+
 
 prefix = ""
 
 bot = commands.Bot(command_prefix=prefix)
 
+notFoundReply = 0
 
 @bot.event
 async def on_ready():
@@ -30,21 +33,30 @@ async def on_message(ctx):
 
         if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
+                lang = 'en'
+                ctx.content = GoogleTranslator(source='auto', target='en').translate(text=ctx.content)
                 ctx.content = ctx.content.lower()
             if ctx.content[0] != '>' and ctx.author != bot.user:
+                notFoundReply = 0
+
+
 
                 if ctx.content == '!help':
-                    await ctx.reply("""Special commands for best perfomance
+                    await ctx.reply(GoogleTranslator(target=lang).translate(GoogleTranslator(target=lang).translate("""Special commands for best perfomance
                     !report - reports user
                     !jobs - shows pending job applications
-                    !ping - shows bot latency
-                    """)
+                    !ping - shows bot latency"
+                    """)))
+                else:
+                    notFoundReply += 1
+
+
 
                 if 'book' in ctx.content or 'checkin' in ctx.content or 'check-in' in ctx.content or 'reg' in ctx.content:
-                    await ctx.reply('Starting booking..')
-                    await ctx.reply("Type 'cancel' anytime to cancel ")
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Starting booking..'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate("Type 'cancel' anytime to cancel "))
 
-                    await ctx.reply('Your local ID:')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Your local ID:'))
 
                     try:
                         message = await bot.wait_for("message",
@@ -55,11 +67,11 @@ async def on_message(ctx):
                     else:
                         lid = message.content
                         if lid == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'LID: {lid}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'LID: {lid}'))
 
-                    await ctx.reply('Discord name:')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Discord name:'))
 
                     try:
                         message = await bot.wait_for("message",
@@ -70,11 +82,11 @@ async def on_message(ctx):
                     else:
                         disname = message.content
                         if disname == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'Discord: {disname}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Discord: {disname}'))
 
-                    await ctx.reply('Date of flight:')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Date of flight:'))
 
                     try:
                         message = await bot.wait_for("message",
@@ -85,11 +97,11 @@ async def on_message(ctx):
                     else:
                         dof = message.content
                         if dof == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'DOF: {dof}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'DOF: {dof}'))
 
-                    await ctx.reply('Departure time:')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Departure time:'))
 
                     try:
                         message = await bot.wait_for("message",
@@ -100,11 +112,11 @@ async def on_message(ctx):
                     else:
                         dept = message.content
                         if dept == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'Dep. Time: {dept}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Dep. Time: {dept}'))
 
-                    await ctx.reply('Flight number:')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Flight number:'))
 
                     try:
                         message = await bot.wait_for("message",
@@ -115,15 +127,15 @@ async def on_message(ctx):
                     else:
                         flnum = message.content
                         if flnum == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'Flight: {flnum}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Flight: {flnum}'))
 
-                    await ctx.reply('''Class:
+                    await ctx.reply(GoogleTranslator(target=lang).translate('''Class:
                     2 - First
                     1 - Business
                     0 - Economy
-                    ''')
+                    '''))
 
                     try:
                         message = await bot.wait_for("message",
@@ -134,16 +146,16 @@ async def on_message(ctx):
                     else:
                         clss = message.content
                         if clss == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'Class: {clss}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Class: {clss}'))
 
-                    await ctx.reply('''Rank:
+                    await ctx.reply(GoogleTranslator(target=lang).translate('''Rank:
                     3 - Nickel
                     2 - Platinum
                     1 - Silver
                     0 - Bronze
-                    ''')
+                    '''))
 
                     try:
                         message = await bot.wait_for("message",
@@ -154,11 +166,11 @@ async def on_message(ctx):
                     else:
                         rank = message.content
                         if rank == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'Rank: {rank}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Rank: {rank}'))
 
-                    await ctx.reply('Departure airport:')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Departure airport:'))
 
                     try:
                         message = await bot.wait_for("message",
@@ -169,11 +181,11 @@ async def on_message(ctx):
                     else:
                         deparpt = message.content
                         if deparpt == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'Origin: {deparpt}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Origin: {deparpt}'))
 
-                    await ctx.reply('Destination: ')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Destination: '))
 
                     try:
                         message = await bot.wait_for("message",
@@ -184,11 +196,11 @@ async def on_message(ctx):
                     else:
                         dest = message.content
                         if dest == 'cancel':
-                            await ctx.reply('Cancelled booking')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(f'Dest.: {dest}')
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Dest.: {dest}')
 
-                    await ctx.reply(f'''Filling ticket with following data...
+                    await ctx.reply(GoogleTranslator(target=lang).translate(f'''Filling ticket with following data...
                     LID: {lid}
                     Class: {clss}
                     Rank: {rank}
@@ -198,7 +210,7 @@ async def on_message(ctx):
                     DOF: {dof}
                     Dep. Time: {dept}
                     Fl. num: {flnum}
-        ''')
+        '''))
 
                     qrcode = segno.make(f'''
                     LID: {lid}
@@ -212,19 +224,27 @@ async def on_message(ctx):
                     Fl. num: {flnum}
         ''')
 
-                    link = f'{lid}-{clss}-{rank}-{disname}-{deparpt}-{dest}-{dof}-{dept}'
+                    link = (f'{lid}-{clss}-{rank}-{disname}-{deparpt}-{dest}-{dof}-{dept}')
                     print(link)
-                    await ctx.reply(f'''
+                    await ctx.reply(GoogleTranslator(target=lang).translate(f'''
         Your ticket is here:
         Send the following link to your personal account to validate by staff. If you do not have it, ping *Deepslate* here.
         See you on flight!
-        https://api.qrserver.com/v1/create-qr-code/?size=450x450&data={link}''')
+        https://api.qrserver.com/v1/create-qr-code/?size=450x450&data={link}'''))
+                else:
+                    notFoundReply += 1
+
+
 
                 if ('hi' in ctx.content and len(ctx.content) == 2) or 'hello' in ctx.content or 'sup' in ctx.content or 'helo' in ctx.content:
-                    await ctx.reply('Hello, how may I help you?')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Hello, how may I help you?'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if 'rank' in ctx.content or 'silver' in ctx.content or 'platinum' in ctx.content or 'nickel' in ctx.content or 'loyal' in ctx.content or 'card' in ctx.content:
-                    await ctx.reply('''
+                    await ctx.reply(GoogleTranslator(target=lang).translate('''
         Our airline have special programme which can give passengers discounts
         It has 3 levels:
             3 - :blue_heart: Nickel (50000). Best level, but makes your flights free and provides you access to all lounges
@@ -232,13 +252,17 @@ async def on_message(ctx):
             1 - :grey_heart: Silver (10000). Discounts only included
             0 - :brown_heart: Bronze (0). Every passenger gets it on first check-in. No discounts provided
         This ranks are represented by different cards in your Aurus Profile
-        ''')
+        '''))
+                else:
+                    notFoundReply += 1
+
+
 
                 if 'partner' in ctx.content:
-                    await ctx.reply('Opening partnership application')
-                    await ctx.reply('type "cancel" to cancel')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Opening partnership application'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('type "cancel" to cancel'))
 
-                    await ctx.reply('Your username')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -248,10 +272,10 @@ async def on_message(ctx):
                     else:
                         username = message.content
                         if username == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Your company name')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Your company name'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -261,10 +285,10 @@ async def on_message(ctx):
                     else:
                         company = message.content
                         if company == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('What your company do (airline, alliance, etc.)')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('What your company do (airline, alliance, etc.)'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -274,10 +298,10 @@ async def on_message(ctx):
                     else:
                         deyateln = message.content
                         if deyateln == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Link to discord server')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Link to discord server'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -287,10 +311,10 @@ async def on_message(ctx):
                     else:
                         link = message.content
                         if link == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Why should you be our partner')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Why should you be our partner'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -300,22 +324,38 @@ async def on_message(ctx):
                     else:
                         reason = message.content
                         if reason == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
                     partnert = username + '   ' + company + '   ' + deyateln + '   ' + link + '   ' + reason + '\n'
                     partnerfile = open('partner.txt', 'w+')
                     partnerfile.write(partnert)
-                    await ctx.reply('Form filled, we will contact you soon')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Form filled, we will contact you soon'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if 'site' in ctx.content:
-                    await ctx.reply('~~[Our website here](https://sites.google.com/view/aurus-va/aurus)')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('[Our website here](https://sites.google.com/view/aurus-va/aurus)'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if 'game' in ctx.content:
-                    await ctx.reply('~~We are flying in PTFS, Aeronautica, FlightLine, X-Plane and MSFS')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('~~We are flying in PTFS, Aeronautica, FlightLine, X-Plane and MSFS'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if 'merch' in ctx.content:
-                    await ctx.reply('Our merch will be available soon...')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Our merch will be available soon...'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if ctx.content == '!schupd':
 
@@ -324,7 +364,7 @@ async def on_message(ctx):
 
                     if role in user.roles:
 
-                        await ctx.reply('Schedule:')
+                        await ctx.reply(GoogleTranslator(target=lang).translate('Schedule:'))
                         try:
                             message = await bot.wait_for("message",
                                                          check=lambda
@@ -335,30 +375,40 @@ async def on_message(ctx):
                             flf = open('schedule.txt', 'w+')
                             flf.write(fl.upper())
                             flf.close()
-                            await ctx.reply('Saved')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Saved'))
                         except asyncio.TimeoutError:
                             await ctx.channel.send("You took to long to respond")
                         else:
                             flsched = message.content
                             if flsched == 'cancel':
-                                await ctx.reply('Cancelled updating')
+                                await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled updating'))
                                 asyncio.as_completed()
-                        await ctx.reply(f"```{fl}```")
+                        await ctx.reply(GoogleTranslator(target=lang).translate(f"```{fl}```"))
 
                     else:
-                        await ctx.reply("No permission")
+                        await ctx.reply(GoogleTranslator(target=lang).translate("No permission"))
+                else:
+                    notFoundReply += 1
+
+
 
                 # if 'airline' in ctx.content:
-                #     await ctx.reply("""We currently have 2 airlines in Aurus Group:
+                #     await ctx.reply(GoogleTranslator(target=lang).translate("""We currently have 2 airlines in Aurus Group:
                 #         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
-                #         Siberian Regional - Aeronautica (Roblox)""")
+                #         Siberian Regional - Aeronautica (Roblox)"""))
+
+
 
                 if ctx.content == '!ping':
-                    await ctx.reply(f'Pong {bot.latency}')
+                    await ctx.reply(GoogleTranslator(target=lang).translate(f'Pong {bot.latency}'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if 'job' in ctx.content or 'work' in ctx.content:
 
-                    await ctx.reply('Your username')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -368,15 +418,15 @@ async def on_message(ctx):
                     else:
                         username = message.content
                         if username == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply("""Department:
+                    await ctx.reply(GoogleTranslator(target=lang).translate("""Department:
                     Discord
                     PTFS (Aurus)
                     X-Plane (Aurus)
                     MSFS (Aurus)
-                    Aeronautica (Siberian Regional)""")
+                    Aeronautica (Siberian Regional)"""))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -386,15 +436,15 @@ async def on_message(ctx):
                     else:
                         airline = message.content
                         if airline == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply("""Choose your job from the list:
+                    await ctx.reply(GoogleTranslator(target=lang).translate("""Choose your job from the list:
                         Pilot / Copilot
                         Cabin crew
                         Gate & check-in agent
                         ~~ATC~~
-                        ~~Moderation~~""")
+                        ~~Moderation~~"""))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -404,10 +454,10 @@ async def on_message(ctx):
                     else:
                         job = message.content
                         if job == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Why should we choose you?')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Why should we choose you?'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -417,18 +467,22 @@ async def on_message(ctx):
                     else:
                         reason = message.content
                         if reason == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
                     jobReq = username + '  ' + job + '  ' + airline + '  ' + username + '\n'
                     jobFile = open('jobs.txt', 'w+')
                     jobFile.write(jobReq)
-                    await ctx.reply('Form filled, we will contact you soon')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Form filled, we will contact you soon'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if ctx.content == '!report':
-                    await ctx.reply('Filling your report')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Filling your report'))
 
-                    await ctx.reply('Your username')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -438,10 +492,10 @@ async def on_message(ctx):
                     else:
                         Rusername = message.content
                         if Rusername == 'cancel':
-                            await ctx.reply('Cancelled reporting')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled reporting'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Who are you reporting (username)')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Who are you reporting (username)'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -451,10 +505,10 @@ async def on_message(ctx):
                     else:
                         username = message.content
                         if username == 'cancel':
-                            await ctx.reply('Cancelled reporting')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled reporting'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Who are you reporting (user id)')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Who are you reporting (user id)'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -464,10 +518,10 @@ async def on_message(ctx):
                     else:
                         userid = message.content
                         if userid == 'cancel':
-                            await ctx.reply('Cancelled reporting')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled reporting'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Reason')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Reason'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -477,10 +531,10 @@ async def on_message(ctx):
                     else:
                         reason = message.content
                         if reason == 'cancel':
-                            await ctx.reply('Cancelled reporting')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled reporting'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Proof (links only allowed)')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Proof (links only allowed)'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -490,7 +544,7 @@ async def on_message(ctx):
                     else:
                         proof = message.content
                         if proof == 'cancel':
-                            await ctx.reply('Cancelled reporting')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled reporting'))
                             asyncio.as_completed()
 
                     report_f = Rusername + '  ' + username + '  ' + userid + '  ' + reason + '  ' + proof + '\n'
@@ -498,16 +552,24 @@ async def on_message(ctx):
                     reportFile = open('reports.txt', 'w+')
                     reportFile.write(report_f)
                     reportFile.close
-                    await ctx.reply('Reported.')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Reported.'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if ctx.content == '!jobs':
                     jobs = open('jobs.txt')
                     jobs = jobs.read()
-                    await ctx.reply(jobs)
+                    await ctx.reply(GoogleTranslator(target=lang).translate(jobs))
+                else:
+                    notFoundReply += 1
+
+
 
                 if ctx.content == '!fileflt':
 
-                    await ctx.reply('Flight number')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Flight number'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -517,10 +579,10 @@ async def on_message(ctx):
                     else:
                         flnum = message.content
                         if flnum == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Route (DME-LED)')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Route (DME-LED)'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -530,10 +592,10 @@ async def on_message(ctx):
                     else:
                         rte = message.content
                         if rte == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Airplane (RA-83003)')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Airplane (RA-83003)'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -543,10 +605,10 @@ async def on_message(ctx):
                     else:
                         acft = message.content
                         if acft == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('Actual departure/arrival time (11:15-12:35')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Actual departure/arrival time (11:15-12:35'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -556,10 +618,10 @@ async def on_message(ctx):
                     else:
                         acttime = message.content
                         if acttime == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply("Planned departure/arrival time 11:15-12:35")
+                    await ctx.reply(GoogleTranslator(target=lang).translate("Planned departure/arrival time 11:15-12:35"))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -569,10 +631,10 @@ async def on_message(ctx):
                     else:
                         plantime = message.content
                         if plantime == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply('IVAO VID')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('IVAO VID'))
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -582,28 +644,44 @@ async def on_message(ctx):
                     else:
                         ivaovid = message.content
                         if ivaovid == 'cancel':
-                            await ctx.reply('Cancelled')
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
                     flightreport = flnum + '  ' + rte + '  ' + acft + '  ' + acttime + '  ' + plantime + '  ' + ivaovid + '\n' + '\n'
                     flrep = open('flights.txt', 'w+')
                     flrep.write(flightreport)
-                    await ctx.reply('Flight saved')
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Flight saved'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if ctx.content == '!fltrep':
                     fltreps = open('flights.txt')
                     flights = fltreps.read()
-                    await ctx.reply(f'```{flights}```')
+                    await ctx.reply(GoogleTranslator(target=lang).translate(f'```{flights}```'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if ctx.content == '!applicj':
                     jobappl = open('jobs.txt')
                     jobapplc = jobappl.read()
-                    await ctx.reply(f'```{jobapplc}```')
+                    await ctx.reply(GoogleTranslator(target=lang).translate(f'```{jobapplc}```'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if ctx.content == '!applicpart':
                     partappl = open('partner.txt')
                     partapplc = partappl.read()
-                    await ctx.reply(f'```{partapplc}```')
+                    await ctx.reply(GoogleTranslator(target=lang).translate(f'```{partapplc}```'))
+                else:
+                    notFoundReply += 1
+
+
 
                 if 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
@@ -611,7 +689,7 @@ async def on_message(ctx):
                     schedule = fl.read()
 
                     if schedule == 'nothing scheduled':
-                        await ctx.reply('```nothing scheduled```')
+                        await ctx.reply(GoogleTranslator(target=lang).translate('```nothing scheduled```'))
                     else:
                         flight1, flight2, flight3, flight4 = schedule.split(' __ # __ ')
 
@@ -653,13 +731,25 @@ async def on_message(ctx):
 
                         await ctx.reply(file=discord.File('schedule.png'))
 
-                        # await ctx.reply(f"```{schedule}```")
+                        # await ctx.reply(GoogleTranslator(target=lang).translate(f"```{schedule}```"))
 
                     fl.close()
+                else:
+                    notFoundReply += 1
 
 
-#                else:
-#                    await ctx.reply("<@926763178925379604> <@1068917271168299179> Can't find a neat answer :(")
+
+                if 'thanks' in ctx.content or 'thank you' in ctx.content:
+                    await ctx.reply('🥰')
+                else:
+                    notFoundReply += 1
+
+
+
+                if notFoundReply != 0:
+                    await ctx.add_reaction('<❓>')
+                else:
+                    print(notFoundReply)
 
 
 bottoken = open('token.txt')
