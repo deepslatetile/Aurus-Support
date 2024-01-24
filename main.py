@@ -36,6 +36,17 @@ async def on_message(ctx):
                 lang = langid.classify(ctx.content)[0]
                 if lang == 'mk' or lang == 'bg':
                     lang = 'ru'
+                if ctx.content[0] == !:
+                    lang = 'en'
+                if ctx.content[0::1] == en:
+                    lang = 'en'
+                if ctx.content[0::1] == ru:
+                    lang = 'ru'
+                if ctx.content[0::1] == bg:
+                    lang = 'bg'
+                if ctx.content[0::1] == mk:
+                    lang = 'mk'
+                    ctx.content = ctx.content[2::]
                 ctx.content = GoogleTranslator(source='auto', target='en').translate(text=ctx.content)
                 ctx.content = ctx.content.lower()
             if ctx.content[0] != '>' and ctx.author != bot.user:
