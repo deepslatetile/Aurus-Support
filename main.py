@@ -1,7 +1,9 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Beta 0.5.1
+# Beta 0.5
+
+
 
 
 import discord
@@ -28,10 +30,9 @@ async def on_message(ctx):
         channel3 = bot.get_channel(1198600734413951036)
 
         if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
-            if 'discord.gg' not in ctx.content:
-                ctx.content = ctx.content.lower()
-                
             if ctx.content[0] != '>' and ctx.author != bot.user:
+
+
 
                 if ctx.content == '!help':
                     await ctx.reply("""Special commands for best perfomance
@@ -39,6 +40,8 @@ async def on_message(ctx):
                     !jobs - shows pending job applications
                     !ping - shows bot latency
                     """)
+
+
 
                 if 'book' in ctx.content or 'checkin' in ctx.content or 'check-in' in ctx.content or 'reg' in ctx.content:
                     await ctx.reply('Starting booking..')
@@ -220,8 +223,12 @@ async def on_message(ctx):
         See you on flight!
         https://api.qrserver.com/v1/create-qr-code/?size=450x450&data={link}''')
 
+
+
                 if ('hi' in ctx.content and len(ctx.content) == 2) or 'hello' in ctx.content or 'sup' in ctx.content or 'helo' in ctx.content:
                     await ctx.reply('Hello, how may I help you?')
+
+
 
                 if 'rank' in ctx.content or 'silver' in ctx.content or 'platinum' in ctx.content or 'nickel' in ctx.content or 'loyal' in ctx.content or 'card' in ctx.content:
                     await ctx.reply('''
@@ -233,6 +240,8 @@ async def on_message(ctx):
             0 - :brown_heart: Bronze (0). Every passenger gets it on first check-in. No discounts provided
         This ranks are represented by different cards in your Aurus Profile
         ''')
+
+
 
                 if 'partner' in ctx.content:
                     await ctx.reply('Opening partnership application')
@@ -308,14 +317,22 @@ async def on_message(ctx):
                     partnerfile.write(partnert)
                     await ctx.reply('Form filled, we will contact you soon')
 
+
+
                 if 'site' in ctx.content:
                     await ctx.reply('~~[Our website here](https://sites.google.com/view/aurus-va/aurus)')
+
+
 
                 if 'game' in ctx.content:
                     await ctx.reply('~~We are flying in PTFS, Aeronautica, FlightLine, X-Plane and MSFS')
 
+
+
                 if 'merch' in ctx.content:
                     await ctx.reply('Our merch will be available soon...')
+
+
 
                 if ctx.content == '!schupd':
 
@@ -348,13 +365,24 @@ async def on_message(ctx):
                     else:
                         await ctx.reply("No permission")
 
+
+
+
+
+
                 # if 'airline' in ctx.content:
                 #     await ctx.reply("""We currently have 2 airlines in Aurus Group:
                 #         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
                 #         Siberian Regional - Aeronautica (Roblox)""")
 
+
+
                 if ctx.content == '!ping':
                     await ctx.reply(f'Pong {bot.latency}')
+
+
+
+
 
                 if 'job' in ctx.content or 'work' in ctx.content:
 
@@ -424,6 +452,8 @@ async def on_message(ctx):
                     jobFile = open('jobs.txt', 'w+')
                     jobFile.write(jobReq)
                     await ctx.reply('Form filled, we will contact you soon')
+
+
 
                 if ctx.content == '!report':
                     await ctx.reply('Filling your report')
@@ -500,10 +530,20 @@ async def on_message(ctx):
                     reportFile.close
                     await ctx.reply('Reported.')
 
+
+
                 if ctx.content == '!jobs':
                     jobs = open('jobs.txt')
                     jobs = jobs.read()
                     await ctx.reply(jobs)
+
+
+
+
+
+
+
+
 
                 if ctx.content == '!fileflt':
 
@@ -520,6 +560,8 @@ async def on_message(ctx):
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
 
+
+
                     await ctx.reply('Route (DME-LED)')
                     try:
                         message = await bot.wait_for("message",
@@ -532,6 +574,8 @@ async def on_message(ctx):
                         if rte == 'cancel':
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
+
+
 
                     await ctx.reply('Airplane (RA-83003)')
                     try:
@@ -546,6 +590,8 @@ async def on_message(ctx):
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
 
+
+
                     await ctx.reply('Actual departure/arrival time (11:15-12:35')
                     try:
                         message = await bot.wait_for("message",
@@ -559,7 +605,9 @@ async def on_message(ctx):
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
 
-                    await ctx.reply('Planned departure/arrival time (11:15-12:35')
+
+
+                    await ctx.reply("Planned departure/arrival time 11:15-12:35")
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -571,6 +619,8 @@ async def on_message(ctx):
                         if plantime == 'cancel':
                             await ctx.reply('Cancelled')
                             asyncio.as_completed()
+
+
 
                     await ctx.reply('IVAO VID')
                     try:
@@ -590,21 +640,27 @@ async def on_message(ctx):
                     flrep.write(flightreport)
                     await ctx.reply('Flight saved')
 
+
+
                 if ctx.content == '!fltrep':
                     fltreps = open('flights.txt')
                     flights = fltreps.read()
                     await ctx.reply(f'```{flights}```')
 
-
                 if ctx.content == '!applicj':
                     jobappl = open('jobs.txt')
                     jobapplc = jobappl.read()
                     await ctx.reply(f'```{jobapplc}```')
-
+ 
                 if ctx.content == '!applicpart':
-                    partappl = open('partners.txt')
-                    partapplc = partappl.read()
-                    await ctx.reply(f'```{partapplc}```')
+                        partappl = open('partner.txt')
+                        partapplc = partappl.read()
+                        await ctx.reply(f'```{partapplc}```')
+
+
+
+
+
 
                 if 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
@@ -630,7 +686,7 @@ async def on_message(ctx):
                         schedule4 = str(
                             f"{format(fl4_clsgn)}" + ' ' + '  ' + f"{format(fl4_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_deptime)}" + ' ' + '  ' + f"{format(fl4_gate)}" + ' ' + ' ' + '  ' + f"{format(fl4_status)}" + ' ' + '  ' + f"{format(fl4_game)}" + ' ')
 
-                        schedule = "Flight  From   To     Time    Gate  Status    Game" + '\n' + '\n' + schedule1 + "\n" + '\n' + schedule2 + "\n" + '\n' + schedule3 + "\n" + '\n' + schedule4
+                        schedule = "Flight  From   To     Time    Gate  Status    Game" + '\n' +  '\n' + schedule1 + "\n" + '\n' + schedule2 + "\n" + '\n' + schedule3 + "\n" + '\n' + schedule4
 
                         from PIL import Image
                         from PIL import ImageDraw
@@ -658,10 +714,11 @@ async def on_message(ctx):
 
                     fl.close()
 
+
 #                else:
 #                    await ctx.reply("<@926763178925379604> <@1068917271168299179> Can't find a neat answer :(")
 
 
 bottoken = open('token.txt')
 bottoken = bottoken.read()
-bot.run(f'{bottoken}')
+bot.run(f'{bottoken}') 
