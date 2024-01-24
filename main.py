@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Beta 0.6
+# Beta 0.6.1
 
 
 import discord
@@ -29,7 +29,7 @@ async def on_message(ctx):
         channel3 = bot.get_channel(1198600734413951036)
 
         if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
-            if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content:
+            if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
                 ctx.content = ctx.content.lower()
             if ctx.content[0] != '>' and ctx.author != bot.user:
 
