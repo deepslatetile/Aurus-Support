@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Beta 0.6.1
+# Beta 0.6.2
 
 
 import discord
@@ -333,7 +333,7 @@ async def on_message(ctx):
                             flsched = message.content
                             fl = message.content
                             flf = open('schedule.txt', 'w+')
-                            flf.write(fl)
+                            flf.write(fl.upper())
                             flf.close()
                             await ctx.reply('Saved')
                         except asyncio.TimeoutError:
