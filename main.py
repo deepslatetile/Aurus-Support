@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.0
+# Release 1.1
 
 
 import discord
@@ -17,6 +17,7 @@ prefix = ""
 bot = commands.Bot(command_prefix=prefix)
 
 notFoundReply = 0
+
 
 @bot.event
 async def on_ready():
@@ -34,19 +35,299 @@ async def on_message(ctx):
         if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
                 lang = langid.classify(ctx.content)[0]
-                if lang == 'mk' or lang == 'bg':
-                    lang = 'ru'
-                if ctx.content[0] == !:
-                    lang = 'en'
-                if ctx.content[0::1] == en:
-                    lang = 'en'
-                if ctx.content[0::1] == ru:
-                    lang = 'ru'
-                if ctx.content[0::1] == bg:
-                    lang = 'bg'
-                if ctx.content[0::1] == mk:
-                    lang = 'mk'
-                    ctx.content = ctx.content[2::]
+
+                if ctx.content[0] == '.':
+                    if ctx.content[0:4] == '.af ':
+                        lang = 'af'
+
+                    if ctx.content[0:4] == '.am ':
+                        lang = 'am'
+
+                    if ctx.content[0:4] == '.an ':
+                        lang = 'an'
+
+                    if ctx.content[0:4] == '.ar ':
+                        lang = 'ar'
+
+                    if ctx.content[0:4] == '.as ':
+                        lang = 'as'
+
+                    if ctx.content[0:4] == '.az ':
+                        lang = 'az'
+
+                    if ctx.content[0:4] == '.be ':
+                        lang = 'be'
+
+                    if ctx.content[0:4] == '.bg ':
+                        lang = 'bg'
+
+                    if ctx.content[0:4] == '.bn ':
+                        lang = 'bn'
+
+                    if ctx.content[0:4] == '.br ':
+                        lang = 'br'
+
+                    if ctx.content[0:4] == '.bs ':
+                        lang = 'bs'
+
+                    if ctx.content[0:4] == '.ca ':
+                        lang = 'ca'
+
+                    if ctx.content[0:4] == '.cs ':
+                        lang = 'cs'
+
+                    if ctx.content[0:4] == '.cy ':
+                        lang = 'cy'
+
+                    if ctx.content[0:4] == '.da ':
+                        lang = 'da'
+
+                    if ctx.content[0:4] == '.de ':
+                        lang = 'de'
+
+                    if ctx.content[0:4] == '.dz ':
+                        lang = 'dz'
+
+                    if ctx.content[0:4] == '.el ':
+                        lang = 'el'
+
+                    if ctx.content[0:4] == '.en ':
+                        lang = 'en'
+
+                    if ctx.content[0:4] == '.eo ':
+                        lang = 'eo'
+
+                    if ctx.content[0:4] == '.es ':
+                        lang = 'es'
+
+                    if ctx.content[0:4] == '.et ':
+                        lang = 'et'
+
+                    if ctx.content[0:4] == '.eu ':
+                        lang = 'eu'
+
+                    if ctx.content[0:4] == '.fa ':
+                        lang = 'fa'
+
+                    if ctx.content[0:4] == '.fi ':
+                        lang = 'fi'
+
+                    if ctx.content[0:4] == '.fo ':
+                        lang = 'fo'
+
+                    if ctx.content[0:4] == '.fr ':
+                        lang = 'fr'
+
+                    if ctx.content[0:4] == '.ga ':
+                        lang = 'ga'
+
+                    if ctx.content[0:4] == '.gl ':
+                        lang = 'gl'
+
+                    if ctx.content[0:4] == '.gu ':
+                        lang = 'gu'
+
+                    if ctx.content[0:4] == '.he ':
+                        lang = 'he'
+
+                    if ctx.content[0:4] == '.hi ':
+                        lang = 'hi'
+
+                    if ctx.content[0:4] == '.hr ':
+                        lang = 'hr'
+
+                    if ctx.content[0:4] == '.ht ':
+                        lang = 'ht'
+
+                    if ctx.content[0:4] == '.hu ':
+                        lang = 'hu'
+
+                    if ctx.content[0:4] == '.hy ':
+                        lang = 'hy'
+
+                    if ctx.content[0:4] == '.id ':
+                        lang = 'id'
+
+                    if ctx.content[0:4] == '.is ':
+                        lang = 'is'
+
+                    if ctx.content[0:4] == '.it ':
+                        lang = 'it'
+
+                    if ctx.content[0:4] == '.ja ':
+                        lang = 'ja'
+
+                    if ctx.content[0:4] == '.jv ':
+                        lang = 'jv'
+
+                    if ctx.content[0:4] == '.ka ':
+                        lang = 'ka'
+
+                    if ctx.content[0:4] == '.kk ':
+                        lang = 'kk'
+
+                    if ctx.content[0:4] == '.km ':
+                        lang = 'km'
+
+                    if ctx.content[0:4] == '.kn ':
+                        lang = 'kn'
+
+                    if ctx.content[0:4] == '.ko ':
+                        lang = 'ko'
+
+                    if ctx.content[0:4] == '.ku ':
+                        lang = 'ku'
+
+                    if ctx.content[0:4] == '.ky ':
+                        lang = 'ky'
+
+                    if ctx.content[0:4] == '.la ':
+                        lang = 'la'
+
+                    if ctx.content[0:4] == '.lb ':
+                        lang = 'lb'
+
+                    if ctx.content[0:4] == '.lo ':
+                        lang = 'lo'
+
+                    if ctx.content[0:4] == '.lt ':
+                        lang = 'lt'
+
+                    if ctx.content[0:4] == '.lv ':
+                        lang = 'lv'
+
+                    if ctx.content[0:4] == '.mg ':
+                        lang = 'mg'
+
+                    if ctx.content[0:4] == '.mk ':
+                        lang = 'mk'
+
+                    if ctx.content[0:4] == '.ml ':
+                        lang = 'ml'
+
+                    if ctx.content[0:4] == '.mn ':
+                        lang = 'mn'
+
+                    if ctx.content[0:4] == '.mr ':
+                        lang = 'mr'
+
+                    if ctx.content[0:4] == '.ms ':
+                        lang = 'ms'
+
+                    if ctx.content[0:4] == '.mt ':
+                        lang = 'mt'
+
+                    if ctx.content[0:4] == '.nb ':
+                        lang = 'nb'
+
+                    if ctx.content[0:4] == '.ne ':
+                        lang = 'ne'
+                        ''
+                    if ctx.content[0:4] == '.nl ':
+                        lang = 'nl'
+
+                    if ctx.content[0:4] == '.nn ':
+                        lang = 'nn'
+
+                    if ctx.content[0:4] == '.no ':
+                        lang = 'no'
+
+                    if ctx.content[0:4] == '.oc ':
+                        lang = 'oc'
+
+                    if ctx.content[0:4] == '.or ':
+                        lang = 'or'
+
+                    if ctx.content[0:4] == '.pa ':
+                        lang = 'pa'
+
+                    if ctx.content[0:4] == '.pl ':
+                        lang = 'pl'
+
+                    if ctx.content[0:4] == '.ps ':
+                        lang = 'ps'
+
+                    if ctx.content[0:4] == '.pt ':
+                        lang = 'pt'
+
+                    if ctx.content[0:4] == '.qu ':
+                        lang = 'qu'
+
+                    if ctx.content[0:4] == '.ro ':
+                        lang = 'ro'
+
+                    if ctx.content[0:4] == '.ru ':
+                        lang = 'ru'
+
+                    if ctx.content[0:4] == '.rw ':
+                        lang = 'rw'
+
+                    if ctx.content[0:4] == '.se ':
+                        lang = 'se'
+
+                    if ctx.content[0:4] == '.si ':
+                        lang = 'si'
+
+                    if ctx.content[0:4] == '.sk ':
+                        lang = 'sk'
+
+                    if ctx.content[0:4] == '.sl ':
+                        lang = 'sl'
+
+                    if ctx.content[0:4] == '.sq ':
+                        lang = 'sq'
+
+                    if ctx.content[0:4] == '.sr ':
+                        lang = 'sr'
+
+                    if ctx.content[0:4] == '.sv ':
+                        lang = 'sv'
+
+                    if ctx.content[0:4] == '.sw ':
+                        lang = 'sw'
+
+                    if ctx.content[0:4] == '.ta ':
+                        lang = 'ta'
+
+                    if ctx.content[0:4] == '.te ':
+                        lang = 'te'
+
+                    if ctx.content[0:4] == '.th ':
+                        lang = 'th'
+
+                    if ctx.content[0:4] == '.tl ':
+                        lang = 'tl'
+
+                    if ctx.content[0:4] == '.tr ':
+                        lang = 'tr'
+
+                    if ctx.content[0:4] == '.ug ':
+                        lang = 'ug'
+
+                    if ctx.content[0:4] == '.uk ':
+                        lang = 'uk'
+
+                    if ctx.content[0:4] == '.ur ':
+                        lang = 'ur'
+
+                    if ctx.content[0:4] == '.vi ':
+                        lang = 'vi'
+
+                    if ctx.content[0:4] == '.vo ':
+                        lang = 'vo'
+
+                    if ctx.content[0:4] == '.wa ':
+                        lang = 'wa'
+
+                    if ctx.content[0:4] == '.xh ':
+                        lang = 'xh'
+
+                    if ctx.content[0:4] == '.zh ':
+                        lang = 'zh'
+
+                    if ctx.content[0:4] == '.zu ':
+                        lang = 'zu'
+
                 ctx.content = GoogleTranslator(source='auto', target='en').translate(text=ctx.content)
                 ctx.content = ctx.content.lower()
             if ctx.content[0] != '>' and ctx.author != bot.user:
@@ -55,11 +336,11 @@ async def on_message(ctx):
 
 
                 if ctx.content == '!help':
-                    await ctx.reply(GoogleTranslator(target=lang).translate(GoogleTranslator(target=lang).translate("""Special commands for best perfomance
+                    await ctx.reply(GoogleTranslator(target=lang).translate("""Special commands for best perfomance
                     !report - reports user
                     !jobs - shows pending job applications
                     !ping - shows bot latency"
-                    """)))
+                    """))
                 else:
                     notFoundReply += 1
 
@@ -419,7 +700,7 @@ async def on_message(ctx):
 
 
 
-                if 'job' in ctx.content or 'work' in ctx.content:
+                if ('job' in ctx.content or 'work' in ctx.content) and ctx.content != '!jobs':
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
                     try:
@@ -573,8 +854,8 @@ async def on_message(ctx):
 
                 if ctx.content == '!jobs':
                     jobs = open('jobs.txt')
-                    jobs = jobs.read()
-                    await ctx.reply(GoogleTranslator(target=lang).translate(jobs))
+                    jobsf = jobs.read()
+                    await ctx.reply(GoogleTranslator(target=lang).translate(jobsf))
                 else:
                     notFoundReply += 1
 
@@ -759,12 +1040,14 @@ async def on_message(ctx):
 
 
 
-                if notFoundReply != 0:
+                if notFoundReply == 19 or ctx.content == '.':
                     await ctx.add_reaction('<❓>')
+                    notFoundReply = 0
                 else:
                     print(notFoundReply)
 
 
+
 bottoken = open('token.txt')
-bottoken = bottoken.read()
-bot.run(f'{bottoken}') 
+bottokens = bottoken.read()
+bot.run(f'{bottokens}')
