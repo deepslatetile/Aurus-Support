@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.1.1
+# Release 1.1
 
 
 import discord
@@ -33,11 +33,10 @@ async def on_message(ctx):
         channel3 = bot.get_channel(1198600734413951036)
 
 
-        if ctx.content == '!angel':
-            pingCount = 20
+        if ctx.content == '!angelWAKEUP':
+            pingCount = 5
             for pingCounter in range(0, pingCount):
-                await ctx.reply('@x999v')
-                await ctx.message.delete()
+                await ctx.reply('<@633317129461956629>', delete_after=5)
             await ctx.reply('Проснись и пой!')
 
 
