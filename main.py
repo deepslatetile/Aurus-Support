@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.1
+# Release 1.1.1
 
 
 import discord
@@ -31,6 +31,15 @@ async def on_message(ctx):
         channel1 = bot.get_channel(1190520793453572107)
         channel2 = bot.get_channel(1197626715875311747)
         channel3 = bot.get_channel(1198600734413951036)
+
+
+        if ctx.content == '!angel':
+            pingCount = 20
+            for pingCounter in range(0, pingCount):
+                await ctx.reply('@x999v')
+                await ctx.message.delete()
+            await ctx.reply('Проснись и пой!')
+
 
         if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
