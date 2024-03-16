@@ -33,17 +33,17 @@ async def on_message(ctx):
         channel3 = bot.get_channel(1198600734413951036)
 
 
-        if ctx.content[0:5] = '!wakeup':
-            role = discord.utils.find(lambda r: r.name == 'Alarm Clock', user.roles)
+        if ctx.content[0:7] == '!wakeup':
             user = ctx.author
-            
+            role = discord.utils.find(lambda r: r.name == 'Alarm Clock', user.roles)
+
             if role in user.roles:   
-                userWakeUp = ctx.content[5:]
+                userWakeUp = ctx.content[8:]
                 pingCount = 5
-                
+
                 for pingCounter in range(0, pingCount):
                     await ctx.reply(f'<@{userWakeUp}>', delete_after=5)
-                    await ctx.reply('Проснись и пой!')
+                await ctx.reply('Проснись и пой!')
             else:
                 await ctx.reply('No permission')
 
