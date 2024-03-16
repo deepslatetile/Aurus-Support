@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.1
+# Release 1.1.2
 
 
 import discord
@@ -34,17 +34,28 @@ async def on_message(ctx):
 
 
         if ctx.content == '!angelWAKEUP':
-            pingCount = 5
+            pingCount = 7
             for pingCounter in range(0, pingCount):
-                await ctx.reply('<@633317129461956629>', delete_after=5)
+                await ctx.reply('<@633317129461956629>', delete_after=3)
             await ctx.reply('Проснись и пой!')
+
+
+
 
 
         if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
                 lang = langid.classify(ctx.content)[0]
 
+                if lang == 'bg':
+                    lang = 'ru'
+                if lang == 'mk':
+                    lang == 'ru'
+                    
                 if ctx.content[0] == '.':
+#                    if ctx.content[0:4] == '.kz ':
+#                        lang = 'kz'
+                        
                     if ctx.content[0:4] == '.af ':
                         lang = 'af'
 
@@ -1051,8 +1062,8 @@ async def on_message(ctx):
                 if notFoundReply == 19 or ctx.content == '.':
                     await ctx.add_reaction('<❓>')
                     notFoundReply = 0
-                else:
-                    print(notFoundReply)
+                #else:
+                    #print(notFoundReply)
 
 
 
