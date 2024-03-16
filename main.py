@@ -712,7 +712,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                 elif 'game' in ctx.content:
                     notFoundReply += 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('~~We are flying in PTFS, Aeronautica, FlightLine, Ro-Av, X-Plane and MSFS'))
-   
+
 
 
 
@@ -724,7 +724,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                 elif 'merch' in ctx.content:
                     notFoundReply += 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Our merch will be available soon...'))
-   
+
 
 
 
@@ -800,7 +800,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ('job' in ctx.content or 'work' in ctx.content) and '!jobs' not in ctx.content:
+                elif ('job' in ctx.content or 'work' in ctx.content) and '!jobs' not in ctx.content and '!applicjob' not in ctx.content:
                     notFoundReply += 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
                     notFoundReply += 1
@@ -971,7 +971,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     reportFile.write(report_f)
                     reportFile.close
                     await ctx.reply(GoogleTranslator(target=lang).translate('Reported.'))
-            
+
 
 
 
@@ -1117,7 +1117,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!applicj':
+                elif ctx.content == '!applicjob':
                     notFoundReply += 1
                     jobappl = open('jobs.txt')
                     jobapplc = jobappl.read()
@@ -1197,7 +1197,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         # await ctx.reply(GoogleTranslator(target=lang).translate(f"```{schedule}```"))
 
                     fl.close()
-                 
+
 
 
 
@@ -1209,7 +1209,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                 if 'thanks' in ctx.content or 'thank you' in ctx.content:
                     notFoundReply += 1
                     await ctx.reply('🥰')
-                 
+
 
 
 
@@ -1239,4 +1239,4 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 bottoken = open('token.txt')
 bottokens = bottoken.read()
-bot.run(f'{bottokens}')
+bot.run(f'{bottokens}') 
