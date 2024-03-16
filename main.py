@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.1.2
+# Release 1.2
 
 
 import discord
@@ -34,6 +34,7 @@ async def on_message(ctx):
 
 
         if ctx.content[0:7] == '!wakeup':
+            notFoundReply += 1
             user = ctx.author
             role = discord.utils.find(lambda r: r.name == 'Alarm Clock', user.roles)
 
@@ -58,11 +59,11 @@ async def on_message(ctx):
                     lang = 'ru'
                 if lang == 'mk':
                     lang == 'ru'
-                    
+
                 if ctx.content[0] == '.':
 #                    if ctx.content[0:4] == '.kz ':
 #                        lang = 'kz'
-                        
+
                     if ctx.content[0:4] == '.af ':
                         lang = 'af'
 
@@ -362,28 +363,32 @@ async def on_message(ctx):
 
 
                 if ctx.content == '!help':
+                    notFoundReply += 1
                     await ctx.reply(GoogleTranslator(target=lang).translate("""Special commands for best perfomance
                     !report - reports user
-                    !jobs - shows pending job applications
                     !ping - shows bot latency"
+                    
+You can use bot in different languages. To get right response use ".lang" for language of your message and response. So, ".ru" is Russian, ".fr" for French.
+Note that our bot was made for Engligh specifically, so asking bot in English will result in better responses.
                     """))
-                else:
+
+
+
+                elif 'book' in ctx.content or 'checkin' in ctx.content or 'check-in' in ctx.content or 'reg' in ctx.content:
                     notFoundReply += 1
-
-
-
-                if 'book' in ctx.content or 'checkin' in ctx.content or 'check-in' in ctx.content or 'reg' in ctx.content:
                     await ctx.reply(GoogleTranslator(target=lang).translate('Starting booking..'))
                     await ctx.reply(GoogleTranslator(target=lang).translate("Type 'cancel' anytime to cancel "))
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Your local ID:'))
 
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Your local ID:'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         lid = message.content
                         if lid == 'cancel':
@@ -392,13 +397,14 @@ async def on_message(ctx):
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'LID: {lid}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Discord name:'))
-
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         disname = message.content
                         if disname == 'cancel':
@@ -407,13 +413,14 @@ async def on_message(ctx):
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Discord: {disname}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Date of flight:'))
-
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         dof = message.content
                         if dof == 'cancel':
@@ -422,13 +429,14 @@ async def on_message(ctx):
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'DOF: {dof}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Departure time:'))
-
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         dept = message.content
                         if dept == 'cancel':
@@ -437,13 +445,14 @@ async def on_message(ctx):
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Dep. Time: {dept}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight number:'))
-
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         flnum = message.content
                         if flnum == 'cancel':
@@ -456,13 +465,14 @@ async def on_message(ctx):
                     1 - Business
                     0 - Economy
                     '''))
-
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         clss = message.content
                         if clss == 'cancel':
@@ -476,13 +486,14 @@ async def on_message(ctx):
                     1 - Silver
                     0 - Bronze
                     '''))
-
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         rank = message.content
                         if rank == 'cancel':
@@ -491,13 +502,14 @@ async def on_message(ctx):
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Rank: {rank}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Departure airport:'))
-
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         deparpt = message.content
                         if deparpt == 'cancel':
@@ -506,13 +518,14 @@ async def on_message(ctx):
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Origin: {deparpt}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Destination: '))
-
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         dest = message.content
                         if dest == 'cancel':
@@ -551,19 +564,29 @@ async def on_message(ctx):
         Send the following link to your personal account to validate by staff. If you do not have it, ping *Deepslate* here.
         See you on flight!
         https://api.qrserver.com/v1/create-qr-code/?size=450x450&data={link}'''))
-                else:
+
+
+
+
+
+
+
+
+
+                elif ('hi' in ctx.content and len(ctx.content) == 2) or 'hello' in ctx.content or 'sup' in ctx.content or 'helo' in ctx.content or 'hey' in ctx.content:
                     notFoundReply += 1
-
-
-
-                if ('hi' in ctx.content and len(ctx.content) == 2) or 'hello' in ctx.content or 'sup' in ctx.content or 'helo' in ctx.content:
                     await ctx.reply(GoogleTranslator(target=lang).translate('Hello, how may I help you?'))
-                else:
+
+
+
+
+
+
+
+
+
+                elif 'rank' in ctx.content or 'silver' in ctx.content or 'platinum' in ctx.content or 'nickel' in ctx.content or 'loyal' in ctx.content or 'card' in ctx.content:
                     notFoundReply += 1
-
-
-
-                if 'rank' in ctx.content or 'silver' in ctx.content or 'platinum' in ctx.content or 'nickel' in ctx.content or 'loyal' in ctx.content or 'card' in ctx.content:
                     await ctx.reply(GoogleTranslator(target=lang).translate('''
         Our airline have special programme which can give passengers discounts
         It has 3 levels:
@@ -573,22 +596,29 @@ async def on_message(ctx):
             0 - :brown_heart: Bronze (0). Every passenger gets it on first check-in. No discounts provided
         This ranks are represented by different cards in your Aurus Profile
         '''))
-                else:
+
+
+
+
+
+
+
+
+
+                elif 'partner' in ctx.content:
                     notFoundReply += 1
-
-
-
-                if 'partner' in ctx.content:
                     await ctx.reply(GoogleTranslator(target=lang).translate('Opening partnership application'))
                     await ctx.reply(GoogleTranslator(target=lang).translate('type "cancel" to cancel'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         username = message.content
                         if username == 'cancel':
@@ -596,12 +626,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your company name'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         company = message.content
                         if company == 'cancel':
@@ -609,12 +641,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('What your company do (airline, alliance, etc.)'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         deyateln = message.content
                         if deyateln == 'cancel':
@@ -622,12 +656,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Link to discord server'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         link = message.content
                         if link == 'cancel':
@@ -635,12 +671,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Why should you be our partner'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         reason = message.content
                         if reason == 'cancel':
@@ -651,40 +689,59 @@ async def on_message(ctx):
                     partnerfile = open('partner.txt', 'w+')
                     partnerfile.write(partnert)
                     await ctx.reply(GoogleTranslator(target=lang).translate('Form filled, we will contact you soon'))
-                else:
+
+
+
+
+
+
+
+
+
+                elif 'site' in ctx.content:
                     notFoundReply += 1
-
-
-
-                if 'site' in ctx.content:
                     await ctx.reply(GoogleTranslator(target=lang).translate('[Our website here](https://sites.google.com/view/aurus-va/aurus)'))
-                else:
+
+
+
+
+
+
+
+
+                elif 'game' in ctx.content:
                     notFoundReply += 1
+                    await ctx.reply(GoogleTranslator(target=lang).translate('~~We are flying in PTFS, Aeronautica, FlightLine, Ro-Av, X-Plane and MSFS'))
+   
 
 
 
-                if 'game' in ctx.content:
-                    await ctx.reply(GoogleTranslator(target=lang).translate('~~We are flying in PTFS, Aeronautica, FlightLine, X-Plane and MSFS'))
-                else:
+
+
+
+
+
+                elif 'merch' in ctx.content:
                     notFoundReply += 1
-
-
-
-                if 'merch' in ctx.content:
                     await ctx.reply(GoogleTranslator(target=lang).translate('Our merch will be available soon...'))
-                else:
+   
+
+
+
+
+
+
+
+
+                elif ctx.content == '!schupd':
                     notFoundReply += 1
-
-
-
-                if ctx.content == '!schupd':
-
                     user = ctx.author
                     role = discord.utils.find(lambda r: r.name == 'Schedule Editor', user.roles)
 
                     if role in user.roles:
 
                         await ctx.reply(GoogleTranslator(target=lang).translate('Schedule:'))
+                        notFoundReply += 1
                         try:
                             message = await bot.wait_for("message",
                                                          check=lambda
@@ -698,6 +755,7 @@ async def on_message(ctx):
                             await ctx.reply(GoogleTranslator(target=lang).translate('Saved'))
                         except asyncio.TimeoutError:
                             await ctx.channel.send("You took to long to respond")
+                            asyncio.as_completed()
                         else:
                             flsched = message.content
                             if flsched == 'cancel':
@@ -706,9 +764,14 @@ async def on_message(ctx):
                         await ctx.reply(GoogleTranslator(target=lang).translate(f"```{fl}```"))
 
                     else:
+                        notFoundReply += 1
                         await ctx.reply(GoogleTranslator(target=lang).translate("No permission"))
-                else:
-                    notFoundReply += 1
+
+
+
+
+
+
 
 
 
@@ -719,22 +782,35 @@ async def on_message(ctx):
 
 
 
-                if ctx.content == '!ping':
-                    await ctx.reply(GoogleTranslator(target=lang).translate(f'Pong {bot.latency}'))
-                else:
+
+
+
+
+
+
+                elif ctx.content == '!ping':
                     notFoundReply += 1
+                    await ctx.reply(GoogleTranslator(target=lang).translate(f'Pong {bot.latency}'))
 
 
 
-                if ('job' in ctx.content or 'work' in ctx.content) and ctx.content != '!jobs':
 
+
+
+
+
+
+                elif ('job' in ctx.content or 'work' in ctx.content) and '!jobs' not in ctx.content:
+                    notFoundReply += 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         username = message.content
                         if username == 'cancel':
@@ -746,13 +822,16 @@ async def on_message(ctx):
                     PTFS (Aurus)
                     X-Plane (Aurus)
                     MSFS (Aurus)
+                    Ro-Av (Aurus)
                     Aeronautica (Siberian Regional)"""))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         airline = message.content
                         if airline == 'cancel':
@@ -765,12 +844,14 @@ async def on_message(ctx):
                         Gate & check-in agent
                         ~~ATC~~
                         ~~Moderation~~"""))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         job = message.content
                         if job == 'cancel':
@@ -778,12 +859,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Why should we choose you?'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         reason = message.content
                         if reason == 'cancel':
@@ -794,21 +877,28 @@ async def on_message(ctx):
                     jobFile = open('jobs.txt', 'w+')
                     jobFile.write(jobReq)
                     await ctx.reply(GoogleTranslator(target=lang).translate('Form filled, we will contact you soon'))
-                else:
+
+
+
+
+
+
+
+
+
+                elif ctx.content == '!report':
                     notFoundReply += 1
-
-
-
-                if ctx.content == '!report':
                     await ctx.reply(GoogleTranslator(target=lang).translate('Filling your report'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         Rusername = message.content
                         if Rusername == 'cancel':
@@ -816,12 +906,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Who are you reporting (username)'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         username = message.content
                         if username == 'cancel':
@@ -829,12 +921,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Who are you reporting (user id)'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         userid = message.content
                         if userid == 'cancel':
@@ -842,25 +936,29 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Reason'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         reason = message.content
                         if reason == 'cancel':
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled reporting'))
                             asyncio.as_completed()
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Proof (links only allowed)'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Proof (links only)'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         proof = message.content
                         if proof == 'cancel':
@@ -873,29 +971,44 @@ async def on_message(ctx):
                     reportFile.write(report_f)
                     reportFile.close
                     await ctx.reply(GoogleTranslator(target=lang).translate('Reported.'))
-                else:
+            
+
+
+
+
+
+
+
+
+                elif ctx.content == '!jobs':
                     notFoundReply += 1
+                    await ctx.reply(GoogleTranslator(target=lang).translate("""
+                    Discord: Moderator, Support
+                    PTFS: Pilot, copilot, ATC, cabin crew, ground crew
+                    X-Plane & MSFS: Pilot
+                    Aeronautica (Siberian Regiobal): Pilot
+                    Ro-Av: Pilot, copilot, ATC, cabin crew, ground crew, airport staff
+                    """))
 
 
 
-                if ctx.content == '!jobs':
-                    jobs = open('jobs.txt')
-                    jobsf = jobs.read()
-                    await ctx.reply(GoogleTranslator(target=lang).translate(jobsf))
-                else:
+
+
+
+
+
+
+                elif ctx.content == '!fileflt':
                     notFoundReply += 1
-
-
-
-                if ctx.content == '!fileflt':
-
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight number'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         flnum = message.content
                         if flnum == 'cancel':
@@ -903,12 +1016,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Route (DME-LED)'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         rte = message.content
                         if rte == 'cancel':
@@ -916,12 +1031,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Airplane (RA-83003)'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         acft = message.content
                         if acft == 'cancel':
@@ -929,12 +1046,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Actual departure/arrival time (11:15-12:35'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         acttime = message.content
                         if acttime == 'cancel':
@@ -942,12 +1061,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate("Planned departure/arrival time 11:15-12:35"))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         plantime = message.content
                         if plantime == 'cancel':
@@ -955,12 +1076,14 @@ async def on_message(ctx):
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('IVAO VID'))
+                    notFoundReply += 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                      timeout=60.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
                     else:
                         ivaovid = message.content
                         if ivaovid == 'cancel':
@@ -971,39 +1094,59 @@ async def on_message(ctx):
                     flrep = open('flights.txt', 'w+')
                     flrep.write(flightreport)
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight saved'))
-                else:
+
+
+
+
+
+
+
+
+
+                elif ctx.content == '!fltrep':
                     notFoundReply += 1
-
-
-
-                if ctx.content == '!fltrep':
                     fltreps = open('flights.txt')
                     flights = fltreps.read()
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'```{flights}```'))
-                else:
+
+
+
+
+
+
+
+
+
+                elif ctx.content == '!applicj':
                     notFoundReply += 1
-
-
-
-                if ctx.content == '!applicj':
                     jobappl = open('jobs.txt')
                     jobapplc = jobappl.read()
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'```{jobapplc}```'))
-                else:
+
+
+
+
+
+
+
+
+
+                elif ctx.content == '!applicpart':
                     notFoundReply += 1
-
-
-
-                if ctx.content == '!applicpart':
                     partappl = open('partner.txt')
                     partapplc = partappl.read()
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'```{partapplc}```'))
-                else:
+
+
+
+
+
+
+
+
+
+                elif 'sched' in ctx.content or 'flight' in ctx.content:
                     notFoundReply += 1
-
-
-
-                if 'sched' in ctx.content or 'flight' in ctx.content:
                     fl = open('schedule.txt')
 
                     schedule = fl.read()
@@ -1054,23 +1197,43 @@ async def on_message(ctx):
                         # await ctx.reply(GoogleTranslator(target=lang).translate(f"```{schedule}```"))
 
                     fl.close()
-                else:
-                    notFoundReply += 1
+                 
+
+
+
+
+
 
 
 
                 if 'thanks' in ctx.content or 'thank you' in ctx.content:
-                    await ctx.reply('🥰')
-                else:
                     notFoundReply += 1
+                    await ctx.reply('🥰')
+                 
 
 
 
-                if notFoundReply == 19 or ctx.content == '.':
+
+
+
+
+
+                if notFoundReply == 0 or ctx.content == '.':
                     await ctx.add_reaction('<❓>')
                     notFoundReply = 0
                 #else:
                     #print(notFoundReply)
+
+
+
+
+
+
+
+
+
+
+
 
 
 
