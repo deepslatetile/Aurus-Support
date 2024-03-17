@@ -11,12 +11,11 @@ from discord.ext import commands
 from deep_translator import GoogleTranslator
 import langid
 
-
 prefix = ""
 
 bot = commands.Bot(command_prefix=prefix)
 
-notFoundReply = 0
+
 
 
 @bot.event
@@ -24,21 +23,21 @@ async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Aurus Support"))
     print('Bot active')
 
-
 @bot.event
 async def on_message(ctx):
     if ctx.author != bot.user:
         channel1 = bot.get_channel(1190520793453572107)
         channel2 = bot.get_channel(1197626715875311747)
         channel3 = bot.get_channel(1198600734413951036)
+        notFoundReply = 0
 
 
         if ctx.content[0:7] == '!wakeup':
-            notFoundReply += 1
+            notFoundReply = 1
             user = ctx.author
             role = discord.utils.find(lambda r: r.name == 'Alarm Clock', user.roles)
 
-            if role in user.roles:   
+            if role in user.roles:
                 userWakeUp = ctx.content[8:]
                 pingCount = 5
 
@@ -50,338 +49,346 @@ async def on_message(ctx):
 
 
 
-
         if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
-                lang = langid.classify(ctx.content)[0]
 
-                if lang == 'bg':
-                    lang = 'ru'
-                if lang == 'mk':
-                    lang == 'ru'
+
 
                 if ctx.content[0] == '.':
-#                    if ctx.content[0:4] == '.kz ':
-#                        lang = 'kz'
+                        if ctx.content[0:4] == '.af ':
+                            lang = 'af'
 
-                    if ctx.content[0:4] == '.af ':
-                        lang = 'af'
+                        if ctx.content[0:4] == '.am ':
+                            lang = 'am'
 
-                    if ctx.content[0:4] == '.am ':
-                        lang = 'am'
+                        if ctx.content[0:4] == '.an ':
+                            lang = 'an'
 
-                    if ctx.content[0:4] == '.an ':
-                        lang = 'an'
+                        if ctx.content[0:4] == '.ar ':
+                            lang = 'ar'
 
-                    if ctx.content[0:4] == '.ar ':
-                        lang = 'ar'
+                        if ctx.content[0:4] == '.as ':
+                            lang = 'as'
 
-                    if ctx.content[0:4] == '.as ':
-                        lang = 'as'
+                        if ctx.content[0:4] == '.az ':
+                            lang = 'az'
 
-                    if ctx.content[0:4] == '.az ':
-                        lang = 'az'
+                        if ctx.content[0:4] == '.be ':
+                            lang = 'be'
 
-                    if ctx.content[0:4] == '.be ':
-                        lang = 'be'
+                        if ctx.content[0:4] == '.bg ':
+                            lang = 'bg'
 
-                    if ctx.content[0:4] == '.bg ':
-                        lang = 'bg'
+                        if ctx.content[0:4] == '.bn ':
+                            lang = 'bn'
 
-                    if ctx.content[0:4] == '.bn ':
-                        lang = 'bn'
+                        if ctx.content[0:4] == '.br ':
+                            lang = 'br'
 
-                    if ctx.content[0:4] == '.br ':
-                        lang = 'br'
+                        if ctx.content[0:4] == '.bs ':
+                            lang = 'bs'
 
-                    if ctx.content[0:4] == '.bs ':
-                        lang = 'bs'
+                        if ctx.content[0:4] == '.ca ':
+                            lang = 'ca'
 
-                    if ctx.content[0:4] == '.ca ':
-                        lang = 'ca'
+                        if ctx.content[0:4] == '.cs ':
+                            lang = 'cs'
 
-                    if ctx.content[0:4] == '.cs ':
-                        lang = 'cs'
+                        if ctx.content[0:4] == '.cy ':
+                            lang = 'cy'
 
-                    if ctx.content[0:4] == '.cy ':
-                        lang = 'cy'
+                        if ctx.content[0:4] == '.da ':
+                            lang = 'da'
 
-                    if ctx.content[0:4] == '.da ':
-                        lang = 'da'
+                        if ctx.content[0:4] == '.de ':
+                            lang = 'de'
 
-                    if ctx.content[0:4] == '.de ':
-                        lang = 'de'
+                        if ctx.content[0:4] == '.dz ':
+                            lang = 'dz'
 
-                    if ctx.content[0:4] == '.dz ':
-                        lang = 'dz'
+                        if ctx.content[0:4] == '.el ':
+                            lang = 'el'
 
-                    if ctx.content[0:4] == '.el ':
-                        lang = 'el'
+                        if ctx.content[0:4] == '.en ':
+                            lang = 'en'
 
-                    if ctx.content[0:4] == '.en ':
-                        lang = 'en'
+                        if ctx.content[0:4] == '.eo ':
+                            lang = 'eo'
 
-                    if ctx.content[0:4] == '.eo ':
-                        lang = 'eo'
+                        if ctx.content[0:4] == '.es ':
+                            lang = 'es'
 
-                    if ctx.content[0:4] == '.es ':
-                        lang = 'es'
+                        if ctx.content[0:4] == '.et ':
+                            lang = 'et'
 
-                    if ctx.content[0:4] == '.et ':
-                        lang = 'et'
+                        if ctx.content[0:4] == '.eu ':
+                            lang = 'eu'
 
-                    if ctx.content[0:4] == '.eu ':
-                        lang = 'eu'
+                        if ctx.content[0:4] == '.fa ':
+                            lang = 'fa'
 
-                    if ctx.content[0:4] == '.fa ':
-                        lang = 'fa'
+                        if ctx.content[0:4] == '.fi ':
+                            lang = 'fi'
 
-                    if ctx.content[0:4] == '.fi ':
-                        lang = 'fi'
+                        if ctx.content[0:4] == '.fo ':
+                            lang = 'fo'
 
-                    if ctx.content[0:4] == '.fo ':
-                        lang = 'fo'
+                        if ctx.content[0:4] == '.fr ':
+                            lang = 'fr'
 
-                    if ctx.content[0:4] == '.fr ':
-                        lang = 'fr'
+                        if ctx.content[0:4] == '.ga ':
+                            lang = 'ga'
 
-                    if ctx.content[0:4] == '.ga ':
-                        lang = 'ga'
+                        if ctx.content[0:4] == '.gl ':
+                            lang = 'gl'
 
-                    if ctx.content[0:4] == '.gl ':
-                        lang = 'gl'
+                        if ctx.content[0:4] == '.gu ':
+                            lang = 'gu'
 
-                    if ctx.content[0:4] == '.gu ':
-                        lang = 'gu'
+                        if ctx.content[0:4] == '.he ':
+                            lang = 'he'
 
-                    if ctx.content[0:4] == '.he ':
-                        lang = 'he'
+                        if ctx.content[0:4] == '.hi ':
+                            lang = 'hi'
 
-                    if ctx.content[0:4] == '.hi ':
-                        lang = 'hi'
+                        if ctx.content[0:4] == '.hr ':
+                            lang = 'hr'
 
-                    if ctx.content[0:4] == '.hr ':
-                        lang = 'hr'
+                        if ctx.content[0:4] == '.ht ':
+                            lang = 'ht'
 
-                    if ctx.content[0:4] == '.ht ':
-                        lang = 'ht'
+                        if ctx.content[0:4] == '.hu ':
+                            lang = 'hu'
 
-                    if ctx.content[0:4] == '.hu ':
-                        lang = 'hu'
+                        if ctx.content[0:4] == '.hy ':
+                            lang = 'hy'
 
-                    if ctx.content[0:4] == '.hy ':
-                        lang = 'hy'
+                        if ctx.content[0:4] == '.id ':
+                            lang = 'id'
 
-                    if ctx.content[0:4] == '.id ':
-                        lang = 'id'
+                        if ctx.content[0:4] == '.is ':
+                            lang = 'is'
 
-                    if ctx.content[0:4] == '.is ':
-                        lang = 'is'
+                        if ctx.content[0:4] == '.it ':
+                            lang = 'it'
 
-                    if ctx.content[0:4] == '.it ':
-                        lang = 'it'
+                        if ctx.content[0:4] == '.ja ':
+                            lang = 'ja'
 
-                    if ctx.content[0:4] == '.ja ':
-                        lang = 'ja'
+                        if ctx.content[0:4] == '.jv ':
+                            lang = 'jv'
 
-                    if ctx.content[0:4] == '.jv ':
-                        lang = 'jv'
+                        if ctx.content[0:4] == '.ka ':
+                            lang = 'ka'
 
-                    if ctx.content[0:4] == '.ka ':
-                        lang = 'ka'
+                        if ctx.content[0:4] == '.kk ':
+                            lang = 'kk'
 
-                    if ctx.content[0:4] == '.kk ':
-                        lang = 'kk'
+                        if ctx.content[0:4] == '.km ':
+                            lang = 'km'
 
-                    if ctx.content[0:4] == '.km ':
-                        lang = 'km'
+                        if ctx.content[0:4] == '.kn ':
+                            lang = 'kn'
 
-                    if ctx.content[0:4] == '.kn ':
-                        lang = 'kn'
+                        if ctx.content[0:4] == '.ko ':
+                            lang = 'ko'
 
-                    if ctx.content[0:4] == '.ko ':
-                        lang = 'ko'
+                        if ctx.content[0:4] == '.ku ':
+                            lang = 'ku'
 
-                    if ctx.content[0:4] == '.ku ':
-                        lang = 'ku'
+                        if ctx.content[0:4] == '.ky ':
+                            lang = 'ky'
 
-                    if ctx.content[0:4] == '.ky ':
-                        lang = 'ky'
+                        if ctx.content[0:4] == '.la ':
+                            lang = 'la'
 
-                    if ctx.content[0:4] == '.la ':
-                        lang = 'la'
+                        if ctx.content[0:4] == '.lb ':
+                            lang = 'lb'
 
-                    if ctx.content[0:4] == '.lb ':
-                        lang = 'lb'
+                        if ctx.content[0:4] == '.lo ':
+                            lang = 'lo'
 
-                    if ctx.content[0:4] == '.lo ':
-                        lang = 'lo'
+                        if ctx.content[0:4] == '.lt ':
+                            lang = 'lt'
 
-                    if ctx.content[0:4] == '.lt ':
-                        lang = 'lt'
+                        if ctx.content[0:4] == '.lv ':
+                            lang = 'lv'
 
-                    if ctx.content[0:4] == '.lv ':
-                        lang = 'lv'
+                        if ctx.content[0:4] == '.mg ':
+                            lang = 'mg'
 
-                    if ctx.content[0:4] == '.mg ':
-                        lang = 'mg'
+                        if ctx.content[0:4] == '.mk ':
+                            lang = 'mk'
 
-                    if ctx.content[0:4] == '.mk ':
-                        lang = 'mk'
+                        if ctx.content[0:4] == '.ml ':
+                            lang = 'ml'
 
-                    if ctx.content[0:4] == '.ml ':
-                        lang = 'ml'
+                        if ctx.content[0:4] == '.mn ':
+                            lang = 'mn'
 
-                    if ctx.content[0:4] == '.mn ':
-                        lang = 'mn'
+                        if ctx.content[0:4] == '.mr ':
+                            lang = 'mr'
 
-                    if ctx.content[0:4] == '.mr ':
-                        lang = 'mr'
+                        if ctx.content[0:4] == '.ms ':
+                            lang = 'ms'
 
-                    if ctx.content[0:4] == '.ms ':
-                        lang = 'ms'
+                        if ctx.content[0:4] == '.mt ':
+                            lang = 'mt'
 
-                    if ctx.content[0:4] == '.mt ':
-                        lang = 'mt'
+                        if ctx.content[0:4] == '.nb ':
+                            lang = 'nb'
 
-                    if ctx.content[0:4] == '.nb ':
-                        lang = 'nb'
+                        if ctx.content[0:4] == '.ne ':
+                            lang = 'ne'
+                            ''
+                        if ctx.content[0:4] == '.nl ':
+                            lang = 'nl'
 
-                    if ctx.content[0:4] == '.ne ':
-                        lang = 'ne'
-                        ''
-                    if ctx.content[0:4] == '.nl ':
-                        lang = 'nl'
+                        if ctx.content[0:4] == '.nn ':
+                            lang = 'nn'
 
-                    if ctx.content[0:4] == '.nn ':
-                        lang = 'nn'
+                        if ctx.content[0:4] == '.no ':
+                            lang = 'no'
 
-                    if ctx.content[0:4] == '.no ':
-                        lang = 'no'
+                        if ctx.content[0:4] == '.oc ':
+                            lang = 'oc'
 
-                    if ctx.content[0:4] == '.oc ':
-                        lang = 'oc'
+                        if ctx.content[0:4] == '.or ':
+                            lang = 'or'
 
-                    if ctx.content[0:4] == '.or ':
-                        lang = 'or'
+                        if ctx.content[0:4] == '.pa ':
+                            lang = 'pa'
 
-                    if ctx.content[0:4] == '.pa ':
-                        lang = 'pa'
+                        if ctx.content[0:4] == '.pl ':
+                            lang = 'pl'
 
-                    if ctx.content[0:4] == '.pl ':
-                        lang = 'pl'
+                        if ctx.content[0:4] == '.ps ':
+                            lang = 'ps'
 
-                    if ctx.content[0:4] == '.ps ':
-                        lang = 'ps'
+                        if ctx.content[0:4] == '.pt ':
+                            lang = 'pt'
 
-                    if ctx.content[0:4] == '.pt ':
-                        lang = 'pt'
+                        if ctx.content[0:4] == '.qu ':
+                            lang = 'qu'
 
-                    if ctx.content[0:4] == '.qu ':
-                        lang = 'qu'
+                        if ctx.content[0:4] == '.ro ':
+                            lang = 'ro'
 
-                    if ctx.content[0:4] == '.ro ':
-                        lang = 'ro'
+                        if ctx.content[0:4] == '.ru ':
+                            lang = 'ru'
 
-                    if ctx.content[0:4] == '.ru ':
-                        lang = 'ru'
+                        if ctx.content[0:4] == '.rw ':
+                            lang = 'rw'
 
-                    if ctx.content[0:4] == '.rw ':
-                        lang = 'rw'
+                        if ctx.content[0:4] == '.se ':
+                            lang = 'se'
 
-                    if ctx.content[0:4] == '.se ':
-                        lang = 'se'
+                        if ctx.content[0:4] == '.si ':
+                            lang = 'si'
 
-                    if ctx.content[0:4] == '.si ':
-                        lang = 'si'
+                        if ctx.content[0:4] == '.sk ':
+                            lang = 'sk'
 
-                    if ctx.content[0:4] == '.sk ':
-                        lang = 'sk'
+                        if ctx.content[0:4] == '.sl ':
+                            lang = 'sl'
 
-                    if ctx.content[0:4] == '.sl ':
-                        lang = 'sl'
+                        if ctx.content[0:4] == '.sq ':
+                            lang = 'sq'
 
-                    if ctx.content[0:4] == '.sq ':
-                        lang = 'sq'
+                        if ctx.content[0:4] == '.sr ':
+                            lang = 'sr'
 
-                    if ctx.content[0:4] == '.sr ':
-                        lang = 'sr'
+                        if ctx.content[0:4] == '.sv ':
+                            lang = 'sv'
 
-                    if ctx.content[0:4] == '.sv ':
-                        lang = 'sv'
+                        if ctx.content[0:4] == '.sw ':
+                            lang = 'sw'
 
-                    if ctx.content[0:4] == '.sw ':
-                        lang = 'sw'
+                        if ctx.content[0:4] == '.ta ':
+                            lang = 'ta'
 
-                    if ctx.content[0:4] == '.ta ':
-                        lang = 'ta'
+                        if ctx.content[0:4] == '.te ':
+                            lang = 'te'
 
-                    if ctx.content[0:4] == '.te ':
-                        lang = 'te'
+                        if ctx.content[0:4] == '.th ':
+                            lang = 'th'
 
-                    if ctx.content[0:4] == '.th ':
-                        lang = 'th'
+                        if ctx.content[0:4] == '.tl ':
+                            lang = 'tl'
 
-                    if ctx.content[0:4] == '.tl ':
-                        lang = 'tl'
+                        if ctx.content[0:4] == '.tr ':
+                            lang = 'tr'
 
-                    if ctx.content[0:4] == '.tr ':
-                        lang = 'tr'
+                        if ctx.content[0:4] == '.ug ':
+                            lang = 'ug'
 
-                    if ctx.content[0:4] == '.ug ':
-                        lang = 'ug'
+                        if ctx.content[0:4] == '.uk ':
+                            lang = 'uk'
 
-                    if ctx.content[0:4] == '.uk ':
-                        lang = 'uk'
+                        if ctx.content[0:4] == '.ur ':
+                            lang = 'ur'
 
-                    if ctx.content[0:4] == '.ur ':
-                        lang = 'ur'
+                        if ctx.content[0:4] == '.vi ':
+                            lang = 'vi'
 
-                    if ctx.content[0:4] == '.vi ':
-                        lang = 'vi'
+                        if ctx.content[0:4] == '.vo ':
+                            lang = 'vo'
 
-                    if ctx.content[0:4] == '.vo ':
-                        lang = 'vo'
+                        if ctx.content[0:4] == '.wa ':
+                            lang = 'wa'
 
-                    if ctx.content[0:4] == '.wa ':
-                        lang = 'wa'
+                        if ctx.content[0:4] == '.xh ':
+                            lang = 'xh'
 
-                    if ctx.content[0:4] == '.xh ':
-                        lang = 'xh'
+                        if ctx.content[0:4] == '.zh ':
+                            lang = 'zh'
 
-                    if ctx.content[0:4] == '.zh ':
-                        lang = 'zh'
+                        if ctx.content[0:4] == '.zu ':
+                            lang = 'zu'
+                else:
+                    lang = 'en'
 
-                    if ctx.content[0:4] == '.zu ':
-                        lang = 'zu'
+                ctxcontent = (GoogleTranslator(target=lang).translate(ctx.content)).lower()
 
-                ctx.content = GoogleTranslator(source='auto', target='en').translate(text=ctx.content)
-                ctx.content = ctx.content.lower()
+
             if ctx.content[0] != '>' and ctx.author != bot.user:
-                notFoundReply = 0
+                if ctx.content[0] != '.' and notFoundReply == 0:
+                    await ctx.add_reaction('🌐')
+
+
+
+
+
+
 
 
 
                 if ctx.content == '!help':
-                    notFoundReply += 1
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate("""Special commands for best perfomance
                     !report - reports user
                     !ping - shows bot latency"
-                    
+
 You can use bot in different languages. To get right response use ".lang" for language of your message and response. So, ".ru" is Russian, ".fr" for French.
 Note that our bot was made for Engligh specifically, so asking bot in English will result in better responses.
                     """))
 
 
 
-                elif 'book' in ctx.content or 'checkin' in ctx.content or 'check-in' in ctx.content or 'reg' in ctx.content:
-                    notFoundReply += 1
+
+
+
+
+
+
+
+                elif 'book' in ctxcontent or 'checkin' in ctxcontent or 'check-in' in ctxcontent or 'reg' in ctxcontent:
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Starting booking..'))
                     await ctx.reply(GoogleTranslator(target=lang).translate("Type 'cancel' anytime to cancel "))
 
-
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your local ID:'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -397,7 +404,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'LID: {lid}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Discord name:'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -413,7 +420,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Discord: {disname}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Date of flight:'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -429,7 +436,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'DOF: {dof}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Departure time:'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -445,7 +452,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Dep. Time: {dept}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight number:'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -465,7 +472,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     1 - Business
                     0 - Economy
                     '''))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -486,7 +493,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     1 - Silver
                     0 - Bronze
                     '''))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -502,7 +509,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Rank: {rank}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Departure airport:'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -518,7 +525,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Origin: {deparpt}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Destination: '))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -573,8 +580,9 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ('hi' in ctx.content and len(ctx.content) == 2) or 'hello' in ctx.content or 'sup' in ctx.content or 'helo' in ctx.content or 'hey' in ctx.content:
-                    notFoundReply += 1
+                elif ('hi' in ctxcontent and len(
+                        ctxcontent) == 2) or 'hello' in ctxcontent or 'sup' in ctxcontent or 'helo' in ctxcontent or 'hey' in ctxcontent:
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Hello, how may I help you?'))
 
 
@@ -585,8 +593,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif 'rank' in ctx.content or 'silver' in ctx.content or 'platinum' in ctx.content or 'nickel' in ctx.content or 'loyal' in ctx.content or 'card' in ctx.content:
-                    notFoundReply += 1
+                elif 'rank' in ctxcontent or 'silver' in ctxcontent or 'platinum' in ctxcontent or 'nickel' in ctxcontent or 'loyal' in ctxcontent or 'card' in ctxcontent:
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('''
         Our airline have special programme which can give passengers discounts
         It has 3 levels:
@@ -605,13 +613,13 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif 'partner' in ctx.content:
-                    notFoundReply += 1
+                elif 'partner' in ctxcontent:
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Opening partnership application'))
                     await ctx.reply(GoogleTranslator(target=lang).translate('type "cancel" to cancel'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -626,7 +634,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your company name'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -641,7 +649,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('What your company do (airline, alliance, etc.)'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -656,7 +664,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Link to discord server'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -671,7 +679,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Why should you be our partner'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -685,9 +693,12 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    partnert = username + '   ' + company + '   ' + deyateln + '   ' + link + '   ' + reason + '\n'
-                    partnerfile = open('partner.txt', 'w+')
-                    partnerfile.write(partnert)
+                    partnerReq = '\n' + username + '   ' + company + '   ' + deyateln + '   ' + link + '   ' + reason + '\n'
+                    partnerFile = open('partner.txt', 'r')
+                    partnerText = partnerFile.read() + partnerReq
+                    partnerFile.close()
+                    partnerFile = open('partner.txt', 'w')
+                    partnerFile.write(partnerText)
                     await ctx.reply(GoogleTranslator(target=lang).translate('Form filled, we will contact you soon'))
 
 
@@ -698,8 +709,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif 'site' in ctx.content:
-                    notFoundReply += 1
+                elif 'site' in ctxcontent:
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('[Our website here](https://sites.google.com/view/aurus-va/aurus)'))
 
 
@@ -709,8 +720,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif 'game' in ctx.content:
-                    notFoundReply += 1
+                elif 'game' in ctxcontent:
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('~~We are flying in PTFS, Aeronautica, FlightLine, Ro-Av, X-Plane and MSFS'))
 
 
@@ -721,8 +732,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif 'merch' in ctx.content:
-                    notFoundReply += 1
+                elif 'merch' in ctxcontent:
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Our merch will be available soon...'))
 
 
@@ -733,15 +744,15 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!schupd':
-                    notFoundReply += 1
+                elif ctxcontent == '!schupd':
+                    notFoundReply = 1
                     user = ctx.author
                     role = discord.utils.find(lambda r: r.name == 'Schedule Editor', user.roles)
 
                     if role in user.roles:
 
                         await ctx.reply(GoogleTranslator(target=lang).translate('Schedule:'))
-                        notFoundReply += 1
+                        notFoundReply = 1
                         try:
                             message = await bot.wait_for("message",
                                                          check=lambda
@@ -764,7 +775,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         await ctx.reply(GoogleTranslator(target=lang).translate(f"```{fl}```"))
 
                     else:
-                        notFoundReply += 1
+                        notFoundReply = 1
                         await ctx.reply(GoogleTranslator(target=lang).translate("No permission"))
 
 
@@ -775,10 +786,10 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                # if 'airline' in ctx.content:
+                # if 'airline' in ctxcontent:
                 #     await ctx.reply(GoogleTranslator(target=lang).translate("""We currently have 2 airlines in Aurus Group:
                 #         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
-                #         Siberian Regional - Aeronautica (Roblox)"""))
+                #         Siberian Regional - Aeronautica (Roblox)"""
 
 
 
@@ -788,8 +799,9 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!ping':
-                    notFoundReply += 1
+
+                elif ctxcontent == '!ping':
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'Pong {bot.latency}'))
 
 
@@ -800,10 +812,11 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ('job' in ctx.content or 'work' in ctx.content) and '!jobs' not in ctx.content and '!applicjob' not in ctx.content:
-                    notFoundReply += 1
+                elif ('job' in ctxcontent or 'work' in ctxcontent) and ('!jobs' not in ctxcontent and '!applicjob' not in ctxcontent):
+                    notFoundReply = 1
+
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -824,7 +837,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     MSFS (Aurus)
                     Ro-Av (Aurus)
                     Aeronautica (Siberian Regional)"""))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -844,7 +857,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         Gate & check-in agent
                         ~~ATC~~
                         ~~Moderation~~"""))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -859,7 +872,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Why should we choose you?'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -873,9 +886,12 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    jobReq = username + '  ' + job + '  ' + airline + '  ' + username + '\n'
-                    jobFile = open('jobs.txt', 'w+')
-                    jobFile.write(jobReq)
+                    jobReq = '\n' + username + '  ' + job + '  ' + airline + '  ' + username + '\n'
+                    jobFile = open('jobs.txt', 'r')
+                    jobText = jobFile.read() + jobReq
+                    jobFile.close()
+                    jobFile = open('jobs.txt', 'w')
+                    jobFile.write(jobText)
                     await ctx.reply(GoogleTranslator(target=lang).translate('Form filled, we will contact you soon'))
 
 
@@ -886,12 +902,12 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!report':
-                    notFoundReply += 1
+                elif ctxcontent == '!report':
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Filling your report'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -906,7 +922,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Who are you reporting (username)'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -921,7 +937,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Who are you reporting (user id)'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -936,7 +952,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Reason'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -951,7 +967,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Proof (links only)'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -965,11 +981,12 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled reporting'))
                             asyncio.as_completed()
 
-                    report_f = Rusername + '  ' + username + '  ' + userid + '  ' + reason + '  ' + proof + '\n'
-
-                    reportFile = open('reports.txt', 'w+')
-                    reportFile.write(report_f)
-                    reportFile.close
+                    reportReq = Rusername + '  ' + username + '  ' + userid + '  ' + reason + '  ' + proof + '\n'
+                    reportFile = open('reports.txt', 'r')
+                    reportText = reportFile.read() + reportReq
+                    reportFile.close()
+                    reportFile = open('reports.txt', 'w')
+                    reportFile.write(reportText)
                     await ctx.reply(GoogleTranslator(target=lang).translate('Reported.'))
 
 
@@ -980,8 +997,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!jobs':
-                    notFoundReply += 1
+                elif ctxcontent == '!jobs':
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate("""
                     Discord: Moderator, Support
                     PTFS: Pilot, copilot, ATC, cabin crew, ground crew
@@ -998,10 +1015,10 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!fileflt':
-                    notFoundReply += 1
+                elif ctxcontent == '!fileflt':
+                    notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight number'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -1016,7 +1033,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Route (DME-LED)'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -1031,7 +1048,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Airplane (RA-83003)'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -1046,7 +1063,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Actual departure/arrival time (11:15-12:35'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -1061,7 +1078,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate("Planned departure/arrival time 11:15-12:35"))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -1076,7 +1093,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('IVAO VID'))
-                    notFoundReply += 1
+                    notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
@@ -1091,8 +1108,11 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
 
                     flightreport = flnum + '  ' + rte + '  ' + acft + '  ' + acttime + '  ' + plantime + '  ' + ivaovid + '\n' + '\n'
-                    flrep = open('flights.txt', 'w+')
-                    flrep.write(flightreport)
+                    flightFile = open('flights.txt', 'r')
+                    flightText = flightFile.read() + flightreport
+                    flightFile.close()
+                    flightFile = open('flights.txt', 'w')
+                    flightFile.write(flightText)
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight saved'))
 
 
@@ -1103,8 +1123,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!fltrep':
-                    notFoundReply += 1
+                elif ctxcontent == '!fltrep':
+                    notFoundReply = 1
                     fltreps = open('flights.txt')
                     flights = fltreps.read()
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'```{flights}```'))
@@ -1117,8 +1137,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!applicjob':
-                    notFoundReply += 1
+                elif ctxcontent == '!applicjob':
+                    notFoundReply = 1
                     jobappl = open('jobs.txt')
                     jobapplc = jobappl.read()
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'```{jobapplc}```'))
@@ -1131,8 +1151,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctx.content == '!applicpart':
-                    notFoundReply += 1
+                elif ctxcontent == '!applicpart':
+                    notFoundReply = 1
                     partappl = open('partner.txt')
                     partapplc = partappl.read()
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'```{partapplc}```'))
@@ -1145,8 +1165,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif 'sched' in ctx.content or 'flight' in ctx.content:
-                    notFoundReply += 1
+                elif 'sched' in ctxcontent or 'flight' in ctxcontent:
+                    notFoundReply = 1
                     fl = open('schedule.txt')
 
                     schedule = fl.read()
@@ -1206,8 +1226,9 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                if 'thanks' in ctx.content or 'thank you' in ctx.content:
-                    notFoundReply += 1
+
+                elif 'thanks' in ctxcontent or 'thank you' in ctxcontent:
+                    notFoundReply = 1
                     await ctx.reply('🥰')
 
 
@@ -1218,16 +1239,9 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                if notFoundReply == 0 or ctx.content == '.':
+
+                else:
                     await ctx.add_reaction('<❓>')
-                    notFoundReply = 0
-                #else:
-                    #print(notFoundReply)
-
-
-
-
-
 
 
 
