@@ -1239,4 +1239,4 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 bottoken = open('token.txt')
 bottokens = bottoken.read()
-bot.run(f'{bottokens}') 
+bot.run(f'{bottokens}')
