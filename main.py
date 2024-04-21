@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.2
+# Release 1.2.1
 
 
 import discord
@@ -387,21 +387,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     await ctx.reply(GoogleTranslator(target=lang).translate('Starting booking..'))
                     await ctx.reply(GoogleTranslator(target=lang).translate("Type 'cancel' anytime to cancel "))
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Your local ID:'))
-                    notFoundReply = 1
-                    try:
-                        message = await bot.wait_for("message",
-                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
-                                                     timeout=60.0)
-                    except asyncio.TimeoutError:
-                        await ctx.channel.send("You took to long to respond")
-                        asyncio.as_completed()
-                    else:
-                        lid = message.content
-                        if lid == 'cancel':
-                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
-                            asyncio.as_completed()
-                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'LID: {lid}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Discord name:'))
                     notFoundReply = 1
@@ -419,7 +404,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Discord: {disname}'))
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Date of flight:'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Game:'))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
@@ -429,13 +414,13 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         await ctx.channel.send("You took to long to respond")
                         asyncio.as_completed()
                     else:
-                        dof = message.content
-                        if dof == 'cancel':
+                        Game = message.content
+                        if Game == 'cancel':
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'DOF: {dof}'))
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Game: {Game}'))
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Departure time:'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Join time (or check-in time):'))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
@@ -468,9 +453,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Flight: {flnum}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('''Class:
-                    2 - First
-                    1 - Business
-                    0 - Economy
+                    First, Business, Economy
                     '''))
                     notFoundReply = 1
                     try:
@@ -488,10 +471,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Class: {clss}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('''Rank:
-                    3 - Nickel
-                    2 - Platinum
-                    1 - Silver
-                    0 - Bronze
+                    Nickel, Platinum, Silver, Bronze
+                    Skyteam Elite
                     '''))
                     notFoundReply = 1
                     try:
@@ -541,36 +522,54 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Dest.: {dest}')
 
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'''Filling ticket with following data...
-                    LID: {lid}
-                    Class: {clss}
-                    Rank: {rank}
-                    Discord: {disname}
-                    Dep. Arpt.: {deparpt}
-                    Arr. Arpt.: {dest}
-                    DOF: {dof}
-                    Dep. Time: {dept}
-                    Fl. num: {flnum}
+                    Class: {clss.upper()}
+                    Perks: {rank.upper()}
+                    Discord: {disname.upper()}
+                    Dep. Arpt.: {deparpt.upper()}
+                    Arr. Arpt.: {dest.upper()}
+                    Game: {Game.upper()}
+                    Join Time: {dept.upper()}
+                    Fl. num: {flnum.upper()}
         '''))
 
-                    qrcode = segno.make(f'''
-                    LID: {lid}
-                    Class: {clss}
-                    Rank: {rank}
-                    Discord: {disname}
-                    Dep. Arpt.: {deparpt}
-                    Arr. Arpt.: {dest}
-                    DOF: {dof}
-                    Dep. Time: {dept}
-                    Fl. num: {flnum}
-        ''')
+                    from PIL import Image
+                    from PIL import ImageFont
+                    from PIL import ImageDraw
 
-                    link = (f'{lid}-{clss}-{rank}-{disname}-{deparpt}-{dest}-{dof}-{dept}')
-                    print(link)
-                    await ctx.reply(GoogleTranslator(target=lang).translate(f'''
-        Your ticket is here:
-        Send the following link to your personal account to validate by staff. If you do not have it, ping *Deepslate* here.
-        See you on flight!
-        https://api.qrserver.com/v1/create-qr-code/?size=450x450&data={link}'''))
+                    img = Image.open("Bsamp.png")
+                    draw = ImageDraw.Draw(img)
+
+                    font = ImageFont.truetype("Consolas.ttf", 48)
+
+                    draw.text((30, 180), flnum.upper()[:6], (0, 0, 0), font=font)
+                    draw.text((530, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparpt.upper()[-3:], (0, 0, 0), font=font)
+                    draw.text((1030, 180), dest.upper().split(' ')[0][:14] + ' ' + dest.upper()[-3:], (0, 0, 0), font=font)
+                    draw.text((1730, 180), Game.upper()[:9], (0, 0, 0), font=font)
+                    draw.text((30, 480), disname.upper()[:14], (0, 0, 0), font=font)
+                    draw.text((530, 480), clss.upper()[:9], (0, 0, 0), font=font)
+                    draw.text((1030, 480), rank.upper()[:18], (0, 0, 0), font=font)
+                    draw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
+
+                    img.save('Bout.png')
+
+                    paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper().split(' ')[0][:14]}-{deparpt.upper()[-3:]}-{dest.upper().split(' ')[0][:14]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{rank.upper().replace(' ', '-')[:18]}-{dept.upper()[:5]}"
+
+                    im1 = Image.open('Bout.png')
+                    BQR = f'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={paxData}'
+
+                    import urllib.request
+                    imgURL = BQR
+                    urllib.request.urlretrieve(imgURL, 'BpassQR.png')
+
+                    im2 = Image.open('BpassQR.png')
+                    back_im = im1.copy()
+                    back_im.paste(im2, (1030, 540))
+                    back_im.save('BoardingPass.png')
+
+                    await ctx.reply(GoogleTranslator(target=lang).translate('''
+                            This is your boarding pass. Our staff will validate it soon. Have a nice flight!
+                            '''))
+                    await ctx.reply(file=discord.File('BoardingPass.png'))
 
 
 
@@ -602,7 +601,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
             2 - :green_heart: Platinum (25000). Discounts and some lounges included
             1 - :grey_heart: Silver (10000). Discounts only included
             0 - :brown_heart: Bronze (0). Every passenger gets it on first check-in. No discounts provided
-        This ranks are represented by different cards in your Aurus Profile
+        This perks are represented by different cards in your Aurus Profile
         '''))
 
 
