@@ -1,19 +1,66 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.2
+# Release 1.4
 
 
 import discord
 import asyncio
-import segno
 from discord.ext import commands
 from deep_translator import GoogleTranslator
-import langid
+from PIL import Image
+from PIL import ImageFont
+from PIL import ImageDraw
+import random
 
 prefix = ""
 
 bot = commands.Bot(command_prefix=prefix)
+
+
+
+
+# B737 properties
+img = Image.open("Seat-B737.png")
+ImageDraw = ImageDraw.Draw(img)
+
+economySeatSize = 100
+comfortSeatSize = 100
+
+economyColor = '#9bc6ff'
+comfortColor = '#559de5'
+
+B737_economySeatList = ['3A', '3B', '3C', '3D', '4A', '4B', '4C', '4D', '5A', '5B', '5C', '5D', '6A', '6B', '6C', '6D', '7A', '7B', '7C', '7D', '8A', '8B', '8C', '8D', '9A', '9B', '9C', '9D', '10A', '10B', '10C', '10D', '11A', '11B', '11C', '11D', '12A', '12B', '12C', '12D', '13A', '13B', '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D']
+B737_comfoftSeatList = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D']
+
+B737_bookedSeatsCurrentFlight = []
+
+outlineWidth = 9
+font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+B737_row1 = 1200
+B737_row2 = 1320
+B737_row3 = 1440
+B737_row4 = 1560
+B737_row5 = 1680
+B737_row6 = 1800
+B737_row7 = 1920
+B737_row8 = 2400
+B737_row9 = 2520
+B737_row10 = 2640
+B737_row11 = 2760
+B737_row12 = 2880
+B737_row13 = 3000
+B737_row14 = 3120
+B737_row15 = 3240
+
+B737_lineA = 1790
+B737_lineB = 1670
+B737_lineC = 1470
+B737_lineD = 1350
+
+
+
 
 
 
@@ -26,9 +73,7 @@ async def on_ready():
 @bot.event
 async def on_message(ctx):
     if ctx.author != bot.user:
-        channel1 = bot.get_channel(1190520793453572107)
-        channel2 = bot.get_channel(1197626715875311747)
-        channel3 = bot.get_channel(1198600734413951036)
+        channelsOpen = [bot.get_channel(1190520793453572107), bot.get_channel(1197626715875311747), bot.get_channel(1198600734413951036)]
         notFoundReply = 0
 
 
@@ -49,7 +94,7 @@ async def on_message(ctx):
 
 
 
-        if ctx.channel == channel1 or ctx.channel == channel2 or ctx.channel == channel3:
+        if ctx.channel in channelsOpen:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
 
 
@@ -348,12 +393,15 @@ async def on_message(ctx):
                 else:
                     lang = 'en'
 
-                ctxcontent = (GoogleTranslator(target=lang).translate(ctx.content)).lower()
-
+                if lang == 'en':
+                    ctxcontent = ctx.content[4:]
+                else:
+                    ctxcontent = (GoogleTranslator(source=lang, target='en').translate(ctx.content)).lower()[4:]
 
             if ctx.content[0] != '>' and ctx.author != bot.user:
                 if ctx.content[0] != '.' and notFoundReply == 0:
                     await ctx.add_reaction('🌐')
+
 
 
 
@@ -381,8 +429,10 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-
-                elif 'book' in ctxcontent or 'checkin' in ctxcontent or 'check-in' in ctxcontent or 'reg' in ctxcontent:
+                elif ctx.content == '!clearBookings':
+                    B737_bookedSeatsCurrentFlight = []
+                    
+                elif 'book' in ctxcontent or 'check' in ctxcontent or 'reg' in ctxcontent or 'register' in ctxcontent or 'registration' in ctxcontent:
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Starting booking..'))
                     await ctx.reply(GoogleTranslator(target=lang).translate("Type 'cancel' anytime to cancel "))
@@ -436,6 +486,23 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Dep. Time: {dept}'))
 
+
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Date of flight: '))
+                    notFoundReply = 1
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
+                    else:
+                        date = message.content
+                        if date == 'cancel':
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
+                            asyncio.as_completed()
+
+
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight number:'))
                     notFoundReply = 1
                     try:
@@ -453,7 +520,10 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Flight: {flnum}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('''Class:
-                    First, Business, Economy
+                    First
+                    Business
+                    Comfort
+                    Economy
                     '''))
                     notFoundReply = 1
                     try:
@@ -464,14 +534,16 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         await ctx.channel.send("You took to long to respond")
                         asyncio.as_completed()
                     else:
-                        clss = message.content
+                        clss = message.content.upper()
                         if clss == 'cancel':
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Class: {clss}'))
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('''Seat (type `any` if any)
-                    '''))
+
+
+
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Aircraft:'))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
@@ -481,11 +553,91 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         await ctx.channel.send("You took to long to respond")
                         asyncio.as_completed()
                     else:
-                        rank = message.content
-                        if rank == 'cancel':
+                        aircraft = message.content
+                        if aircraft == 'cancel':
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Rank: {rank}'))
+                    # await ctx.reply(GoogleTranslator(target=lang).translate(f'Origin: {deparpt}'))
+
+                    if aircraft.upper() == 'B737':
+
+                        from PIL import Image
+                        from PIL import ImageFont
+                        from PIL import ImageDraw
+
+                        img = Image.open("Seat-B737.png")
+                        ImageDraw = ImageDraw.Draw(img)
+
+                        currentClass = clss.upper()
+
+                        if currentClass == 'ECONOMY':
+                            currentSeat = random.choice(B737_economySeatList)
+                            B737_bookedSeatsCurrentFlight.append(currentSeat)
+
+                        elif currentClass == 'COMFORT':
+                            currentSeat = random.choice(B737_comfoftSeatList)
+                            B737_bookedSeatsCurrentFlight.append(currentSeat)
+
+                        B737_row = int(currentSeat[:-1])
+                        B737_line = currentSeat[-1]
+
+                        if B737_line == 'A':
+                            B737_line = 1790
+                        elif B737_line == 'B':
+                            B737_line = 1670
+                        elif B737_line == 'C':
+                            B737_line = 1470
+                        elif B737_line == 'D':
+                            B737_line = 1350
+
+                        seatCoord = [B737_row, B737_line]
+
+                        if B737_row == 1 or 2:
+                            currentSeatSize = int(comfortSeatSize)
+                        else:
+                            currentSeatSize = int(economySeatSize)
+
+                        B737_rowList = [1200, 1320, 1440, 1560, 1680, 1800, 1920, 2400, 2520, 2640, 2760, 2880, 3000, 3120, 3240]
+
+
+                        for bookedSeat in range(len(B737_bookedSeatsCurrentFlight)):
+                            B737_rowCurrentFlight = int(B737_bookedSeatsCurrentFlight[bookedSeat][:-1])
+                            B737_lineCurrentFlight = B737_bookedSeatsCurrentFlight[bookedSeat][-1]
+                            if B737_lineCurrentFlight == 'A':
+                                B737_lineCurrentFlight = 1790
+                            elif B737_lineCurrentFlight == 'B':
+                                B737_lineCurrentFlight = 1670
+                            elif B737_lineCurrentFlight == 'C':
+                                B737_lineCurrentFlight = 1470
+                            elif B737_lineCurrentFlight == 'D':
+                                B737_lineCurrentFlight = 1350
+
+                            if B737_rowCurrentFlight == 1 or 2:
+                                currentSeatSize = int(comfortSeatSize)
+                            else:
+                                currentSeatSize = int(economySeatSize)
+
+                            ImageDraw.rectangle(
+                                (B737_rowList[B737_rowCurrentFlight - 1], B737_lineCurrentFlight, B737_rowList[B737_rowCurrentFlight - 1] + 100,
+                                 B737_lineCurrentFlight + 100), fill='#646464', outline='#ffffff', width=outlineWidth)
+
+
+                        ImageDraw.rectangle((B737_rowList[B737_row - 1], B737_line, B737_rowList[B737_row - 1] + currentSeatSize, B737_line + currentSeatSize),
+                                       fill='red',
+                                       outline='#ffffff', width=outlineWidth)
+
+                        font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+                        ImageDraw.text((B737_row1, B737_lineD), ' D', '#ffffff', font=font)
+                        ImageDraw.text((B737_row1, B737_lineC), ' C', '#ffffff', font=font)
+                        ImageDraw.text((B737_row1, B737_lineB), ' B', '#ffffff', font=font)
+                        ImageDraw.text((B737_row1, B737_lineA), ' A', '#ffffff', font=font)
+
+                        img.save('SeatOutput.png')
+                    else:
+                        currentSeat = 'N/A'
+
+
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Departure airport:'))
                     notFoundReply = 1
@@ -521,12 +673,13 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'''Filling ticket with following data...
                     Class: {clss.upper()}
-                    Seat: {rank.upper()}
+                    Seat: {currentSeat.upper()}
                     Discord: {disname.upper()}
                     Dep. Arpt.: {deparpt.upper()}
                     Arr. Arpt.: {dest.upper()}
                     Game: {Game.upper()}
                     Join Time: {dept.upper()}
+                    Date: {date.upper()}
                     Fl. num: {flnum.upper()}
         '''))
 
@@ -535,39 +688,43 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     from PIL import ImageDraw
 
                     img = Image.open("Bsamp.png")
-                    draw = ImageDraw.Draw(img)
+                    ImageDraw = ImageDraw.ImageDraw(img)
 
                     font = ImageFont.truetype("Consolas.ttf", 48)
 
-                    draw.text((30, 180), flnum.upper()[:6], (0, 0, 0), font=font)
-                    draw.text((530, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparpt.upper()[-3:], (0, 0, 0), font=font)
-                    draw.text((1030, 180), dest.upper().split(' ')[0][:14] + ' ' + dest.upper()[-3:], (0, 0, 0), font=font)
-                    draw.text((1730, 180), Game.upper()[:9], (0, 0, 0), font=font)
-                    draw.text((30, 480), disname.upper()[:14], (0, 0, 0), font=font)
-                    draw.text((530, 480), clss.upper()[:9], (0, 0, 0), font=font)
-                    draw.text((1030, 480), rank.upper()[:3], (0, 0, 0), font=font)
-                    draw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
+                    ImageDraw.text((30, 180), flnum.upper()[:6], (0, 0, 0), font=font)
+                    ImageDraw.text((530, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparpt.upper()[-3:], (0, 0, 0), font=font)
+                    ImageDraw.text((1030, 180), dest.upper().split(' ')[0][:14] + ' ' + dest.upper()[-3:], (0, 0, 0), font=font)
+                    ImageDraw.text((1730, 180), Game.upper()[:9], (0, 0, 0), font=font)
+                    ImageDraw.text((30, 480), disname.upper()[:14], (0, 0, 0), font=font)
+                    ImageDraw.text((530, 480), clss.upper()[:9], (0, 0, 0), font=font)
+                    ImageDraw.text((1030, 480), currentSeat.upper()[:3], (0, 0, 0), font=font)
+                    ImageDraw.text((1330, 480), date.upper()[:5], (0, 0, 0), font=font)
+                    ImageDraw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
+
 
                     img.save('Bout.png')
 
-                    paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper().split(' ')[0][:14]}-{deparpt.upper()[-3:]}-{dest.upper().split(' ')[0][:14]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{rank.upper().replace(' ', '-')[:13]}-{dept.upper()[:5]}"
+                    paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper()[-3:]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{currentSeat.upper().replace(' ', '-')[:4]}-{dept.upper()[:5]}".replace(':', '-').replace(' ', '-').replace('.', '-')
 
                     im1 = Image.open('Bout.png')
-                    BQR = f'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={paxData}'
-
-                    import urllib.request
-                    imgURL = BQR
-                    urllib.request.urlretrieve(imgURL, 'BpassQR.png')
-
-                    im2 = Image.open('BpassQR.png')
-                    back_im = im1.copy()
-                    back_im.paste(im2, (1030, 540))
-                    back_im.save('BoardingPass.png')
+                    # BQR = f'https://api.qrserver.com/v1/create-qr-rde/?size=200x200&data={paxData}'
+                    # print(BQR)
+                    #
+                    # import urllib.request
+                    # imgURL = BQR
+                    # urllib.request.urlretrieve(imgURL, 'BpassQR.png')
+                    #
+                    # im2 = Image.open('BpassQR.png')
+                    # back_im = im1.copy()
+                    # back_im.paste(im2, (1030, 540))
+                    # back_im.save('BoardingPass.png')
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('''
                             This is your boarding pass. Our staff will validate it soon. Have a nice flight!
                             '''))
-                    await ctx.reply(file=discord.File('BoardingPass.png'))
+                    await ctx.reply(file=discord.File('Bout.png'))
+                    await ctx.reply(file=discord.File('SeatOutput.png'))
 
 
 
@@ -590,7 +747,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif 'rank' in ctxcontent or 'silver' in ctxcontent or 'platinum' in ctxcontent or 'nickel' in ctxcontent or 'loyal' in ctxcontent or 'card' in ctxcontent:
+                elif 'currentSeat' in ctxcontent or 'silver' in ctxcontent or 'platinum' in ctxcontent or 'nickel' in ctxcontent or 'loyal' in ctxcontent or 'card' in ctxcontent:
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('''
         Our airline have special programme which can give passengers discounts
@@ -1203,7 +1360,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         font = ImageFont.truetype(fontname, fontsize)
                         width, height = 1200, 576
                         img = Image.new('RGB', (width + 4, height + 4), '#0D2064')
-                        d = ImageDraw.Draw(img)
+                        d = ImageDraw.ImageDraw(img)
                         d.text((65, height - 440), text, fill=colorText, font=font)
                         d.rectangle((0, 0, width + 3, height + 3), outline=colorOutline)
 
@@ -1239,6 +1396,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
                 else:
                     await ctx.add_reaction('<❓>')
+                    print(GoogleTranslator(source=lang,target='en').translate(ctx.content))
 
 
 
