@@ -470,9 +470,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Class: {clss}'))
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('''Rank:
-                    Nickel, Platinum, Silver, Bronze
-                    Skyteam Elite
+                    await ctx.reply(GoogleTranslator(target=lang).translate('''Seat (type `any` if any)
                     '''))
                     notFoundReply = 1
                     try:
@@ -523,7 +521,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'''Filling ticket with following data...
                     Class: {clss.upper()}
-                    Perks: {rank.upper()}
+                    Seat: {rank.upper()}
                     Discord: {disname.upper()}
                     Dep. Arpt.: {deparpt.upper()}
                     Arr. Arpt.: {dest.upper()}
@@ -547,12 +545,12 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     draw.text((1730, 180), Game.upper()[:9], (0, 0, 0), font=font)
                     draw.text((30, 480), disname.upper()[:14], (0, 0, 0), font=font)
                     draw.text((530, 480), clss.upper()[:9], (0, 0, 0), font=font)
-                    draw.text((1030, 480), rank.upper()[:18], (0, 0, 0), font=font)
+                    draw.text((1030, 480), rank.upper()[:3], (0, 0, 0), font=font)
                     draw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
 
                     img.save('Bout.png')
 
-                    paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper().split(' ')[0][:14]}-{deparpt.upper()[-3:]}-{dest.upper().split(' ')[0][:14]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{rank.upper().replace(' ', '-')[:18]}-{dept.upper()[:5]}"
+                    paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper().split(' ')[0][:14]}-{deparpt.upper()[-3:]}-{dest.upper().split(' ')[0][:14]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{rank.upper().replace(' ', '-')[:13]}-{dept.upper()[:5]}"
 
                     im1 = Image.open('Bout.png')
                     BQR = f'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data={paxData}'
