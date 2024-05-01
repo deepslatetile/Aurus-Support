@@ -22,8 +22,8 @@ bot = commands.Bot(command_prefix=prefix)
 
 # B737 properties
 
-img = Image.open("Seat-B737.png")
-ImageDraw = ImageDraw.Draw(img)
+img_B737 = Image.open("Seat-B737.png")
+ImageDraw_B737 = ImageDraw.Draw(img_B737)
 
 economySeatSize = 100
 comfortSeatSize = 100
@@ -73,6 +73,70 @@ B737_lineA = 1790
 B737_lineB = 1670
 B737_lineC = 1470
 B737_lineD = 1350
+
+
+
+
+# A350 properties
+
+img_A350 = Image.open("Seat-A350.png")
+ImageDraw_A350 = ImageDraw.Draw(img_A350)
+
+economySeatSize = 100
+comfortSeatSize = 100
+businessSeatSize = 120
+
+economyColor = '#9bc6ff'
+comfortColor = '#559de5'
+businessColor = '#0d62c9'
+
+
+A350_economySeatList = ['10A', '10B', '10C', '10D', '10E', '10F', '11A', '11B', '11C', '11D', '11E', '11F', '12A', '12B', '12C', '12D', '12E', '12F', '13A',
+                        '13B', '13C', '13D', '13E', '13F', '14A', '14B', '14C', '14D', '14E', '14F', '15A', '15B', '15C', '15D', '15E', '15F', '16A', '16B',
+                        '16C', '16D', '16E', '16F', '17A', '17B', '17C', '17D', '17E', '17F', '18A', '18B', '18C', '18D', '18E', '18F', '19A', '19B', '19C',
+                        '19D', '19E', '19F', '20A', '20B', '20C', '20D', '20E', '20F']
+
+A350_comfortSeatList = ['7A', '7B', '7E', '7F', '8A', '8B', '8C', '8D', '8E', '8F', '9A', '9B', '9C', '9D', '9E', '9F']
+
+A350_businessSeatList = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '3A', '3B', '3C', '3D', '4A', '4B', '4C', '4D', '5A', '5B', '5C', '5D', '6A', '6B',
+                         '6C', '6D']
+
+A350_economySeatListCurrent = []
+A350_comfortSeatListCurrent = []
+A350_businessSeatListCurrent = []
+
+
+A350bookedSeatsFile = open("A350_bookedSeats.txt")
+A350bookedSeatsCurrentFlight = A350bookedSeatsFile.read().split(' ')
+A350bookedSeatsFile.close()
+
+for seatAvailEconomyA350 in range(len(A350_economySeatList)):
+    if A350_economySeatList[seatAvailEconomyA350] not in A350bookedSeatsCurrentFlight:
+        A350_economySeatListCurrent.append(A350_economySeatList[seatAvailEconomyA350])
+for seatAvailComfortA350 in range(len(A350_comfortSeatList)):
+    if A350_comfortSeatList[seatAvailComfortA350] not in A350bookedSeatsCurrentFlight:
+        A350_comfortSeatListCurrent.append(A350_comfortSeatList[seatAvailComfortA350])
+for seatAvailBusinessA350 in range(len(A350_businessSeatList)):
+    if A350_businessSeatList[seatAvailBusinessA350] not in A350bookedSeatsCurrentFlight:
+        A350_businessSeatListCurrent.append(A350_businessSeatList[seatAvailBusinessA350])
+
+outlineWidth = 9
+font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+A350_rowList = [1200, 1340, 1480, 1620, 1900, 2040, 2250, 2370, 2490, 2610, 2730, 2850, 2970, 3240, 3360, 3480, 3600, 3720, 3840, 3960]
+
+A350_lineA_1 = 2010
+A350_lineB_1 = 1760
+A350_lineC_1 = 1620
+A350_lineD_1 = 1350
+A350_lineA_2 = 2030
+A350_lineB_2 = 1920
+A350_lineC_2 = 1745
+A350_lineD_2 = 1635
+A350_lineE_2 = 1460
+A350_lineF_2 = 1350
+
+
 
 
 
@@ -455,15 +519,12 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
                 elif ctx.content == '!clearBookings':
                     B737bookedSeatsCurrentFlight = []
+                    A350bookedSeatsCurrentFlight = []
                     from PIL import Image
                     from PIL import ImageDraw
-                    imgOut = Image.open("SeatOutput.png")
-                    imgSample = Image.open("Seat-B737.png")
-                    imgOut = imgOut.copy()
-                    imgSample = imgSample.copy()
-                    imgOut.paste(imgSample, (0, 0))
-                    imgOut.save("SeatOutput.png")
                     clearBookings_B737 = open("B737_bookedSeats.txt", 'w').write('')
+                    clearBookings_A350 = open("A350_bookedSeats.txt", 'w').write('')
+
 
 
 
@@ -607,14 +668,28 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         from PIL import ImageDraw
                         B737_rowList = [1200, 1320, 1440, 1560, 1680, 1800, 1920, 2400, 2520, 2640, 2760, 2880, 3000, 3120, 3240]
 
-                        img = Image.open("SeatOutput.png")
-                        ImageDraw = ImageDraw.Draw(img)
+                        imgOut = Image.open("SeatOutput.png")
+                        imgB737_schema = Image.open("Seat-B737.png")
+                        imgOutN = imgOut.crop((0, 0, 4000, 3000))
+                        imgOutN.save("SeatOutput.png")
+                        imgOut = imgOutN.copy()
+                        imgB737_schema = imgB737_schema.copy()
+                        imgOut.paste(imgB737_schema, (0, 0))
+                        imgOut.save("SeatOutput.png")
+
+
+                        outlineWidth = 9
+                        font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+                        img_B737 = Image.open("SeatOutput.png")
+                        ImageDraw_B737 = ImageDraw.Draw(img_B737)
 
                         B737bookedSeatsFile = open("B737_bookedSeats.txt")
                         B737bookedSeatsCurrentFlight = B737bookedSeatsFile.read().split(' ')
                         B737bookedSeatsFile.close()
+
                         if len(B737bookedSeatsCurrentFlight) > 1:
-                            for bookedSeat in range(len(B737bookedSeatsCurrentFlight)):
+                            for bookedSeat in range(1, len(B737bookedSeatsCurrentFlight)):
 
                                 B737_rowCurrentFlight = int(B737bookedSeatsCurrentFlight[bookedSeat][:-1].replace(' ', ''))
                                 B737_lineCurrentFlight = B737bookedSeatsCurrentFlight[bookedSeat][-1].replace(' ', '')
@@ -633,7 +708,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                                 else:
                                     currentSeatSize = int(economySeatSize)
 
-                                ImageDraw.rectangle(
+                                ImageDraw_B737.rectangle(
                                     (B737_rowList[B737_rowCurrentFlight - 1], B737_lineCurrentFlight, B737_rowList[B737_rowCurrentFlight - 1] + 100,
                                      B737_lineCurrentFlight + 100), fill='#646464', outline='#ffffff', width=outlineWidth)
 
@@ -669,27 +744,132 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         else:
                             currentSeatSize = int(economySeatSize)
 
-
-
-
-
                         B737bookedSeatsFile = open("B737_bookedSeats.txt", 'w')
                         B737bookedSeatsFile.write(f"{' '.join(B737bookedSeatsCurrentFlight)} {currentSeat}")
                         B737bookedSeatsFile.close()
 
-
-                        ImageDraw.rectangle((B737_rowList[B737_row - 1], B737_line, B737_rowList[B737_row - 1] + 100, B737_line + 100),
+                        ImageDraw_B737.rectangle((B737_rowList[B737_row - 1], B737_line, B737_rowList[B737_row - 1] + 100, B737_line + 100),
                                        fill='red',
                                        outline='#ffffff', width=outlineWidth)
 
                         font = ImageFont.truetype("Stem-Medium.ttf", 81)
 
-                        ImageDraw.text((B737_row1, B737_lineD), ' D', '#ffffff', font=font)
-                        ImageDraw.text((B737_row1, B737_lineC), ' C', '#ffffff', font=font)
-                        ImageDraw.text((B737_row1, B737_lineB), ' B', '#ffffff', font=font)
-                        ImageDraw.text((B737_row1, B737_lineA), ' A', '#ffffff', font=font)
+                        ImageDraw_B737.text((B737_row1, B737_lineD), ' D', '#ffffff', font=font)
+                        ImageDraw_B737.text((B737_row1, B737_lineC), ' C', '#ffffff', font=font)
+                        ImageDraw_B737.text((B737_row1, B737_lineB), ' B', '#ffffff', font=font)
+                        ImageDraw_B737.text((B737_row1, B737_lineA), ' A', '#ffffff', font=font)
 
-                        img.save('SeatOutput.png')
+                        img_B737.save('SeatOutput.png')
+
+
+                    elif aircraft.upper() == 'A350':
+                        from PIL import Image
+                        from PIL import ImageFont
+                        from PIL import ImageDraw
+
+
+                        imgOut = Image.open("SeatOutput.png")
+                        imgA350_schema = Image.open("Seat-A350.png")
+                        imgOutN = imgOut.crop((0, 0, 4000, 3000))
+                        imgOutN.save("SeatOutput.png")
+                        imgOut = imgOutN.copy()
+                        imgA350_schema = imgA350_schema.copy()
+                        imgOut.paste(imgA350_schema, (0, 0))
+                        imgOut.save("SeatOutput.png")
+
+
+                        A350bookedSeatsFile = open("A350_bookedSeats.txt")
+                        A350bookedSeatsCurrentFlight = A350bookedSeatsFile.read().split(' ')
+                        A350bookedSeatsFile.close()
+
+                        currentClass = clss.upper()
+                        outlineWidth = 9
+                        font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+                        if currentClass == 'BUSINESS':
+                            currentSeat = random.choice(A350_businessSeatList)
+                            A350bookedSeatsCurrentFlight.append(currentSeat)
+                        elif currentClass == 'COMFORT':
+                            currentSeat = random.choice(A350_comfortSeatList)
+                            A350bookedSeatsCurrentFlight.append(currentSeat)
+                        else:
+                            currentSeat = random.choice(A350_economySeatList)
+                            A350bookedSeatsCurrentFlight.append(currentSeat)
+
+                        A350bookedSeatsFile = open("A350_bookedSeats.txt", 'w')
+                        A350bookedSeatsFile.write(f"{' '.join(A350bookedSeatsCurrentFlight)}")
+                        A350bookedSeatsFile.close()
+
+                        A350_row = int(currentSeat[:-1])
+                        A350_line = currentSeat[-1]
+
+                        if len(A350bookedSeatsCurrentFlight) > 1:
+                            for bookedSeat in range(1, len(A350bookedSeatsCurrentFlight)):
+                                A350_rowCurrentFlight = int(A350bookedSeatsCurrentFlight[bookedSeat][:-1].replace(' ', ''))
+                                A350_lineCurrentFlight = A350bookedSeatsCurrentFlight[bookedSeat][-1].replace(' ', '')
+
+                                if int(A350_rowCurrentFlight) < 7:
+                                    if A350_lineCurrentFlight == 'A':
+                                        A350_lineCurrentFlight = 2010
+                                    elif A350_lineCurrentFlight == 'B':
+                                        A350_lineCurrentFlight = 1760
+                                    elif A350_lineCurrentFlight == 'C':
+                                        A350_lineCurrentFlight = 1620
+                                    elif A350_lineCurrentFlight == 'D':
+                                        A350_lineCurrentFlight = 1350
+
+                                    ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
+                                                        A350_rowList[A350_rowCurrentFlight - 1] + 120, A350_lineCurrentFlight + 120),
+                                                       fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                                else:
+                                    if A350_lineCurrentFlight == 'A':
+                                        A350_lineCurrentFlight = 2030
+                                    elif A350_lineCurrentFlight == 'B':
+                                        A350_lineCurrentFlight = 1920
+                                    elif A350_lineCurrentFlight == 'C':
+                                        A350_lineCurrentFlight = 1745
+                                    elif A350_lineCurrentFlight == 'D':
+                                        A350_lineCurrentFlight = 1635
+                                    elif A350_lineCurrentFlight == 'E':
+                                        A350_lineCurrentFlight = 1460
+                                    elif A350_lineCurrentFlight == 'F':
+                                        A350_lineCurrentFlight = 1350
+
+                                    ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
+                                                        A350_rowList[A350_rowCurrentFlight - 1] + 100, A350_lineCurrentFlight + 100),
+                                                       fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                            if int(A350_rowCurrentFlight) < 7:
+                                ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
+                                                    A350_rowList[A350_rowCurrentFlight - 1] + 120, A350_lineCurrentFlight + 120),
+                                                   fill='red', outline='#ffffff', width=outlineWidth)
+                            else:
+                                ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
+                                                    A350_rowList[A350_rowCurrentFlight - 1] + 100, A350_lineCurrentFlight + 100),
+                                                   fill='red', outline='#ffffff', width=outlineWidth)
+
+                            ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineD_1 + 10), ' D', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineC_1 + 10), ' C', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineB_1 + 10), ' B', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineA_1 + 10), ' A', '#ffffff', font=font)
+
+                            ImageDraw_A350.text((A350_rowList[6], A350_lineF_2), ' F', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[6], A350_lineE_2), ' E', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[7], A350_lineD_2), ' D', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[7], A350_lineC_2), ' C', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[6], A350_lineB_2), ' B', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[6], A350_lineA_2), ' A', '#ffffff', font=font)
+
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineF_2), ' F', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineE_2), ' E', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineD_2), ' D', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineC_2), ' C', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineB_2), ' B', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineA_2), ' A', '#ffffff', font=font)
+
+                        img_A350.save('SeatOutput.png')
+
                     else:
                         currentSeat = 'N/A'
 
@@ -803,7 +983,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif 'currentSeat' in ctxcontent or 'silver' in ctxcontent or 'platinum' in ctxcontent or 'nickel' in ctxcontent or 'loyal' in ctxcontent or 'card' in ctxcontent:
+                elif 'silver' in ctxcontent or 'platinum' in ctxcontent or 'nickel' in ctxcontent or 'loyal' in ctxcontent or 'card' in ctxcontent:
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('''
         Our airline have special programme which can give passengers discounts
