@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.4
+# Release 1.3
 
 
 import discord
@@ -21,6 +21,7 @@ bot = commands.Bot(command_prefix=prefix)
 
 
 # B737 properties
+
 img = Image.open("Seat-B737.png")
 ImageDraw = ImageDraw.Draw(img)
 
@@ -33,7 +34,21 @@ comfortColor = '#559de5'
 B737_economySeatList = ['3A', '3B', '3C', '3D', '4A', '4B', '4C', '4D', '5A', '5B', '5C', '5D', '6A', '6B', '6C', '6D', '7A', '7B', '7C', '7D', '8A', '8B', '8C', '8D', '9A', '9B', '9C', '9D', '10A', '10B', '10C', '10D', '11A', '11B', '11C', '11D', '12A', '12B', '12C', '12D', '13A', '13B', '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D']
 B737_comfoftSeatList = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D']
 
-B737_bookedSeatsCurrentFlight = []
+B737_economySeatListCurrent = []
+B737_comfoftSeatListCurrent = []
+
+B737bookedSeatsFile = open("B737_bookedSeats.txt")
+B737bookedSeatsCurrentFlight = B737bookedSeatsFile.read().split(' ')
+B737bookedSeatsFile.close()
+
+for seatAvailEconomyB737 in range(len(B737_economySeatList)):
+    if B737_economySeatList[seatAvailEconomyB737] not in B737bookedSeatsCurrentFlight:
+        B737_economySeatListCurrent.append(B737_economySeatList[seatAvailEconomyB737])
+for seatAvailComfortB737 in range(len(B737_comfoftSeatList)):
+    if B737_comfoftSeatList[seatAvailComfortB737] not in B737bookedSeatsCurrentFlight:
+        B737_comfoftSeatListCurrent.append(B737_comfoftSeatList[seatAvailComfortB737])
+
+B737bookedSeatsCurrentFlight = []
 
 outlineWidth = 9
 font = ImageFont.truetype("Stem-Medium.ttf", 81)
@@ -69,6 +84,15 @@ B737_lineD = 1350
 async def on_ready():
     await bot.change_presence(activity=discord.Game(name="Aurus Support"))
     print('Bot active')
+
+
+class B737bookedSeatsCurrentFlight:
+    pass
+
+
+class B737bookedSeatsCurrentFlight:
+    pass
+
 
 @bot.event
 async def on_message(ctx):
@@ -430,8 +454,25 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
                 elif ctx.content == '!clearBookings':
-                    B737_bookedSeatsCurrentFlight = []
-                    
+                    B737bookedSeatsCurrentFlight = []
+                    from PIL import Image
+                    from PIL import ImageDraw
+                    imgOut = Image.open("SeatOutput.png")
+                    imgSample = Image.open("Seat-B737.png")
+                    imgOut = imgOut.copy()
+                    imgSample = imgSample.copy()
+                    imgOut.paste(imgSample, (0, 0))
+                    imgOut.save("SeatOutput.png")
+                    clearBookings_B737 = open("B737_bookedSeats.txt", 'w').write('')
+
+
+
+
+
+
+
+
+
                 elif 'book' in ctxcontent or 'check' in ctxcontent or 'reg' in ctxcontent or 'register' in ctxcontent or 'registration' in ctxcontent:
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Starting booking..'))
@@ -564,19 +605,50 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         from PIL import Image
                         from PIL import ImageFont
                         from PIL import ImageDraw
+                        B737_rowList = [1200, 1320, 1440, 1560, 1680, 1800, 1920, 2400, 2520, 2640, 2760, 2880, 3000, 3120, 3240]
 
-                        img = Image.open("Seat-B737.png")
+                        img = Image.open("SeatOutput.png")
                         ImageDraw = ImageDraw.Draw(img)
+
+                        B737bookedSeatsFile = open("B737_bookedSeats.txt")
+                        B737bookedSeatsCurrentFlight = B737bookedSeatsFile.read().split(' ')
+                        B737bookedSeatsFile.close()
+                        if len(B737bookedSeatsCurrentFlight) > 1:
+                            for bookedSeat in range(len(B737bookedSeatsCurrentFlight)):
+
+                                B737_rowCurrentFlight = int(B737bookedSeatsCurrentFlight[bookedSeat][:-1].replace(' ', ''))
+                                B737_lineCurrentFlight = B737bookedSeatsCurrentFlight[bookedSeat][-1].replace(' ', '')
+
+                                if B737_lineCurrentFlight == 'A':
+                                    B737_lineCurrentFlight = 1790
+                                elif B737_lineCurrentFlight == 'B':
+                                    B737_lineCurrentFlight = 1670
+                                elif B737_lineCurrentFlight == 'C':
+                                    B737_lineCurrentFlight = 1470
+                                elif B737_lineCurrentFlight == 'D':
+                                    B737_lineCurrentFlight = 1350
+
+                                if B737_rowCurrentFlight == 1 or 2:
+                                    currentSeatSize = int(comfortSeatSize)
+                                else:
+                                    currentSeatSize = int(economySeatSize)
+
+                                ImageDraw.rectangle(
+                                    (B737_rowList[B737_rowCurrentFlight - 1], B737_lineCurrentFlight, B737_rowList[B737_rowCurrentFlight - 1] + 100,
+                                     B737_lineCurrentFlight + 100), fill='#646464', outline='#ffffff', width=outlineWidth)
+
+
 
                         currentClass = clss.upper()
 
-                        if currentClass == 'ECONOMY':
-                            currentSeat = random.choice(B737_economySeatList)
-                            B737_bookedSeatsCurrentFlight.append(currentSeat)
 
-                        elif currentClass == 'COMFORT':
-                            currentSeat = random.choice(B737_comfoftSeatList)
-                            B737_bookedSeatsCurrentFlight.append(currentSeat)
+                        if currentClass.upper() == 'ECONOMY':
+                            currentSeat = random.choice(B737_economySeatListCurrent)
+                            B737_economySeatListCurrent.remove(currentSeat)
+
+                        elif currentClass.upper() == 'COMFORT':
+                            currentSeat = random.choice(B737_comfoftSeatListCurrent)
+                            B737_comfoftSeatListCurrent.remove(currentSeat)
 
                         B737_row = int(currentSeat[:-1])
                         B737_line = currentSeat[-1]
@@ -597,32 +669,16 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         else:
                             currentSeatSize = int(economySeatSize)
 
-                        B737_rowList = [1200, 1320, 1440, 1560, 1680, 1800, 1920, 2400, 2520, 2640, 2760, 2880, 3000, 3120, 3240]
 
 
-                        for bookedSeat in range(len(B737_bookedSeatsCurrentFlight)):
-                            B737_rowCurrentFlight = int(B737_bookedSeatsCurrentFlight[bookedSeat][:-1])
-                            B737_lineCurrentFlight = B737_bookedSeatsCurrentFlight[bookedSeat][-1]
-                            if B737_lineCurrentFlight == 'A':
-                                B737_lineCurrentFlight = 1790
-                            elif B737_lineCurrentFlight == 'B':
-                                B737_lineCurrentFlight = 1670
-                            elif B737_lineCurrentFlight == 'C':
-                                B737_lineCurrentFlight = 1470
-                            elif B737_lineCurrentFlight == 'D':
-                                B737_lineCurrentFlight = 1350
-
-                            if B737_rowCurrentFlight == 1 or 2:
-                                currentSeatSize = int(comfortSeatSize)
-                            else:
-                                currentSeatSize = int(economySeatSize)
-
-                            ImageDraw.rectangle(
-                                (B737_rowList[B737_rowCurrentFlight - 1], B737_lineCurrentFlight, B737_rowList[B737_rowCurrentFlight - 1] + 100,
-                                 B737_lineCurrentFlight + 100), fill='#646464', outline='#ffffff', width=outlineWidth)
 
 
-                        ImageDraw.rectangle((B737_rowList[B737_row - 1], B737_line, B737_rowList[B737_row - 1] + currentSeatSize, B737_line + currentSeatSize),
+                        B737bookedSeatsFile = open("B737_bookedSeats.txt", 'w')
+                        B737bookedSeatsFile.write(f"{' '.join(B737bookedSeatsCurrentFlight)} {currentSeat}")
+                        B737bookedSeatsFile.close()
+
+
+                        ImageDraw.rectangle((B737_rowList[B737_row - 1], B737_line, B737_rowList[B737_row - 1] + 100, B737_line + 100),
                                        fill='red',
                                        outline='#ffffff', width=outlineWidth)
 
@@ -914,7 +970,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                                                          timeout=60.0)
                             flsched = message.content
                             fl = message.content
-                            flf = open('schedule.txt', 'w+')
+                            flf = open('schedule.txt', 'w')
                             flf.write(fl.upper())
                             flf.close()
                             await ctx.reply(GoogleTranslator(target=lang).translate('Saved'))
