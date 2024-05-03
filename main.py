@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.3
+# Release 1.4
 
 
 import discord
@@ -17,6 +17,54 @@ prefix = ""
 
 bot = commands.Bot(command_prefix=prefix)
 
+
+
+
+questsList = ['"Seoul Mate" - visit Seoul ICN and Seoul GMP in 48h',
+              '"Dora the Explorer" - visit at least one airport in Europe, Asia, South America, North America, Africa, Australia, Oceania',
+              '"Connection Flight" - visit 3 flights of different airlines in 24h',
+              '"Connection Guru" - visit 2 flights of different airlines with connection time less than 45 minutes between departures',
+              '"Polar Bear" - visit airport northern than 66°',
+              '"Infinite Night" - visit airport during  polar night',
+              '"Infinite Day" - visit airport during polar day',
+              '"Airport Guru" - visit 3 or more airports in 24h',
+              '"Sky photo" - take 100 pictures (no more than 4 per flight)',
+              '"High in mountains" - visit airport > 2000m above sea level',
+              '"Around the World" - make a round-the-world trip',
+              '"I own the sky" - spend more than 500 minutes in the sky',
+              '"Newbie" - complete your first flight',
+              '"Sky Traveller" - visit 10 countries',
+              '"Frequent Flyer" - visit flights every week in 2 months',
+              '"Thats okay" - get last row in plane, and not a window seat',
+              '"I prefer Comfort" - take a flight in Comfort class',
+              '"Businessman" - take a flight in Business class',
+              '"First" - take a flight in First class',
+              '"Special day" - take a flight on your birthday',
+              '"Double it" - take your alt to flight with you',
+              '"Friendship" - take 2 your friends with you on a flight',
+              '"Game changing" - take a connection flight in different game',
+              '"Capital" - visit 5 capital cities in a month',
+              '"Connection master" - take 10 connection flights in 2 weeks',
+              '"Bonus time" - upgrade your class using bonuses',
+              '"Distance" - take a flight >3000 miles',
+              '"Time Traveller" - travel 7 timezones in one flight',
+              '"Turboprop" - take a flight on turboprop aircraft',
+              '"Pythagoras" - solve math task during flight (ask for it on flight)',
+              '"Two-way ticket" - take a return connection flight back',
+              '"Boeing bro" - take 10 flights on Boeing in a row',
+              '"Airbus bro" - take 10 flights on Airbus in a row',
+              '"Turboprop bro" - take 10 flights on turboprop in a row',
+              '"Marathon" - finish 42 flights',
+              '"Cross the Pond" - take flight across Atlantic Ocean',
+              '"Delicious" - try everything in menu',
+              '"Rebel" - ask for alcohol',
+              '"Artist" - paint a picture on board',
+              '"Full check-in" - use online check-in for 5 flights',
+              '"Always the same" - take 10 flights on same routes',
+              '"King" - be the only passenger on board',
+              '"Hungry" - take 3 or more meals in one of categories',
+              '"Rock, paper, scissors" - win in rock,paper, scissors with any passenger (not your alt or friend)'
+]
 
 
 
@@ -517,6 +565,21 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
+
+
+
+                elif 'quest' in ctx.content:
+                    quest = random.choice(questsList)
+                    await ctx.reply(f'Quest: {quest}')
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 elif ctx.content == '!clearBookings':
                     B737bookedSeatsCurrentFlight = []
                     A350bookedSeatsCurrentFlight = []
