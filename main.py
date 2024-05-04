@@ -12,6 +12,8 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 import random
+import time
+
 
 prefix = ""
 
@@ -571,15 +573,64 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                 elif 'quest' in ctx.content:
                     quest = random.choice(questsList)
                     await ctx.reply(f'Quest: {quest}')
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
+
+
+                elif ('flight' in ctx.content and 'discord' in ctx.content) or ('fly' in ctx.content and 'discord' in ctx.content):
+
+                    frameFile = open("discordFlightFrames.txt", 'r')
+                    frame = frameFile.read().split(',')
+
+
+                    await ctx.reply("So, I thought that it would be funny if we do flights in Discord")
+                    time.sleep(1.0)
+                    await ctx.reply("Just imagine flying in Discord))")
+                    time.sleep(1.0)
+                    await ctx.reply("I have no idea how to do it")
+                    time.sleep(1.0)
+                    await ctx.reply("I don-")
+                    time.sleep(0.7)
+                    await ctx.reply("What the?..")
+                    time.sleep(0.7)
+                    await ctx.reply("Where am I falling??")
+                    time.sleep(0.7)
+                    await ctx.reply("AAAAAAAAAAAAAAA...")
+                    time.sleep(0.7)
+
+                    msg = await ctx.reply(frame[0])
+                    for i in range(0, len(frame)):
+                        await msg.edit(content=frame[i] + '\n ** **')
+                        time.sleep(4.0)
+
+                    await ctx.reply("`- ` Bro, are you okay?")
+                    time.sleep(2.0)
+                    await ctx.reply("`- ` What happened? Where am I?..")
+                    time.sleep(2.0)
+                    await ctx.reply("`- ` You had a seizure again. Did you take the pills?")
+                    time.sleep(2.0)
+                    await ctx.reply("`- ` Yes.. Or no.. I don't remember.. Have I missed Brawl Talk?")
+                    time.sleep(2.0)
+                    await ctx.reply("`- ` Brawl? Well.. How to say that.. It was 20 years ago..")
+                    time.sleep(2.0)
+                    await ctx.reply("`- ` Are you kidding?")
+                    time.sleep(1.0)
+                    day = int((round(time.time() * 10) + 31536000 * 200) / 10)
+                    await ctx.reply(f"`- ` No, it's <t:{day}:D> today. Brawl got closed few years ago")
+                    time.sleep(2.0)
+                    await ctx.reply("`- ` No.. No.. No.. I-")
+                    time.sleep(2.0)
+                    await ctx.reply("** ** \n *To be continued...* \n ** **")
+
+
+
+
+
+
+
                 elif ctx.content == '!clearBookings':
                     B737bookedSeatsCurrentFlight = []
                     A350bookedSeatsCurrentFlight = []
@@ -917,19 +968,19 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineB_1 + 10), ' B', '#ffffff', font=font)
                             ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineA_1 + 10), ' A', '#ffffff', font=font)
 
-                            ImageDraw_A350.text((A350_rowList[6], A350_lineF_2), ' F', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[6], A350_lineE_2), ' E', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[7], A350_lineD_2), ' D', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[7], A350_lineC_2), ' C', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[6], A350_lineB_2), ' B', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[6], A350_lineA_2), ' A', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[6], A350_lineF_2), ' A', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[6], A350_lineE_2), ' B', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[7], A350_lineD_2), ' C', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[7], A350_lineC_2), ' D', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[6], A350_lineB_2), ' E', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[6], A350_lineA_2), ' F', '#ffffff', font=font)
 
-                            ImageDraw_A350.text((A350_rowList[13], A350_lineF_2), ' F', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[13], A350_lineE_2), ' E', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[13], A350_lineD_2), ' D', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[13], A350_lineC_2), ' C', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[13], A350_lineB_2), ' B', '#ffffff', font=font)
-                            ImageDraw_A350.text((A350_rowList[13], A350_lineA_2), ' A', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineF_2), ' A', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineE_2), ' B', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineD_2), ' C', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineC_2), ' D', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineB_2), ' E', '#ffffff', font=font)
+                            ImageDraw_A350.text((A350_rowList[13], A350_lineA_2), ' F', '#ffffff', font=font)
 
                         img_A350.save('SeatOutput.png')
 
