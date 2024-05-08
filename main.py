@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.4
+# Release 1.4.1
 
 
 import discord
@@ -67,6 +67,69 @@ questsList = ['"Seoul Mate" - visit Seoul ICN and Seoul GMP in 48h',
               '"Hungry" - take 3 or more meals in one of categories',
               '"Rock, paper, scissors" - win in rock,paper, scissors with any passenger (not your alt or friend)'
 ]
+
+
+# B737R properties
+
+img_B737R = Image.open("Seat-B737R.png")
+ImageDraw_B737R = ImageDraw.Draw(img_B737R)
+
+economySeatSize = 100
+comfortSeatSize = 100
+businessSeatSize = 120
+
+economyColor = '#9bc6ff'
+comfortColor = '#559de5'
+businessColor = '#0d62c9'
+
+
+B737R_economySeatList = ['7A', '7B', '7C', '7D', '8A', '8B', '8C', '8D', '9A', '9B', '9C', '9D', '10A', '10B', '10C', '10D', '11A', '11B', '11C', '11D', '12A',
+                        '12B','12C', '12D', '13A', '13B', '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D', '16A', '16B', '16C', '16D',
+                        '17A', '17B', '17C', '17D', '18A', '18B', '18C', '18D', '19A', '19B', '19C', '19D', '20A', '20B', '20C', '20D', '21A', '21B', '21C',
+                        '21D', '22A', '22B', '22C', '22D', '23A', '23B', '23C', '23D']
+
+B737R_comfortSeatList = ['4A', '4B', '4C', '4D', '5A', '5B', '5C', '5D', '6A', '6B', '6C', '6D']
+
+B737R_businessSeatList = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '3A', '3B', '3C', '3D']
+
+B737R_economySeatListCurrent = []
+B737R_comfortSeatListCurrent = []
+B737R_businessSeatListCurrent = []
+
+
+B737RbookedSeatsFile = open("B737R_bookedSeats.txt")
+B737RbookedSeatsCurrentFlight = B737RbookedSeatsFile.read().split(' ')
+B737RbookedSeatsFile.close()
+
+for seatAvailEconomyB737R in range(len(B737R_economySeatList)):
+    if B737R_economySeatList[seatAvailEconomyB737R] not in B737RbookedSeatsCurrentFlight:
+        B737R_economySeatListCurrent.append(B737R_economySeatList[seatAvailEconomyB737R])
+for seatAvailComfortB737R in range(len(B737R_comfortSeatList)):
+    if B737R_comfortSeatList[seatAvailComfortB737R] not in B737RbookedSeatsCurrentFlight:
+        B737R_comfortSeatListCurrent.append(B737R_comfortSeatList[seatAvailComfortB737R])
+for seatAvailBusinessB737R in range(len(B737R_businessSeatList)):
+    if B737R_businessSeatList[seatAvailBusinessB737R] not in B737RbookedSeatsCurrentFlight:
+        B737R_businessSeatListCurrent.append(B737R_businessSeatList[seatAvailBusinessB737R])
+
+outlineWidth = 9
+font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+
+B737R_rowList = [1200, 1340, 1480, 1620, 1740, 1860, 1980, 2100, 2220, 2340, 2460, 2580, 2700, 2820, 2940, 3060, 3180, 3300, 3420, 3540, 3660, 3780, 3900]
+
+B737R_lineA_1 = 1810
+B737R_lineB_1 = 1670
+B737R_lineC_1 = 1490
+B737R_lineD_1 = 1350
+B737R_lineA_2 = 1830
+B737R_lineB_2 = 1710
+B737R_lineC_2 = 1470
+B737R_lineD_2 = 1350
+
+
+
+
+
 
 
 
@@ -211,7 +274,7 @@ class B737bookedSeatsCurrentFlight:
 @bot.event
 async def on_message(ctx):
     if ctx.author != bot.user:
-        channelsOpen = [bot.get_channel(1190520793453572107), bot.get_channel(1197626715875311747), bot.get_channel(1198600734413951036)]
+        channelsOpen = [bot.get_channel(1190520793453572107), bot.get_channel(1197626715875311747), bot.get_channel(1198600734413951036), bot.get_channel(1237788511906562100), bot.get_channel(1237788539383709749)]
         notFoundReply = 0
 
 
@@ -632,12 +695,20 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
                 elif ctx.content == '!clearBookings':
-                    B737bookedSeatsCurrentFlight = []
-                    A350bookedSeatsCurrentFlight = []
-                    from PIL import Image
-                    from PIL import ImageDraw
-                    clearBookings_B737 = open("B737_bookedSeats.txt", 'w').write('')
-                    clearBookings_A350 = open("A350_bookedSeats.txt", 'w').write('')
+                    user = ctx.author
+                    role = discord.utils.find(lambda r: r.name == 'Check-In Assistant', user.roles)
+
+                    if role in user.roles:
+                        B737bookedSeatsCurrentFlight = []
+                        B737RbookedSeatsCurrentFlight = []
+                        A350bookedSeatsCurrentFlight = []
+                        from PIL import Image
+                        from PIL import ImageDraw
+                        clearBookings_B737 = open("B737_bookedSeats.txt", 'w').write('')
+                        clearBookings_B737R = open("B737R_bookedSeats.txt", 'w').write('')
+                        clearBookings_A350 = open("A350_bookedSeats.txt", 'w').write('')
+                    else:
+                        await ctx.reply('No permission')
 
 
 
@@ -686,7 +757,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Game: {Game}'))
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Join time (or check-in time):'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Join time (or check-in time) in UTC:'))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
@@ -703,7 +774,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Dep. Time: {dept}'))
 
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Date of flight: '))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Date of flight (DD.MM): '))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
@@ -736,10 +807,10 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Flight: {flnum}'))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('''Class:
-                    First
-                    Business
-                    Comfort
-                    Economy
+- First
+- Business
+- Comfort
+- Economy
                     '''))
                     notFoundReply = 1
                     try:
@@ -774,6 +845,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Origin: {deparpt}'))
+
 
                     if aircraft.upper() == 'B737':
 
@@ -881,7 +953,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         from PIL import ImageFont
                         from PIL import ImageDraw
 
-
                         imgOut = Image.open("SeatOutput.png")
                         imgA350_schema = Image.open("Seat-A350.png")
                         imgOutN = imgOut.crop((0, 0, 4000, 3000))
@@ -890,7 +961,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         imgA350_schema = imgA350_schema.copy()
                         imgOut.paste(imgA350_schema, (0, 0))
                         imgOut.save("SeatOutput.png")
-
 
                         A350bookedSeatsFile = open("A350_bookedSeats.txt")
                         A350bookedSeatsCurrentFlight = A350bookedSeatsFile.read().split(' ')
@@ -984,6 +1054,108 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
                         img_A350.save('SeatOutput.png')
 
+
+                    elif aircraft.upper() == 'B737R':
+
+                        from PIL import Image
+                        from PIL import ImageFont
+                        from PIL import ImageDraw
+
+                        imgOut = Image.open("SeatOutput.png")
+                        imgB737R_schema = Image.open("Seat-B737R.png")
+                        imgOutN = imgOut.crop((0, 0, 4000, 3000))
+                        imgOutN.save("SeatOutput.png")
+                        imgOut = imgOutN.copy()
+                        imgB737R_schema = imgB737R_schema.copy()
+                        imgOut.paste(imgB737R_schema, (0, 0))
+                        imgOut.save("SeatOutput.png")
+
+                        B737RbookedSeatsFile = open("B737R_bookedSeats.txt")
+                        B737RbookedSeatsCurrentFlight = B737RbookedSeatsFile.read().split(' ')
+                        B737RbookedSeatsFile.close()
+
+                        currentClass = clss.upper()
+                        outlineWidth = 9
+                        font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+                        if currentClass == 'BUSINESS':
+                            currentSeat = random.choice(B737R_businessSeatListCurrent)
+                            B737RbookedSeatsCurrentFlight.append(currentSeat)
+                        elif currentClass == 'COMFORT':
+                            currentSeat = random.choice(B737R_comfortSeatListCurrent)
+                            B737RbookedSeatsCurrentFlight.append(currentSeat)
+                        else:
+                            currentSeat = random.choice(B737R_economySeatListCurrent)
+                            B737RbookedSeatsCurrentFlight.append(currentSeat)
+
+                        B737RbookedSeatsFile = open("B737R_bookedSeats.txt", 'w')
+                        B737RbookedSeatsFile.write(f"{' '.join(B737RbookedSeatsCurrentFlight)}")
+                        B737RbookedSeatsFile.close()
+
+                        B737R_row = int(currentSeat[:-1])
+                        B737R_line = currentSeat[-1]
+
+                        if len(B737RbookedSeatsCurrentFlight) > 1:
+                            for bookedSeat in range(1, len(B737RbookedSeatsCurrentFlight)):
+
+                                B737R_rowCurrentFlight = int(B737RbookedSeatsCurrentFlight[bookedSeat][:-1].replace(' ', ''))
+                                B737R_lineCurrentFlight = B737RbookedSeatsCurrentFlight[bookedSeat][-1].replace(' ', '')
+
+                                if int(B737R_rowCurrentFlight) < 4:
+                                    if B737R_lineCurrentFlight == 'A':
+                                        B737R_lineCurrentFlight = 1810
+                                    elif B737R_lineCurrentFlight == 'B':
+                                        B737R_lineCurrentFlight = 1670
+                                    elif B737R_lineCurrentFlight == 'C':
+                                        B737R_lineCurrentFlight = 1490
+                                    elif B737R_lineCurrentFlight == 'D':
+                                        B737R_lineCurrentFlight = 1350
+
+                                    ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                               B737R_rowList[B737R_rowCurrentFlight - 1] + 120, B737R_lineCurrentFlight + 120),
+                                                              fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                                elif int(B737R_rowCurrentFlight) >= 4:
+                                    if B737R_lineCurrentFlight == 'A':
+                                        B737R_lineCurrentFlight = 1830
+                                    elif B737R_lineCurrentFlight == 'B':
+                                        B737R_lineCurrentFlight = 1710
+                                    elif B737R_lineCurrentFlight == 'C':
+                                        B737R_lineCurrentFlight = 1470
+                                    elif B737R_lineCurrentFlight == 'D':
+                                        B737R_lineCurrentFlight = 1350
+
+                                    if int(B737R_rowCurrentFlight) < 7:
+                                        ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                                   B737R_rowList[B737R_rowCurrentFlight - 1] + 100, B737R_lineCurrentFlight + 100),
+                                                                  fill='#646464', outline='#ffffff', width=outlineWidth)
+                                    else:
+                                        ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                                   B737R_rowList[B737R_rowCurrentFlight - 1] + 100, B737R_lineCurrentFlight + 100),
+                                                                  fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                            if int(B737R_rowCurrentFlight) < 4:
+                                ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                           B737R_rowList[B737R_rowCurrentFlight - 1] + 120, B737R_lineCurrentFlight + 120),
+                                                          fill='red', outline='#ffffff', width=outlineWidth)
+                            else:
+                                ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                           B737R_rowList[B737R_rowCurrentFlight - 1] + 100, B737R_lineCurrentFlight + 100),
+                                                          fill='red', outline='#ffffff', width=outlineWidth)
+
+                            ImageDraw_B737R.text((B737R_rowList[0] + 10, B737R_lineD_1 + 10), ' D', '#ffffff', font=font)
+                            ImageDraw_B737R.text((B737R_rowList[0] + 10, B737R_lineC_1 + 10), ' C', '#ffffff', font=font)
+                            ImageDraw_B737R.text((B737R_rowList[0] + 10, B737R_lineB_1 + 10), ' B', '#ffffff', font=font)
+                            ImageDraw_B737R.text((B737R_rowList[0] + 10, B737R_lineA_1 + 10), ' A', '#ffffff', font=font)
+
+                            ImageDraw_B737R.text((B737R_rowList[3], B737R_lineD_2), ' D', '#ffffff', font=font)
+                            ImageDraw_B737R.text((B737R_rowList[3], B737R_lineC_2), ' C', '#ffffff', font=font)
+                            ImageDraw_B737R.text((B737R_rowList[3], B737R_lineB_2), ' B', '#ffffff', font=font)
+                            ImageDraw_B737R.text((B737R_rowList[3], B737R_lineA_2), ' A', '#ffffff', font=font)
+
+                        img_B737R.save('SeatOutput.png')
+
+
                     else:
                         currentSeat = 'N/A'
 
@@ -1058,6 +1230,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper()[-3:]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{currentSeat.upper().replace(' ', '-')[:4]}-{dept.upper()[:5]}".replace(':', '-').replace(' ', '-').replace('.', '-')
 
                     im1 = Image.open('Bout.png')
+
                     # BQR = f'https://api.qrserver.com/v1/create-qr-rde/?size=200x200&data={paxData}'
                     # print(BQR)
                     #
@@ -1074,7 +1247,9 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             This is your boarding pass. Our staff will validate it soon. Have a nice flight!
                             '''))
                     await ctx.reply(file=discord.File('Bout.png'))
-                    await ctx.reply(file=discord.File('SeatOutput.png'))
+
+                    if currentSeat != 'N/A':
+                        await ctx.reply(file=discord.File('SeatOutput.png'))
 
 
 
@@ -1084,8 +1259,400 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ('hi' in ctxcontent and len(
-                        ctxcontent) == 2) or 'hello' in ctxcontent or 'sup' in ctxcontent or 'helo' in ctxcontent or 'hey' in ctxcontent:
+                elif ctx.content == '!createBoardingPass':
+                    user = ctx.author
+                    role = discord.utils.find(lambda r: r.name == 'Check-In Assistant', user.roles)
+
+                    if role in user.roles:
+                        from PIL import Image
+                        from PIL import ImageFont
+                        from PIL import ImageDraw
+
+                        await ctx.reply(GoogleTranslator(target=lang).translate('FLNUM DEPARPT DEP DESTARPT DES GAME PAXNAME CLASS SEAT DATE DEPTIME'))
+                        await ctx.reply(GoogleTranslator(target=lang).translate('Passenger Info:'))
+                        notFoundReply = 1
+                        try:
+                            message = await bot.wait_for("message",
+                                                         check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                         timeout=60.0)
+                        except asyncio.TimeoutError:
+                            await ctx.channel.send("You took to long to respond")
+                            asyncio.as_completed()
+                        else:
+                            paxInfo = message.content
+                            if paxInfo == 'cancel':
+                                await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
+                                asyncio.as_completed()
+
+                        img = Image.open("Bsamp.png")
+                        ImageDraw = ImageDraw.ImageDraw(img)
+
+                        font = ImageFont.truetype("Consolas.ttf", 48)
+
+                        paxinfolist = paxInfo.split(' ')
+                        flnum, deparpt , deparptcode, dest, destcode, Game, disname, clss, currentSeat, date, dept = paxInfo.split(' ')
+                        ImageDraw.text((30, 180), flnum.upper()[:6], (0, 0, 0), font=font)
+                        ImageDraw.text((530, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparptcode.upper()[:3], (0, 0, 0), font=font)
+                        ImageDraw.text((1030, 180), dest.upper().split(' ')[0][:14] + ' ' + destcode.upper()[:3], (0, 0, 0), font=font)
+                        ImageDraw.text((1730, 180), Game.upper()[:9], (0, 0, 0), font=font)
+                        ImageDraw.text((30, 480), disname.upper()[:14], (0, 0, 0), font=font)
+                        ImageDraw.text((530, 480), clss.upper()[:9], (0, 0, 0), font=font)
+                        ImageDraw.text((1030, 480), currentSeat.upper()[:3], (0, 0, 0), font=font)
+                        ImageDraw.text((1330, 480), date.upper()[:5], (0, 0, 0), font=font)
+                        ImageDraw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
+
+                        img.save('Bout.png')
+
+
+                        await ctx.reply(GoogleTranslator(target=lang).translate('Create seat map (+|-):'))
+                        notFoundReply = 1
+                        try:
+                            message = await bot.wait_for("message",
+                                                         check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                         timeout=60.0)
+                        except asyncio.TimeoutError:
+                            await ctx.channel.send("You took to long to respond")
+                            asyncio.as_completed()
+                        else:
+                            createSeatMap = message.content
+                            if createSeatMap == 'cancel':
+                                await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
+                                asyncio.as_completed()
+
+
+                        if createSeatMap == '+':
+                            await ctx.reply(GoogleTranslator(target=lang).translate('Aircraft:'))
+                            try:
+                                message = await bot.wait_for("message",
+                                                             check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                             timeout=60.0)
+                            except asyncio.TimeoutError:
+                                await ctx.channel.send("You took to long to respond")
+                                asyncio.as_completed()
+                            else:
+                                aircraft = message.content
+                                if aircraft == 'cancel':
+                                    await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
+                                    asyncio.as_completed()
+
+
+                            if aircraft.upper() == 'B737':
+
+                                from PIL import Image
+                                from PIL import ImageFont
+                                from PIL import ImageDraw
+                                B737_rowList = [1200, 1320, 1440, 1560, 1680, 1800, 1920, 2400, 2520, 2640, 2760, 2880, 3000, 3120, 3240]
+
+                                imgOut = Image.open("SeatOutput.png")
+                                imgB737_schema = Image.open("Seat-B737.png")
+                                imgOutN = imgOut.crop((0, 0, 4000, 3000))
+                                imgOutN.save("SeatOutput.png")
+                                imgOut = imgOutN.copy()
+                                imgB737_schema = imgB737_schema.copy()
+                                imgOut.paste(imgB737_schema, (0, 0))
+                                imgOut.save("SeatOutput.png")
+
+                                outlineWidth = 9
+                                font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+                                img_B737 = Image.open("SeatOutput.png")
+                                ImageDraw_B737 = ImageDraw.Draw(img_B737)
+
+                                B737bookedSeatsFile = open("B737_bookedSeats.txt")
+                                B737bookedSeatsCurrentFlight = B737bookedSeatsFile.read().split(' ')
+                                B737bookedSeatsFile.close()
+
+                                if len(B737bookedSeatsCurrentFlight) > 1:
+                                    for bookedSeat in range(1, len(B737bookedSeatsCurrentFlight)):
+
+                                        B737_rowCurrentFlight = int(B737bookedSeatsCurrentFlight[bookedSeat][:-1].replace(' ', ''))
+                                        B737_lineCurrentFlight = B737bookedSeatsCurrentFlight[bookedSeat][-1].replace(' ', '')
+
+                                        if B737_lineCurrentFlight == 'A':
+                                            B737_lineCurrentFlight = 1790
+                                        elif B737_lineCurrentFlight == 'B':
+                                            B737_lineCurrentFlight = 1670
+                                        elif B737_lineCurrentFlight == 'C':
+                                            B737_lineCurrentFlight = 1470
+                                        elif B737_lineCurrentFlight == 'D':
+                                            B737_lineCurrentFlight = 1350
+
+                                        if B737_rowCurrentFlight == 1 or 2:
+                                            currentSeatSize = int(comfortSeatSize)
+                                        else:
+                                            currentSeatSize = int(economySeatSize)
+
+                                        ImageDraw_B737.rectangle(
+                                            (B737_rowList[B737_rowCurrentFlight - 1], B737_lineCurrentFlight, B737_rowList[B737_rowCurrentFlight - 1] + 100,
+                                             B737_lineCurrentFlight + 100), fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                                currentClass = clss.upper()
+
+                                if currentClass.upper() == 'ECONOMY':
+                                    currentSeat = random.choice(B737_economySeatListCurrent)
+                                    B737_economySeatListCurrent.remove(currentSeat)
+
+                                elif currentClass.upper() == 'COMFORT':
+                                    currentSeat = random.choice(B737_comfoftSeatListCurrent)
+                                    B737_comfoftSeatListCurrent.remove(currentSeat)
+
+                                B737_row = int(currentSeat[:-1])
+                                B737_line = currentSeat[-1]
+
+                                if B737_line == 'A':
+                                    B737_line = 1790
+                                elif B737_line == 'B':
+                                    B737_line = 1670
+                                elif B737_line == 'C':
+                                    B737_line = 1470
+                                elif B737_line == 'D':
+                                    B737_line = 1350
+
+                                seatCoord = [B737_row, B737_line]
+
+                                if B737_row == 1 or 2:
+                                    currentSeatSize = int(comfortSeatSize)
+                                else:
+                                    currentSeatSize = int(economySeatSize)
+
+                                B737bookedSeatsFile = open("B737_bookedSeats.txt", 'w')
+                                B737bookedSeatsFile.write(f"{' '.join(B737bookedSeatsCurrentFlight)} {currentSeat}")
+                                B737bookedSeatsFile.close()
+
+                                ImageDraw_B737.rectangle((B737_rowList[B737_row - 1], B737_line, B737_rowList[B737_row - 1] + 100, B737_line + 100),
+                                                         fill='red',
+                                                         outline='#ffffff', width=outlineWidth)
+
+                                font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+                                ImageDraw_B737.text((B737_row1, B737_lineD), ' D', '#ffffff', font=font)
+                                ImageDraw_B737.text((B737_row1, B737_lineC), ' C', '#ffffff', font=font)
+                                ImageDraw_B737.text((B737_row1, B737_lineB), ' B', '#ffffff', font=font)
+                                ImageDraw_B737.text((B737_row1, B737_lineA), ' A', '#ffffff', font=font)
+
+                                img_B737.save('SeatOutput.png')
+
+
+                            elif aircraft.upper() == 'A350':
+                                from PIL import Image
+                                from PIL import ImageFont
+                                from PIL import ImageDraw
+
+                                imgOut = Image.open("SeatOutput.png")
+                                imgA350_schema = Image.open("Seat-A350.png")
+                                imgOutN = imgOut.crop((0, 0, 4000, 3000))
+                                imgOutN.save("SeatOutput.png")
+                                imgOut = imgOutN.copy()
+                                imgA350_schema = imgA350_schema.copy()
+                                imgOut.paste(imgA350_schema, (0, 0))
+                                imgOut.save("SeatOutput.png")
+
+                                A350bookedSeatsFile = open("A350_bookedSeats.txt")
+                                A350bookedSeatsCurrentFlight = A350bookedSeatsFile.read().split(' ')
+                                A350bookedSeatsFile.close()
+
+                                currentClass = clss.upper()
+                                outlineWidth = 9
+                                font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+                                if currentClass == 'BUSINESS':
+                                    currentSeat = random.choice(A350_businessSeatList)
+                                    A350bookedSeatsCurrentFlight.append(currentSeat)
+                                elif currentClass == 'COMFORT':
+                                    currentSeat = random.choice(A350_comfortSeatList)
+                                    A350bookedSeatsCurrentFlight.append(currentSeat)
+                                else:
+                                    currentSeat = random.choice(A350_economySeatList)
+                                    A350bookedSeatsCurrentFlight.append(currentSeat)
+
+                                A350bookedSeatsFile = open("A350_bookedSeats.txt", 'w')
+                                A350bookedSeatsFile.write(f"{' '.join(A350bookedSeatsCurrentFlight)}")
+                                A350bookedSeatsFile.close()
+
+                                A350_row = int(currentSeat[:-1])
+                                A350_line = currentSeat[-1]
+
+                                if len(A350bookedSeatsCurrentFlight) > 1:
+                                    for bookedSeat in range(1, len(A350bookedSeatsCurrentFlight)):
+                                        A350_rowCurrentFlight = int(A350bookedSeatsCurrentFlight[bookedSeat][:-1].replace(' ', ''))
+                                        A350_lineCurrentFlight = A350bookedSeatsCurrentFlight[bookedSeat][-1].replace(' ', '')
+
+                                        if int(A350_rowCurrentFlight) < 7:
+                                            if A350_lineCurrentFlight == 'A':
+                                                A350_lineCurrentFlight = 2010
+                                            elif A350_lineCurrentFlight == 'B':
+                                                A350_lineCurrentFlight = 1760
+                                            elif A350_lineCurrentFlight == 'C':
+                                                A350_lineCurrentFlight = 1620
+                                            elif A350_lineCurrentFlight == 'D':
+                                                A350_lineCurrentFlight = 1350
+
+                                            ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
+                                                                      A350_rowList[A350_rowCurrentFlight - 1] + 120, A350_lineCurrentFlight + 120),
+                                                                     fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                                        else:
+                                            if A350_lineCurrentFlight == 'A':
+                                                A350_lineCurrentFlight = 2030
+                                            elif A350_lineCurrentFlight == 'B':
+                                                A350_lineCurrentFlight = 1920
+                                            elif A350_lineCurrentFlight == 'C':
+                                                A350_lineCurrentFlight = 1745
+                                            elif A350_lineCurrentFlight == 'D':
+                                                A350_lineCurrentFlight = 1635
+                                            elif A350_lineCurrentFlight == 'E':
+                                                A350_lineCurrentFlight = 1460
+                                            elif A350_lineCurrentFlight == 'F':
+                                                A350_lineCurrentFlight = 1350
+
+                                            ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
+                                                                      A350_rowList[A350_rowCurrentFlight - 1] + 100, A350_lineCurrentFlight + 100),
+                                                                     fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                                    if int(A350_rowCurrentFlight) < 7:
+                                        ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
+                                                                  A350_rowList[A350_rowCurrentFlight - 1] + 120, A350_lineCurrentFlight + 120),
+                                                                 fill='red', outline='#ffffff', width=outlineWidth)
+                                    else:
+                                        ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
+                                                                  A350_rowList[A350_rowCurrentFlight - 1] + 100, A350_lineCurrentFlight + 100),
+                                                                 fill='red', outline='#ffffff', width=outlineWidth)
+
+                                    ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineD_1 + 10), ' D', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineC_1 + 10), ' C', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineB_1 + 10), ' B', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineA_1 + 10), ' A', '#ffffff', font=font)
+
+                                    ImageDraw_A350.text((A350_rowList[6], A350_lineF_2), ' A', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[6], A350_lineE_2), ' B', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[7], A350_lineD_2), ' C', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[7], A350_lineC_2), ' D', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[6], A350_lineB_2), ' E', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[6], A350_lineA_2), ' F', '#ffffff', font=font)
+
+                                    ImageDraw_A350.text((A350_rowList[13], A350_lineF_2), ' A', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[13], A350_lineE_2), ' B', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[13], A350_lineD_2), ' C', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[13], A350_lineC_2), ' D', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[13], A350_lineB_2), ' E', '#ffffff', font=font)
+                                    ImageDraw_A350.text((A350_rowList[13], A350_lineA_2), ' F', '#ffffff', font=font)
+
+                                img_A350.save('SeatOutput.png')
+
+
+                            elif aircraft.upper() == 'B737R':
+                                from PIL import Image
+                                from PIL import ImageFont
+                                from PIL import ImageDraw
+
+                                imgOut = Image.open("SeatOutput.png")
+                                imgB737R_schema = Image.open("Seat-B737R.png")
+                                imgOutN = imgOut.crop((0, 0, 4000, 3000))
+                                imgOutN.save("SeatOutput.png")
+                                imgOut = imgOutN.copy()
+                                imgB737R_schema = imgB737R_schema.copy()
+                                imgOut.paste(imgB737R_schema, (0, 0))
+                                imgOut.save("SeatOutput.png")
+
+                                B737RbookedSeatsFile = open("B737R_bookedSeats.txt")
+                                B737RbookedSeatsCurrentFlight = B737RbookedSeatsFile.read().split(' ')
+                                B737RbookedSeatsFile.close()
+
+                                currentClass = clss.upper()
+                                currentSeat = paxinfolist[8]
+                                B737RbookedSeatsCurrentFlight.append(currentSeat)
+                                outlineWidth = 9
+                                font = ImageFont.truetype("Stem-Medium.ttf", 81)
+
+
+                                B737RbookedSeatsFile = open("B737R_bookedSeats.txt", 'w')
+                                B737RbookedSeatsFile.write(f"{' '.join(B737RbookedSeatsCurrentFlight)}")
+                                B737RbookedSeatsFile.close()
+
+                                B737R_row = int(currentSeat[:-1])
+                                B737R_line = currentSeat[-1]
+
+                                if len(B737RbookedSeatsCurrentFlight) > 1:
+                                    for bookedSeat in range(1, len(B737RbookedSeatsCurrentFlight)):
+
+                                        B737R_rowCurrentFlight = int(B737RbookedSeatsCurrentFlight[bookedSeat][:-1].replace(' ', ''))
+                                        B737R_lineCurrentFlight = B737RbookedSeatsCurrentFlight[bookedSeat][-1].replace(' ', '')
+
+                                        if int(B737R_rowCurrentFlight) < 4:
+                                            if B737R_lineCurrentFlight == 'A':
+                                                B737R_lineCurrentFlight = 1810
+                                            elif B737R_lineCurrentFlight == 'B':
+                                                B737R_lineCurrentFlight = 1670
+                                            elif B737R_lineCurrentFlight == 'C':
+                                                B737R_lineCurrentFlight = 1490
+                                            elif B737R_lineCurrentFlight == 'D':
+                                                B737R_lineCurrentFlight = 1350
+
+                                            ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                                       B737R_rowList[B737R_rowCurrentFlight - 1] + 120, B737R_lineCurrentFlight + 120),
+                                                                      fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                                        elif int(B737R_rowCurrentFlight) >= 4:
+                                            if B737R_lineCurrentFlight == 'A':
+                                                B737R_lineCurrentFlight = 1830
+                                            elif B737R_lineCurrentFlight == 'B':
+                                                B737R_lineCurrentFlight = 1710
+                                            elif B737R_lineCurrentFlight == 'C':
+                                                B737R_lineCurrentFlight = 1470
+                                            elif B737R_lineCurrentFlight == 'D':
+                                                B737R_lineCurrentFlight = 1350
+
+                                            if int(B737R_rowCurrentFlight) < 7:
+                                                ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                                           B737R_rowList[B737R_rowCurrentFlight - 1] + 100, B737R_lineCurrentFlight + 100),
+                                                                          fill='#646464', outline='#ffffff', width=outlineWidth)
+                                            else:
+                                                ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                                           B737R_rowList[B737R_rowCurrentFlight - 1] + 100, B737R_lineCurrentFlight + 100),
+                                                                          fill='#646464', outline='#ffffff', width=outlineWidth)
+
+                                    if int(B737R_rowCurrentFlight) < 4:
+                                        ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                                   B737R_rowList[B737R_rowCurrentFlight - 1] + 120, B737R_lineCurrentFlight + 120),
+                                                                  fill='red', outline='#ffffff', width=outlineWidth)
+                                    else:
+                                        ImageDraw_B737R.rectangle((B737R_rowList[B737R_rowCurrentFlight - 1], B737R_lineCurrentFlight,
+                                                                   B737R_rowList[B737R_rowCurrentFlight - 1] + 100, B737R_lineCurrentFlight + 100),
+                                                                  fill='red', outline='#ffffff', width=outlineWidth)
+
+                                    ImageDraw_B737R.text((B737R_rowList[0] + 10, B737R_lineD_1 + 10), ' D', '#ffffff', font=font)
+                                    ImageDraw_B737R.text((B737R_rowList[0] + 10, B737R_lineC_1 + 10), ' C', '#ffffff', font=font)
+                                    ImageDraw_B737R.text((B737R_rowList[0] + 10, B737R_lineB_1 + 10), ' B', '#ffffff', font=font)
+                                    ImageDraw_B737R.text((B737R_rowList[0] + 10, B737R_lineA_1 + 10), ' A', '#ffffff', font=font)
+
+                                    ImageDraw_B737R.text((B737R_rowList[3], B737R_lineD_2), ' D', '#ffffff', font=font)
+                                    ImageDraw_B737R.text((B737R_rowList[3], B737R_lineC_2), ' C', '#ffffff', font=font)
+                                    ImageDraw_B737R.text((B737R_rowList[3], B737R_lineB_2), ' B', '#ffffff', font=font)
+                                    ImageDraw_B737R.text((B737R_rowList[3], B737R_lineA_2), ' A', '#ffffff', font=font)
+
+                                img_B737R.save('SeatOutput.png')
+
+
+                            await ctx.reply(file=discord.File('SeatOutput.png'))
+
+
+
+
+
+                        await ctx.reply(file=discord.File('Bout.png'))
+
+                    else:
+                        await ctx.reply('No permission')
+
+
+
+
+
+
+
+
+
+                elif ('hi' in ctxcontent and len(ctxcontent) == 2) or 'hello' in ctxcontent or 'sup' in ctxcontent or 'helo' in ctxcontent or 'hey' in ctxcontent:
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Hello, how may I help you?'))
 
@@ -1758,4 +2325,4 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 bottoken = open('token.txt')
 bottokens = bottoken.read()
-bot.run(f'{bottokens}') 
+bot.run(f'{bottokens}')
