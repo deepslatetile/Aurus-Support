@@ -1815,7 +1815,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ctxcontent == '!schupd':
+                elif ctx.content == '!schupd':
                     notFoundReply = 1
                     user = ctx.author
                     role = discord.utils.find(lambda r: r.name == 'Schedule Editor', user.roles)
