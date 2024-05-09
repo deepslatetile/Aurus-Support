@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.4.1
+# Release 1.4.2
 
 
 import discord
@@ -1160,6 +1160,10 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         currentSeat = 'N/A'
 
 
+                    if currentSeat != 'N/A':
+                        await ctx.reply(file=discord.File('SeatOutput.png'))
+
+
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Departure airport:'))
                     notFoundReply = 1
@@ -1248,8 +1252,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             '''))
                     await ctx.reply(file=discord.File('Bout.png'))
 
-                    if currentSeat != 'N/A':
-                        await ctx.reply(file=discord.File('SeatOutput.png'))
+
 
 
 
