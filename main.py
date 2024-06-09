@@ -1,8 +1,7 @@
-
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.5
+# Release 1.5.2
 
 
 import discord
@@ -15,13 +14,9 @@ from PIL import ImageDraw
 import random
 import time
 
-
 prefix = ""
 
 bot = commands.Bot(command_prefix=prefix)
-
-
-
 
 questsList = ['"Seoul Mate" - visit Seoul ICN and Seoul GMP in 48h',
               '"Dora the Explorer" - visit at least one airport in Europe, Asia, South America, North America, Africa, Australia, Oceania',
@@ -67,8 +62,7 @@ questsList = ['"Seoul Mate" - visit Seoul ICN and Seoul GMP in 48h',
               '"King" - be the only passenger on board',
               '"Hungry" - take 3 or more meals in one of categories',
               '"Rock, paper, scissors" - win in rock,paper, scissors with any passenger (not your alt or friend)'
-]
-
+              ]
 
 # B737R properties
 
@@ -83,11 +77,10 @@ economyColor = '#9bc6ff'
 comfortColor = '#559de5'
 businessColor = '#0d62c9'
 
-
 B737R_economySeatList = ['7A', '7B', '7C', '7D', '8A', '8B', '8C', '8D', '9A', '9B', '9C', '9D', '10A', '10B', '10C', '10D', '11A', '11B', '11C', '11D', '12A',
-                        '12B','12C', '12D', '13A', '13B', '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D', '16A', '16B', '16C', '16D',
-                        '17A', '17B', '17C', '17D', '18A', '18B', '18C', '18D', '19A', '19B', '19C', '19D', '20A', '20B', '20C', '20D', '21A', '21B', '21C',
-                        '21D', '22A', '22B', '22C', '22D', '23A', '23B', '23C', '23D']
+                         '12B', '12C', '12D', '13A', '13B', '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D', '16A', '16B', '16C', '16D',
+                         '17A', '17B', '17C', '17D', '18A', '18B', '18C', '18D', '19A', '19B', '19C', '19D', '20A', '20B', '20C', '20D', '21A', '21B', '21C',
+                         '21D', '22A', '22B', '22C', '22D', '23A', '23B', '23C', '23D']
 
 B737R_comfortSeatList = ['4A', '4B', '4C', '4D', '5A', '5B', '5C', '5D', '6A', '6B', '6C', '6D']
 
@@ -96,7 +89,6 @@ B737R_businessSeatList = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '3A', 
 B737R_economySeatListCurrent = []
 B737R_comfortSeatListCurrent = []
 B737R_businessSeatListCurrent = []
-
 
 B737RbookedSeatsFile = open("B737R_bookedSeats.txt")
 B737RbookedSeatsCurrentFlight = B737RbookedSeatsFile.read().split(' ')
@@ -115,7 +107,6 @@ for seatAvailBusinessB737R in range(len(B737R_businessSeatList)):
 outlineWidth = 9
 font = ImageFont.truetype("Stem-Medium.ttf", 81)
 
-
 B737R_rowList = [1200, 1340, 1480, 1620, 1740, 1860, 1980, 2100, 2220, 2340, 2460, 2580, 2700, 2820, 2940, 3060, 3180, 3300, 3420, 3540, 3660, 3780, 3900]
 
 B737R_lineA_1 = 1810
@@ -126,13 +117,6 @@ B737R_lineA_2 = 1830
 B737R_lineB_2 = 1710
 B737R_lineC_2 = 1470
 B737R_lineD_2 = 1350
-
-
-
-
-
-
-
 
 # B737 properties
 
@@ -145,7 +129,9 @@ comfortSeatSize = 100
 economyColor = '#9bc6ff'
 comfortColor = '#559de5'
 
-B737_economySeatList = ['3A', '3B', '3C', '3D', '4A', '4B', '4C', '4D', '5A', '5B', '5C', '5D', '6A', '6B', '6C', '6D', '7A', '7B', '7C', '7D', '8A', '8B', '8C', '8D', '9A', '9B', '9C', '9D', '10A', '10B', '10C', '10D', '11A', '11B', '11C', '11D', '12A', '12B', '12C', '12D', '13A', '13B', '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D']
+B737_economySeatList = ['3A', '3B', '3C', '3D', '4A', '4B', '4C', '4D', '5A', '5B', '5C', '5D', '6A', '6B', '6C', '6D', '7A', '7B', '7C', '7D', '8A', '8B',
+                        '8C', '8D', '9A', '9B', '9C', '9D', '10A', '10B', '10C', '10D', '11A', '11B', '11C', '11D', '12A', '12B', '12C', '12D', '13A', '13B',
+                        '13C', '13D', '14A', '14B', '14C', '14D', '15A', '15B', '15C', '15D']
 B737_comfoftSeatList = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D']
 
 B737_economySeatListCurrent = []
@@ -188,9 +174,6 @@ B737_lineB = 1670
 B737_lineC = 1470
 B737_lineD = 1350
 
-
-
-
 # A350 properties
 
 img_A350 = Image.open("Seat-A350.png")
@@ -203,7 +186,6 @@ businessSeatSize = 120
 economyColor = '#9bc6ff'
 comfortColor = '#559de5'
 businessColor = '#0d62c9'
-
 
 A350_economySeatList = ['10A', '10B', '10C', '10D', '10E', '10F', '11A', '11B', '11C', '11D', '11E', '11F', '12A', '12B', '12C', '12D', '12E', '12F', '13A',
                         '13B', '13C', '13D', '13E', '13F', '14A', '14B', '14C', '14D', '14E', '14F', '15A', '15B', '15C', '15D', '15E', '15F', '16A', '16B',
@@ -218,7 +200,6 @@ A350_businessSeatList = ['1A', '1B', '1C', '1D', '2A', '2B', '2C', '2D', '3A', '
 A350_economySeatListCurrent = []
 A350_comfortSeatListCurrent = []
 A350_businessSeatListCurrent = []
-
 
 A350bookedSeatsFile = open("A350_bookedSeats.txt")
 A350bookedSeatsCurrentFlight = A350bookedSeatsFile.read().split(' ')
@@ -250,12 +231,11 @@ A350_lineD_2 = 1635
 A350_lineE_2 = 1460
 A350_lineF_2 = 1350
 
-
-
-
-
-
-
+langlist = ['af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'dz', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa',
+            'fi', 'fo', 'fr', 'ga', 'gl', 'gu', 'he', 'hi', 'hr', 'ht', 'hu', 'hy', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk', 'km', 'kn', 'ko', 'ku', 'ky',
+            'la', 'lb', 'lo', 'lt', 'lv', 'mg', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'nb', 'ne', 'nl', 'nn', 'no', 'oc', 'or', 'pa', 'pl', 'ps', 'pt', 'qu',
+            'ro', 'ru', 'rw', 'se', 'si', 'sk', 'sl', 'sq', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tl', 'tr', 'ug', 'uk', 'ur', 'vi', 'vo', 'wa', 'xh', 'zh',
+            'zu']
 
 
 @bot.event
@@ -275,9 +255,9 @@ class B737bookedSeatsCurrentFlight:
 @bot.event
 async def on_message(ctx):
     if ctx.author != bot.user:
-        channelsOpen = [bot.get_channel(1190520793453572107), bot.get_channel(1197626715875311747), bot.get_channel(1198600734413951036), bot.get_channel(1238184152159748146), bot.get_channel(1238184179645288498)]
+        channelsOpen = [bot.get_channel(1190520793453572107), bot.get_channel(1197626715875311747), bot.get_channel(1198600734413951036),
+                        bot.get_channel(1238184152159748146), bot.get_channel(1238184179645288498)]
         notFoundReply = 0
-
 
         if ctx.content[0:7] == '!wakeup':
             notFoundReply = 1
@@ -294,322 +274,26 @@ async def on_message(ctx):
             else:
                 await ctx.reply('No permission')
 
-
-
         if ctx.channel in channelsOpen:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
 
-
-
                 if ctx.content[0] == '.' and ctx.content[:4] != '.bal':
-                        if ctx.content[0:4] == '.af ':
-                            lang = 'af'
-
-                        if ctx.content[0:4] == '.am ':
-                            lang = 'am'
-
-                        if ctx.content[0:4] == '.an ':
-                            lang = 'an'
-
-                        if ctx.content[0:4] == '.ar ':
-                            lang = 'ar'
-
-                        if ctx.content[0:4] == '.as ':
-                            lang = 'as'
-
-                        if ctx.content[0:4] == '.az ':
-                            lang = 'az'
-
-                        if ctx.content[0:4] == '.be ':
-                            lang = 'be'
-
-                        if ctx.content[0:4] == '.bg ':
-                            lang = 'bg'
-
-                        if ctx.content[0:4] == '.bn ':
-                            lang = 'bn'
-
-                        if ctx.content[0:4] == '.br ':
-                            lang = 'br'
-
-                        if ctx.content[0:4] == '.bs ':
-                            lang = 'bs'
-
-                        if ctx.content[0:4] == '.ca ':
-                            lang = 'ca'
-
-                        if ctx.content[0:4] == '.cs ':
-                            lang = 'cs'
-
-                        if ctx.content[0:4] == '.cy ':
-                            lang = 'cy'
-
-                        if ctx.content[0:4] == '.da ':
-                            lang = 'da'
-
-                        if ctx.content[0:4] == '.de ':
-                            lang = 'de'
-
-                        if ctx.content[0:4] == '.dz ':
-                            lang = 'dz'
-
-                        if ctx.content[0:4] == '.el ':
-                            lang = 'el'
-
-                        if ctx.content[0:4] == '.en ':
-                            lang = 'en'
-
-                        if ctx.content[0:4] == '.eo ':
-                            lang = 'eo'
-
-                        if ctx.content[0:4] == '.es ':
-                            lang = 'es'
-
-                        if ctx.content[0:4] == '.et ':
-                            lang = 'et'
-
-                        if ctx.content[0:4] == '.eu ':
-                            lang = 'eu'
-
-                        if ctx.content[0:4] == '.fa ':
-                            lang = 'fa'
-
-                        if ctx.content[0:4] == '.fi ':
-                            lang = 'fi'
-
-                        if ctx.content[0:4] == '.fo ':
-                            lang = 'fo'
-
-                        if ctx.content[0:4] == '.fr ':
-                            lang = 'fr'
-
-                        if ctx.content[0:4] == '.ga ':
-                            lang = 'ga'
-
-                        if ctx.content[0:4] == '.gl ':
-                            lang = 'gl'
-
-                        if ctx.content[0:4] == '.gu ':
-                            lang = 'gu'
-
-                        if ctx.content[0:4] == '.he ':
-                            lang = 'he'
-
-                        if ctx.content[0:4] == '.hi ':
-                            lang = 'hi'
-
-                        if ctx.content[0:4] == '.hr ':
-                            lang = 'hr'
-
-                        if ctx.content[0:4] == '.ht ':
-                            lang = 'ht'
-
-                        if ctx.content[0:4] == '.hu ':
-                            lang = 'hu'
-
-                        if ctx.content[0:4] == '.hy ':
-                            lang = 'hy'
-
-                        if ctx.content[0:4] == '.id ':
-                            lang = 'id'
-
-                        if ctx.content[0:4] == '.is ':
-                            lang = 'is'
-
-                        if ctx.content[0:4] == '.it ':
-                            lang = 'it'
-
-                        if ctx.content[0:4] == '.ja ':
-                            lang = 'ja'
-
-                        if ctx.content[0:4] == '.jv ':
-                            lang = 'jv'
-
-                        if ctx.content[0:4] == '.ka ':
-                            lang = 'ka'
-
-                        if ctx.content[0:4] == '.kk ':
-                            lang = 'kk'
-
-                        if ctx.content[0:4] == '.km ':
-                            lang = 'km'
-
-                        if ctx.content[0:4] == '.kn ':
-                            lang = 'kn'
-
-                        if ctx.content[0:4] == '.ko ':
-                            lang = 'ko'
-
-                        if ctx.content[0:4] == '.ku ':
-                            lang = 'ku'
-
-                        if ctx.content[0:4] == '.ky ':
-                            lang = 'ky'
-
-                        if ctx.content[0:4] == '.la ':
-                            lang = 'la'
-
-                        if ctx.content[0:4] == '.lb ':
-                            lang = 'lb'
-
-                        if ctx.content[0:4] == '.lo ':
-                            lang = 'lo'
-
-                        if ctx.content[0:4] == '.lt ':
-                            lang = 'lt'
-
-                        if ctx.content[0:4] == '.lv ':
-                            lang = 'lv'
-
-                        if ctx.content[0:4] == '.mg ':
-                            lang = 'mg'
-
-                        if ctx.content[0:4] == '.mk ':
-                            lang = 'mk'
-
-                        if ctx.content[0:4] == '.ml ':
-                            lang = 'ml'
-
-                        if ctx.content[0:4] == '.mn ':
-                            lang = 'mn'
-
-                        if ctx.content[0:4] == '.mr ':
-                            lang = 'mr'
-
-                        if ctx.content[0:4] == '.ms ':
-                            lang = 'ms'
-
-                        if ctx.content[0:4] == '.mt ':
-                            lang = 'mt'
-
-                        if ctx.content[0:4] == '.nb ':
-                            lang = 'nb'
-
-                        if ctx.content[0:4] == '.ne ':
-                            lang = 'ne'
-                            ''
-                        if ctx.content[0:4] == '.nl ':
-                            lang = 'nl'
-
-                        if ctx.content[0:4] == '.nn ':
-                            lang = 'nn'
-
-                        if ctx.content[0:4] == '.no ':
-                            lang = 'no'
-
-                        if ctx.content[0:4] == '.oc ':
-                            lang = 'oc'
-
-                        if ctx.content[0:4] == '.or ':
-                            lang = 'or'
-
-                        if ctx.content[0:4] == '.pa ':
-                            lang = 'pa'
-
-                        if ctx.content[0:4] == '.pl ':
-                            lang = 'pl'
-
-                        if ctx.content[0:4] == '.ps ':
-                            lang = 'ps'
-
-                        if ctx.content[0:4] == '.pt ':
-                            lang = 'pt'
-
-                        if ctx.content[0:4] == '.qu ':
-                            lang = 'qu'
-
-                        if ctx.content[0:4] == '.ro ':
-                            lang = 'ro'
-
-                        if ctx.content[0:4] == '.ru ':
-                            lang = 'ru'
-
-                        if ctx.content[0:4] == '.rw ':
-                            lang = 'rw'
-
-                        if ctx.content[0:4] == '.se ':
-                            lang = 'se'
-
-                        if ctx.content[0:4] == '.si ':
-                            lang = 'si'
-
-                        if ctx.content[0:4] == '.sk ':
-                            lang = 'sk'
-
-                        if ctx.content[0:4] == '.sl ':
-                            lang = 'sl'
-
-                        if ctx.content[0:4] == '.sq ':
-                            lang = 'sq'
-
-                        if ctx.content[0:4] == '.sr ':
-                            lang = 'sr'
-
-                        if ctx.content[0:4] == '.sv ':
-                            lang = 'sv'
-
-                        if ctx.content[0:4] == '.sw ':
-                            lang = 'sw'
-
-                        if ctx.content[0:4] == '.ta ':
-                            lang = 'ta'
-
-                        if ctx.content[0:4] == '.te ':
-                            lang = 'te'
-
-                        if ctx.content[0:4] == '.th ':
-                            lang = 'th'
-
-                        if ctx.content[0:4] == '.tl ':
-                            lang = 'tl'
-
-                        if ctx.content[0:4] == '.tr ':
-                            lang = 'tr'
-
-                        if ctx.content[0:4] == '.ug ':
-                            lang = 'ug'
-
-                        if ctx.content[0:4] == '.uk ':
-                            lang = 'uk'
-
-                        if ctx.content[0:4] == '.ur ':
-                            lang = 'ur'
-
-                        if ctx.content[0:4] == '.vi ':
-                            lang = 'vi'
-
-                        if ctx.content[0:4] == '.vo ':
-                            lang = 'vo'
-
-                        if ctx.content[0:4] == '.wa ':
-                            lang = 'wa'
-
-                        if ctx.content[0:4] == '.xh ':
-                            lang = 'xh'
-
-                        if ctx.content[0:4] == '.zh ':
-                            lang = 'zh'
-
-                        if ctx.content[0:4] == '.zu ':
-                            lang = 'zu'
+                    if ctx.content[:4] in langlist:
+                        lang = ctx.content[1:3]
                 else:
                     lang = 'en'
 
                 if lang == 'en':
-                    ctxcontent = ctx.content
+                    if ctx.content[0] == '.':
+                        ctxcontent = ctx.content
+                    else:
+                        ctxcontent = ctx.content[4:]
                 else:
                     ctxcontent = (GoogleTranslator(source=lang, target='en').translate(ctx.content)).lower()[4:]
 
             if ctx.content[0] != '>' and ctx.author != bot.user:
                 if ctx.content[0] != '.' and notFoundReply == 0:
                     await ctx.add_reaction('🌐')
-
-
-
-
-
-
-
 
 
 
@@ -621,6 +305,11 @@ async def on_message(ctx):
 
 You can use bot in different languages. To get right response use ".lang" for language of your message and response. So, ".ru" is Russian, ".fr" for French.
 Note that our bot was made for Engligh specifically, so asking bot in English will result in better responses.
+Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br', 'bs', 'ca', 'cs', 'cy', 'da', 'de', 'dz', 'el', 'en', 'eo', 'es', 'et', 'eu', 'fa',
+            'fi', 'fo', 'fr', 'ga', 'gl', 'gu', 'he', 'hi', 'hr', 'ht', 'hu', 'hy', 'id', 'is', 'it', 'ja', 'jv', 'ka', 'kk', 'km', 'kn', 'ko', 'ku', 'ky',
+            'la', 'lb', 'lo', 'lt', 'lv', 'mg', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'nb', 'ne', 'nl', 'nn', 'no', 'oc', 'or', 'pa', 'pl', 'ps', 'pt', 'qu',
+            'ro', 'ru', 'rw', 'se', 'si', 'sk', 'sl', 'sq', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tl', 'tr', 'ug', 'uk', 'ur', 'vi', 'vo', 'wa', 'xh', 'zh',
+            'zu'.
                     """))
 
 
@@ -648,7 +337,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
                     frameFile = open("discordFlightFrames.txt", 'r')
                     frame = frameFile.read().split(',')
-
 
                     await ctx.reply("So, I thought that it would be funny if we do flights in Discord")
                     time.sleep(1.0)
@@ -725,7 +413,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     await ctx.reply(GoogleTranslator(target=lang).translate('Starting booking..'))
                     await ctx.reply(GoogleTranslator(target=lang).translate("Type 'cancel' anytime to cancel "))
 
-
                     await ctx.reply(GoogleTranslator(target=lang).translate('Passenger:'))
                     notFoundReply = 1
                     try:
@@ -774,7 +461,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Dep. Time: {dept}'))
 
-
                     await ctx.reply(GoogleTranslator(target=lang).translate('Date of flight (DD.MM): '))
                     notFoundReply = 1
                     try:
@@ -789,7 +475,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         if date == 'cancel':
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled booking'))
                             asyncio.as_completed()
-
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight number:'))
                     notFoundReply = 1
@@ -828,9 +513,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Class: {clss}'))
 
-
-
-
                     await ctx.reply(GoogleTranslator(target=lang).translate('Aircraft:'))
                     notFoundReply = 1
                     try:
@@ -847,7 +529,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             asyncio.as_completed()
                     # await ctx.reply(GoogleTranslator(target=lang).translate(f'Origin: {deparpt}'))
 
-
                     if aircraft.upper() == 'B737':
 
                         from PIL import Image
@@ -863,7 +544,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         imgB737_schema = imgB737_schema.copy()
                         imgOut.paste(imgB737_schema, (0, 0))
                         imgOut.save("SeatOutput.png")
-
 
                         outlineWidth = 9
                         font = ImageFont.truetype("Stem-Medium.ttf", 81)
@@ -899,10 +579,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                                     (B737_rowList[B737_rowCurrentFlight - 1], B737_lineCurrentFlight, B737_rowList[B737_rowCurrentFlight - 1] + 100,
                                      B737_lineCurrentFlight + 100), fill='#646464', outline='#ffffff', width=outlineWidth)
 
-
-
                         currentClass = clss.upper()
-
 
                         if currentClass.upper() == 'ECONOMY':
                             currentSeat = random.choice(B737_economySeatListCurrent)
@@ -936,8 +613,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         B737bookedSeatsFile.close()
 
                         ImageDraw_B737.rectangle((B737_rowList[B737_row - 1], B737_line, B737_rowList[B737_row - 1] + 100, B737_line + 100),
-                                       fill='red',
-                                       outline='#ffffff', width=outlineWidth)
+                                                 fill='red',
+                                                 outline='#ffffff', width=outlineWidth)
 
                         font = ImageFont.truetype("Stem-Medium.ttf", 81)
 
@@ -1004,8 +681,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                                         A350_lineCurrentFlight = 1350
 
                                     ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
-                                                        A350_rowList[A350_rowCurrentFlight - 1] + 120, A350_lineCurrentFlight + 120),
-                                                       fill='#646464', outline='#ffffff', width=outlineWidth)
+                                                              A350_rowList[A350_rowCurrentFlight - 1] + 120, A350_lineCurrentFlight + 120),
+                                                             fill='#646464', outline='#ffffff', width=outlineWidth)
 
                                 else:
                                     if A350_lineCurrentFlight == 'A':
@@ -1022,17 +699,17 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                                         A350_lineCurrentFlight = 1350
 
                                     ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
-                                                        A350_rowList[A350_rowCurrentFlight - 1] + 100, A350_lineCurrentFlight + 100),
-                                                       fill='#646464', outline='#ffffff', width=outlineWidth)
+                                                              A350_rowList[A350_rowCurrentFlight - 1] + 100, A350_lineCurrentFlight + 100),
+                                                             fill='#646464', outline='#ffffff', width=outlineWidth)
 
                             if int(A350_rowCurrentFlight) < 7:
                                 ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
-                                                    A350_rowList[A350_rowCurrentFlight - 1] + 120, A350_lineCurrentFlight + 120),
-                                                   fill='red', outline='#ffffff', width=outlineWidth)
+                                                          A350_rowList[A350_rowCurrentFlight - 1] + 120, A350_lineCurrentFlight + 120),
+                                                         fill='red', outline='#ffffff', width=outlineWidth)
                             else:
                                 ImageDraw_A350.rectangle((A350_rowList[A350_rowCurrentFlight - 1], A350_lineCurrentFlight,
-                                                    A350_rowList[A350_rowCurrentFlight - 1] + 100, A350_lineCurrentFlight + 100),
-                                                   fill='red', outline='#ffffff', width=outlineWidth)
+                                                          A350_rowList[A350_rowCurrentFlight - 1] + 100, A350_lineCurrentFlight + 100),
+                                                         fill='red', outline='#ffffff', width=outlineWidth)
 
                             ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineD_1 + 10), ' D', '#ffffff', font=font)
                             ImageDraw_A350.text((A350_rowList[0] + 10, A350_lineC_1 + 10), ' C', '#ffffff', font=font)
@@ -1160,11 +837,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     else:
                         currentSeat = 'N/A'
 
-
                     if currentSeat != 'N/A':
                         await ctx.reply(file=discord.File('SeatOutput.png'))
-
-
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Departure airport:'))
                     notFoundReply = 1
@@ -1229,10 +903,10 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                     ImageDraw.text((1330, 480), date.upper()[:5], (0, 0, 0), font=font)
                     ImageDraw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
 
-
                     img.save('Bout.png')
 
-                    paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper()[-3:]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{currentSeat.upper().replace(' ', '-')[:4]}-{dept.upper()[:5]}".replace(':', '-').replace(' ', '-').replace('.', '-')
+                    paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper()[-3:]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{currentSeat.upper().replace(' ', '-')[:4]}-{dept.upper()[:5]}".replace(
+                        ':', '-').replace(' ', '-').replace('.', '-')
 
                     im1 = Image.open('Bout.png')
 
@@ -1294,7 +968,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         font = ImageFont.truetype("Consolas.ttf", 48)
 
                         paxinfolist = paxInfo.split(' ')
-                        flnum, deparpt , deparptcode, dest, destcode, Game, disname, clss, currentSeat, date, dept = paxInfo.split(' ')
+                        flnum, deparpt, deparptcode, dest, destcode, Game, disname, clss, currentSeat, date, dept = paxInfo.split(' ')
                         ImageDraw.text((30, 180), flnum.upper()[:6], (0, 0, 0), font=font)
                         ImageDraw.text((530, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparptcode.upper()[:3], (0, 0, 0), font=font)
                         ImageDraw.text((1030, 180), dest.upper().split(' ')[0][:14] + ' ' + destcode.upper()[:3], (0, 0, 0), font=font)
@@ -1306,7 +980,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         ImageDraw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
 
                         img.save('Bout.png')
-
 
                         await ctx.reply(GoogleTranslator(target=lang).translate('Create seat map (+|-):'))
                         notFoundReply = 1
@@ -1323,7 +996,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                                 await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                                 asyncio.as_completed()
 
-
                         if createSeatMap == '+':
                             await ctx.reply(GoogleTranslator(target=lang).translate('Aircraft:'))
                             try:
@@ -1338,7 +1010,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                                 if aircraft == 'cancel':
                                     await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                                     asyncio.as_completed()
-
 
                             if aircraft.upper() == 'B737':
 
@@ -1568,7 +1239,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                                 outlineWidth = 9
                                 font = ImageFont.truetype("Stem-Medium.ttf", 81)
 
-
                                 B737RbookedSeatsFile = open("B737R_bookedSeats.txt", 'w')
                                 B737RbookedSeatsFile.write(f"{' '.join(B737RbookedSeatsCurrentFlight)}")
                                 B737RbookedSeatsFile.close()
@@ -1636,12 +1306,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
                                 img_B737R.save('SeatOutput.png')
 
-
                             await ctx.reply(file=discord.File('SeatOutput.png'))
-
-
-
-
 
                         await ctx.reply(file=discord.File('Bout.png'))
 
@@ -1656,7 +1321,8 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ('hi' in ctxcontent and len(ctxcontent) == 2) or 'hello' in ctxcontent or 'sup' in ctxcontent or 'helo' in ctxcontent or 'hey' in ctxcontent:
+                elif ('hi' in ctxcontent and len(
+                        ctxcontent) == 2) or 'hello' in ctxcontent or 'sup' in ctxcontent or 'helo' in ctxcontent or 'hey' in ctxcontent:
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Hello, how may I help you?'))
 
@@ -1866,15 +1532,6 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                 #         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
                 #         Siberian Regional - Aeronautica (Roblox)"""
 
-
-
-
-
-
-
-
-
-
                 elif ctxcontent == '!ping':
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate(f'Pong {bot.latency}'))
@@ -2075,7 +1732,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                 elif ctxcontent == '!jobs':
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate("""
-                    
+
                     Discord: Moderator, Support
                     PTFS: Pilot, copilot, ATC, cabin crew, ground crew
                     X-Plane & MSFS: Pilot
@@ -2329,34 +1986,40 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                             await ctx.reply('Account not found')
 
                     elif cmd == ".balChange":
-                        balFileR = open('balance.txt')
-                        balFile = balFileR.read()
-                        balList = balFile.split(' $ ')
-                        balFileR.close()
-                        balFileW = open('balance.txt', 'w')
+                        notFoundReply = 1
+                        userr = ctx.author
+                        role = discord.utils.find(lambda r: r.name == 'Miles Manager', userr.roles)
 
-                        if user not in balFile:
-                            balFileW.write(f"{user} 0 $ {balFile}")
-                            await ctx.reply(f"<@{user}> 0")
+                        if role in userr.roles:
+                            balFileR = open('balance.txt')
+                            balFile = balFileR.read()
+                            balList = balFile.split(' $ ')
+                            balFileR.close()
+                            balFileW = open('balance.txt', 'w')
+
+                            if user not in balFile:
+                                balFileW.write(f"{user} 0 $ {balFile}")
+                                await ctx.reply(f"<@{user}> 0")
+                            else:
+                                for person in range(len(balList)):
+                                    if str(user) == balList[person].split(" ")[0]:
+                                        print('user found')
+                                        userBal = balList[person].split(" ")[1]
+                                        amount = inData.split(' ')[2]
+
+                                        if amount[0] == "-":
+                                            balFileW.write(f"{user} {int(userBal) - int(amount[1:])} $ {balFile}")
+                                            await ctx.reply(f"<@{user}> {int(userBal) - int(amount[1:])}")
+                                        elif amount[0] == '+':
+                                            balFileW.write(f"{user} {int(userBal) + int(amount[1:])} $ {balFile}")
+                                            await ctx.reply(f"<@{user}> {int(userBal) + int(amount[1:])}")
+                                        else:
+                                            balFileW.write(f"{user} {int(amount)} $ {balFile}")
+                                            await ctx.reply(f"<@{user}> {int(amount)}")
+                            balFileW.close()
+
                         else:
-                            for person in range(len(balList)):
-                                if str(user) == balList[person].split(" ")[0]:
-                                    print('user found')
-                                    userBal = balList[person].split(" ")[1]
-                                    amount = inData.split(' ')[2]
-
-                                    if amount[0] == "-":
-                                        balFileW.write(f"{user} {int(userBal) - int(amount[1:])} $ {balFile}")
-                                        await ctx.reply(f"<@{user}> {int(userBal) - int(amount[1:])}")
-                                    elif amount[0] == '+':
-                                        balFileW.write(f"{user} {int(userBal) + int(amount[1:])} $ {balFile}")
-                                        await ctx.reply(f"<@{user}> {int(userBal) + int(amount[1:])}")
-                                    else:
-                                        balFileW.write(f"{user} {int(amount)} $ {balFile}")
-                                        await ctx.reply(f"<@{user}> {int(amount)}")
-                        balFileW.close()
-
-
+                            await ctx.reply('No permission')
 
 
 
@@ -2381,14 +2044,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
                 else:
                     await ctx.add_reaction('<❓>')
-                    print(GoogleTranslator(source=lang,target='en').translate(ctx.content))
-
-
-
-
-
-
-
+                    print(GoogleTranslator(source=lang, target='en').translate(ctx.content))
 
 
 bottoken = open('token.txt')
