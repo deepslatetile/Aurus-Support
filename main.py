@@ -301,7 +301,7 @@ async def on_message(ctx):
 
 
 
-                if ctx.content[0] == '.':
+                if ctx.content[0] == '.' and ctx.content[:4] != '.bal':
                         if ctx.content[0:4] == '.af ':
                             lang = 'af'
 
@@ -596,7 +596,7 @@ async def on_message(ctx):
                     lang = 'en'
 
                 if lang == 'en':
-                    ctxcontent = ctx.content[4:]
+                    ctxcontent = ctx.content
                 else:
                     ctxcontent = (GoogleTranslator(source=lang, target='en').translate(ctx.content)).lower()[4:]
 
