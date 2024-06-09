@@ -1,7 +1,8 @@
+
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.4.2
+# Release 1.5
 
 
 import discord
@@ -1886,7 +1887,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
 
 
 
-                elif ('job' in ctxcontent or 'work' in ctxcontent) and ('!jobs' not in ctxcontent and '!applicjob' not in ctxcontent):
+                elif ctx.content[0] != '!' and ('job' in ctxcontent or 'work' in ctxcontent) and ('!jobs' not in ctxcontent and '!applicjob' not in ctxcontent):
                     notFoundReply = 1
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Your username'))
@@ -2074,6 +2075,7 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                 elif ctxcontent == '!jobs':
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate("""
+                    
                     Discord: Moderator, Support
                     PTFS: Pilot, copilot, ATC, cabin crew, ground crew
                     X-Plane & MSFS: Pilot
@@ -2291,6 +2293,69 @@ Note that our bot was made for Engligh specifically, so asking bot in English wi
                         # await ctx.reply(GoogleTranslator(target=lang).translate(f"```{schedule}```"))
 
                     fl.close()
+
+
+
+
+
+
+
+
+
+
+                elif ctx.content[0] == '.' and '.bal' in ctx.content:
+                    inData = ctx.content
+
+                    user = ctx.author.id if len(inData.split(' ')) == 1 else inData.split(' ')[1][2:-1]
+
+                    cmd = inData.split(' ')[0]
+
+                    if cmd == ".bal":
+                        balFileR = open('balance.txt')
+                        balFile = balFileR.read()
+                        balList = balFile.split(' $ ')
+                        balFileR.close()
+
+                        if f'{user} ' in balFile:
+                            for person in range(len(balList)):
+                                if str(user) == balList[person].split(" ")[0]:
+                                    await ctx.reply(f'<@{user}> = {balList[person].split(" ")[1]}')
+                                    break
+                        else:
+                            # balFileW = open('balance.txt', 'w')
+                            # await ctx.reply(f'<@{user}> = 0')
+                            # balFileW.write(f"{balFile} $ {user} 0")
+                            # balFileW.close()
+                            await ctx.reply('Account not found')
+
+                    elif cmd == ".balChange":
+                        balFileR = open('balance.txt')
+                        balFile = balFileR.read()
+                        balList = balFile.split(' $ ')
+                        balFileR.close()
+                        balFileW = open('balance.txt', 'w')
+
+                        if user not in balFile:
+                            balFileW.write(f"{user} 0 $ {balFile}")
+                            await ctx.reply(f"<@{user}> 0")
+                        else:
+                            for person in range(len(balList)):
+                                if str(user) == balList[person].split(" ")[0]:
+                                    print('user found')
+                                    userBal = balList[person].split(" ")[1]
+                                    amount = inData.split(' ')[2]
+
+                                    if amount[0] == "-":
+                                        balFileW.write(f"{user} {int(userBal) - int(amount[1:])} $ {balFile}")
+                                        await ctx.reply(f"<@{user}> {int(userBal) - int(amount[1:])}")
+                                    elif amount[0] == '+':
+                                        balFileW.write(f"{user} {int(userBal) + int(amount[1:])} $ {balFile}")
+                                        await ctx.reply(f"<@{user}> {int(userBal) + int(amount[1:])}")
+                                    else:
+                                        balFileW.write(f"{user} {int(amount)} $ {balFile}")
+                                        await ctx.reply(f"<@{user}> {int(amount)}")
+                        balFileW.close()
+
 
 
 
