@@ -256,7 +256,7 @@ class B737bookedSeatsCurrentFlight:
 async def on_message(ctx):
     if ctx.author != bot.user:
         channelsOpen = [bot.get_channel(1190520793453572107), bot.get_channel(1197626715875311747), bot.get_channel(1198600734413951036),
-                        bot.get_channel(1238184152159748146), bot.get_channel(1238184179645288498)]
+                        bot.get_channel(1238184152159748146), bot.get_channel(1238184179645288498), bot.get_channel(1250104662174990396)]
         notFoundReply = 0
 
         if ctx.content[0:7] == '!wakeup':
