@@ -8,6 +8,11 @@
 # All files must be in the same folder // Все файлы должны храниться в одной папке
 
 
+# ZIP file for installation // ZIP файл для установки
+https://drive.google.com/file/d/1ViKoxZUluGxngjMsYx6d7u0ToA6ZbYJS/view?usp=sharing
+
+#
+
 Bot's folder // Папка с ботом
 
   ∟ main.py
