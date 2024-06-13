@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.5.2
+# Release 1.6
 
 
 import discord
@@ -486,7 +486,7 @@ async def on_message(ctx):
 
 
 
-                if ctx.content == '!help':
+                if 'help' in ctx.content or 'command' in ctx.content:
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate("""Special commands for best perfomance
                     !report - reports user
@@ -499,6 +499,11 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
             'la', 'lb', 'lo', 'lt', 'lv', 'mg', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'nb', 'ne', 'nl', 'nn', 'no', 'oc', 'or', 'pa', 'pl', 'ps', 'pt', 'qu',
             'ro', 'ru', 'rw', 'se', 'si', 'sk', 'sl', 'sq', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tl', 'tr', 'ug', 'uk', 'ur', 'vi', 'vo', 'wa', 'xh', 'zh',
             'zu'.
+            
+            So, if you want to book a ticket you may use something like `.en check-in` and bot will help you
+            And for partnership you can ask like `.en partner application`
+            No need to stick to the format, the more messages you send, the better our support bot can grow
+            You always can ask our Staff for help, enjoy!
                     """))
 
 
@@ -511,6 +516,8 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
+                elif 'staff' in ctx.content:
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Our staff is separated into 3 groups. C-level is Deepslate and Future which run this all. Staff level is Nikfirs and D3LTAREX, they help a lot and help with management. Crew level is all our crew, people who fly and help on ground. If you want to get a job in Aurus, try including "job" in your message'))
 
                 elif 'quest' in ctx.content:
                     quest = random.choice(questsList)
@@ -2172,7 +2179,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                             # await ctx.reply(f'<@{user}> = 0')
                             # balFileW.write(f"{balFile} $ {user} 0")
                             # balFileW.close()
-                            await ctx.reply('Account not found')
+                            await ctx.reply('Account not found, read more here https://discord.com/channels/870625915275735040/990232151821799424/1249298867598528533')
 
                     elif cmd == ".balChange":
                         notFoundReply = 1
