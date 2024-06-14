@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.6
+# Release 1.7
 
 
 import discord
@@ -1084,27 +1084,38 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                     from PIL import ImageFont
                     from PIL import ImageDraw
 
-                    img = Image.open("Bsamp.png")
+                    font = ImageFont.truetype("Stem-Medium.ttf", 64)
+                    fontBig = ImageFont.truetype("Stem-Medium.ttf", 96)
+                    currentClass = clss.upper()
+                    clss = currentClass
+
+                    imgOut = Image.open("Bout.png")
+
+                    if currentClass == 'COMFORT':
+                        img = Image.open("boardingPassComfort.png")
+                    elif currentClass == 'BUSINESS':
+                        img = Image.open("boardingPassBusiness.png")
+                    elif currentClass == 'FIRST':
+                        img = Image.open("boardingPassFirst.png")
+                    else:
+                        img = Image.open("boardingPassEconomy.png")
+
                     ImageDraw = ImageDraw.ImageDraw(img)
 
-                    font = ImageFont.truetype("Consolas.ttf", 48)
 
-                    ImageDraw.text((30, 180), flnum.upper()[:6], (0, 0, 0), font=font)
-                    ImageDraw.text((530, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparpt.upper()[-3:], (0, 0, 0), font=font)
-                    ImageDraw.text((1030, 180), dest.upper().split(' ')[0][:14] + ' ' + dest.upper()[-3:], (0, 0, 0), font=font)
-                    ImageDraw.text((1730, 180), Game.upper()[:9], (0, 0, 0), font=font)
-                    ImageDraw.text((30, 480), disname.upper()[:14], (0, 0, 0), font=font)
-                    ImageDraw.text((530, 480), clss.upper()[:9], (0, 0, 0), font=font)
-                    ImageDraw.text((1030, 480), currentSeat.upper()[:3], (0, 0, 0), font=font)
-                    ImageDraw.text((1330, 480), date.upper()[:5], (0, 0, 0), font=font)
-                    ImageDraw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
+                    ImageDraw.text((30, 170), flnum.upper()[:6], (255, 255, 255), font=fontBig)
+                    ImageDraw.text((500, 180), currentSeat.upper()[:3] if ' ' not in currentSeat else currentSeat.upper().split(' ')[0], (255, 255, 255),
+                                   font=font)
+                    ImageDraw.text((675, 180), date.upper()[:5], (255, 255, 255), font=font)
+                    ImageDraw.text((930, 180), dept.upper()[:5], (255, 255, 255), font=font)
+
+                    ImageDraw.text((1230, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparpt.upper()[-3:], (255, 255, 255), font=font)
+                    ImageDraw.text((1230, 360), dest.upper().split(' ')[0][:14] + ' ' + dest.upper()[-3:], (255, 255, 255), font=font)
+
+                    ImageDraw.text((30, 360), Game.upper()[:9], (255, 255, 255), font=font)
+                    ImageDraw.text((500, 360), disname.upper()[:14], (255, 255, 255), font=font)
 
                     img.save('Bout.png')
-
-                    paxData = f"{flnum.upper().replace(' ', '-')[:6]}-{deparpt.upper()[-3:]}-{dest.upper()[-3:]}-{Game.upper()[:9]}-{disname.upper()[:14]}-{clss.upper()[:9]}-{currentSeat.upper().replace(' ', '-')[:4]}-{dept.upper()[:5]}".replace(
-                        ':', '-').replace(' ', '-').replace('.', '-')
-
-                    im1 = Image.open('Bout.png')
 
                     # BQR = f'https://api.qrserver.com/v1/create-qr-rde/?size=200x200&data={paxData}'
                     # print(BQR)
@@ -2066,7 +2077,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif ctxcontent == '!applicjob':
+                elif ctx.content == '!applicjob':
                     notFoundReply = 1
                     jobappl = open('jobs.txt')
                     jobapplc = jobappl.read()
@@ -2080,7 +2091,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif ctxcontent == '!applicpart':
+                elif ctx.content == '!applicpart':
                     notFoundReply = 1
                     partappl = open('partner.txt')
                     partapplc = partappl.read()
