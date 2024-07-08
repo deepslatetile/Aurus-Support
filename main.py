@@ -1,7 +1,7 @@
 # Aurus Support
 # Made entirely by @_deepslate
 # Coded specifically for Aurus
-# Release 1.7
+# Release 1.8
 
 
 import discord
@@ -23,6 +23,7 @@ questsList = ['"Seoul Mate" - visit Seoul ICN and Seoul GMP in 48h',
               '"Connection Flight" - visit 3 flights of different airlines in 24h',
               '"Connection Guru" - visit 2 flights of different airlines with connection time less than 45 minutes between departures',
               '"Polar Bear" - visit airport northern than 66°',
+              '"Penguin" - visit airport southern than 66°',
               '"Infinite Night" - visit airport during  polar night',
               '"Infinite Day" - visit airport during polar day',
               '"Airport Guru" - visit 3 or more airports in 24h',
@@ -61,8 +62,9 @@ questsList = ['"Seoul Mate" - visit Seoul ICN and Seoul GMP in 48h',
               '"Always the same" - take 10 flights on same routes',
               '"King" - be the only passenger on board',
               '"Hungry" - take 3 or more meals in one of categories',
-              '"Rock, paper, scissors" - win in rock,paper, scissors with any passenger (not your alt or friend)'
+              '"Rock, paper, scissors" - play rock,paper,scissors onboard'
               ]
+flights = []
 
 # B737R properties
 
@@ -274,7 +276,7 @@ async def on_message(ctx):
             else:
                 await ctx.reply('No permission')
 
-        if ctx.channel in channelsOpen:
+        if ctx.channel in channelsOpen or ctx.guild == None:
             if 'discord' not in ctx.content or 'https://' not in ctx.content or 'http://' not in ctx.content or ' __ # __ ' in ctx.content:
 
                 if ctx.content[0] == '.' and ctx.content[:4] != '.bal':
@@ -478,13 +480,11 @@ async def on_message(ctx):
                 if lang == 'en':
                     ctxcontent = ctx.content[4:]
                 else:
-                    ctxcontent = (GoogleTranslator(source=lang, target='en').translate(ctx.content)).lower()[4:]
+                    ctxcontent = (GoogleTranslator(source=lang, target='en').translate(ctx.content)).lower()[4:].lower()
 
             if ctx.content[0] != '>' and ctx.author != bot.user:
-                if ctx.content[0] != '.' and notFoundReply == 0:
+                if ctx.content[0] != '.' and notFoundReply == 0 and ctx.content[0] != '!':
                     await ctx.add_reaction('🌐')
-
-
 
                 if 'help' in ctx.content or 'command' in ctx.content:
                     notFoundReply = 1
@@ -499,7 +499,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
             'la', 'lb', 'lo', 'lt', 'lv', 'mg', 'mk', 'ml', 'mn', 'mr', 'ms', 'mt', 'nb', 'ne', 'nl', 'nn', 'no', 'oc', 'or', 'pa', 'pl', 'ps', 'pt', 'qu',
             'ro', 'ru', 'rw', 'se', 'si', 'sk', 'sl', 'sq', 'sr', 'sv', 'sw', 'ta', 'te', 'th', 'tl', 'tr', 'ug', 'uk', 'ur', 'vi', 'vo', 'wa', 'xh', 'zh',
             'zu'.
-            
+
             So, if you want to book a ticket you may use something like `.en check-in` and bot will help you
             And for partnership you can ask like `.en partner application`
             No need to stick to the format, the more messages you send, the better our support bot can grow
@@ -516,10 +516,11 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif 'staff' in ctx.content:
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Our staff is separated into 3 groups. C-level is Deepslate and Future which run this all. Staff level is Nikfirs and D3LTAREX, they help a lot and help with management. Crew level is all our crew, people who fly and help on ground. If you want to get a job in Aurus, try including "job" in your message'))
+                elif 'staff' in ctxcontent:
+                    await ctx.reply(GoogleTranslator(target=lang).translate(
+                        'Our staff is separated into 3 groups. C-level is Deepslate and Future which run this all. Staff level is Nikfirs and D3LTAREX, they help a lot and help with management. Crew level is all our crew, people who fly and help on ground. If you want to get a job in Aurus, try including "job" in your message'))
 
-                elif 'quest' in ctx.content:
+                elif 'quest' in ctxcontent:
                     quest = random.choice(questsList)
                     await ctx.reply(f'Quest: {quest}')
 
@@ -529,7 +530,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif ('flight' in ctx.content and 'discord' in ctx.content) or ('fly' in ctx.content and 'discord' in ctx.content):
+                elif ('flight' in ctxcontent and 'discord' in ctxcontent) or ('fly' in ctxcontent and 'discord' in ctxcontent):
 
                     frameFile = open("discordFlightFrames.txt", 'r')
                     frame = frameFile.read().split(',')
@@ -592,6 +593,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                         clearBookings_B737 = open("B737_bookedSeats.txt", 'w').write('')
                         clearBookings_B737R = open("B737R_bookedSeats.txt", 'w').write('')
                         clearBookings_A350 = open("A350_bookedSeats.txt", 'w').write('')
+                        await ctx.add_reaction('<✅>')
                     else:
                         await ctx.reply('No permission')
 
@@ -819,7 +821,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                         ImageDraw_B737.text((B737_row1, B737_lineB), ' B', '#ffffff', font=font)
                         ImageDraw_B737.text((B737_row1, B737_lineA), ' A', '#ffffff', font=font)
 
-                        img_B737.save('SeatOutput.png')
+                        img_B737.save("SeatOutput.png")
 
 
                     elif aircraft.upper() == 'A350':
@@ -827,9 +829,11 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                         from PIL import ImageFont
                         from PIL import ImageDraw
 
-                        imgOut = Image.open("SeatOutput.png")
+                        imgOut = Image.open(f"SeatOutput.png")
                         imgA350_schema = Image.open("Seat-A350.png")
                         imgOutN = imgOut.crop((0, 0, 4000, 3000))
+                        imgN = Image.new('RGB', (4000, 3000))
+                        imgN.paste(imgOutN, (0, 0))
                         imgOutN.save("SeatOutput.png")
                         imgOut = imgOutN.copy()
                         imgA350_schema = imgA350_schema.copy()
@@ -926,7 +930,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                             ImageDraw_A350.text((A350_rowList[13], A350_lineB_2), ' E', '#ffffff', font=font)
                             ImageDraw_A350.text((A350_rowList[13], A350_lineA_2), ' F', '#ffffff', font=font)
 
-                        img_A350.save('SeatOutput.png')
+                        img_A350.save("SeatOutput.png")
 
 
                     elif aircraft.upper() == 'B737R':
@@ -935,9 +939,11 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                         from PIL import ImageFont
                         from PIL import ImageDraw
 
-                        imgOut = Image.open("SeatOutput.png")
+                        imgOut = Image.open(f"SeatOutput.png")
                         imgB737R_schema = Image.open("Seat-B737R.png")
                         imgOutN = imgOut.crop((0, 0, 4000, 3000))
+                        imgN = Image.new('RGB', (4000, 3000))
+                        imgN.paste(imgOutN, (0, 0))
                         imgOutN.save("SeatOutput.png")
                         imgOut = imgOutN.copy()
                         imgB737R_schema = imgB737R_schema.copy()
@@ -1027,14 +1033,15 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                             ImageDraw_B737R.text((B737R_rowList[3], B737R_lineB_2), ' B', '#ffffff', font=font)
                             ImageDraw_B737R.text((B737R_rowList[3], B737R_lineA_2), ' A', '#ffffff', font=font)
 
-                        img_B737R.save('SeatOutput.png')
+                        img_B737R.save("SeatOutput.png")
 
 
                     else:
                         currentSeat = 'N/A'
 
                     if currentSeat != 'N/A':
-                        await ctx.reply(file=discord.File('SeatOutput.png'))
+                        await ctx.reply(file=discord.File("SeatOutput.png"))
+                        await ctx.author.send(file=discord.File("SeatOutput.png"))
 
                     await ctx.reply(GoogleTranslator(target=lang).translate('Departure airport:'))
                     notFoundReply = 1
@@ -1089,7 +1096,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                     currentClass = clss.upper()
                     clss = currentClass
 
-                    imgOut = Image.open("Bout.png")
+                    imgOut = Image.openimgOut = Image.open("Bout.png")
 
                     if currentClass == 'COMFORT':
                         img = Image.open("boardingPassComfort.png")
@@ -1101,7 +1108,6 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                         img = Image.open("boardingPassEconomy.png")
 
                     ImageDraw = ImageDraw.ImageDraw(img)
-
 
                     ImageDraw.text((30, 170), flnum.upper()[:6], (255, 255, 255), font=fontBig)
                     ImageDraw.text((500, 180), currentSeat.upper()[:3] if ' ' not in currentSeat else currentSeat.upper().split(' ')[0], (255, 255, 255),
@@ -1115,7 +1121,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                     ImageDraw.text((30, 360), Game.upper()[:9], (255, 255, 255), font=font)
                     ImageDraw.text((500, 360), disname.upper()[:14], (255, 255, 255), font=font)
 
-                    img.save('Bout.png')
+                    img.save(f'Bout.png')
 
                     # BQR = f'https://api.qrserver.com/v1/create-qr-rde/?size=200x200&data={paxData}'
                     # print(BQR)
@@ -1132,8 +1138,8 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                     await ctx.reply(GoogleTranslator(target=lang).translate('''
                             This is your boarding pass. Our staff will validate it soon. Have a nice flight!
                             '''))
-                    await ctx.reply(file=discord.File('Bout.png'))
-
+                    await ctx.reply(file=discord.File(f'Bout.png'))
+                    await ctx.author.send(file=discord.File(f'Bout.png'))
 
 
 
@@ -1169,24 +1175,47 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                                 await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                                 asyncio.as_completed()
 
-                        img = Image.open("Bsamp.png")
-                        ImageDraw = ImageDraw.ImageDraw(img)
-
-                        font = ImageFont.truetype("Consolas.ttf", 48)
+                        from PIL import Image
+                        from PIL import ImageFont
+                        from PIL import ImageDraw
 
                         paxinfolist = paxInfo.split(' ')
                         flnum, deparpt, deparptcode, dest, destcode, Game, disname, clss, currentSeat, date, dept = paxInfo.split(' ')
-                        ImageDraw.text((30, 180), flnum.upper()[:6], (0, 0, 0), font=font)
-                        ImageDraw.text((530, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparptcode.upper()[:3], (0, 0, 0), font=font)
-                        ImageDraw.text((1030, 180), dest.upper().split(' ')[0][:14] + ' ' + destcode.upper()[:3], (0, 0, 0), font=font)
-                        ImageDraw.text((1730, 180), Game.upper()[:9], (0, 0, 0), font=font)
-                        ImageDraw.text((30, 480), disname.upper()[:14], (0, 0, 0), font=font)
-                        ImageDraw.text((530, 480), clss.upper()[:9], (0, 0, 0), font=font)
-                        ImageDraw.text((1030, 480), currentSeat.upper()[:3], (0, 0, 0), font=font)
-                        ImageDraw.text((1330, 480), date.upper()[:5], (0, 0, 0), font=font)
-                        ImageDraw.text((1730, 480), dept.upper()[:5], (0, 0, 0), font=font)
 
-                        img.save('Bout.png')
+
+                        font = ImageFont.truetype("Stem-Medium.ttf", 64)
+                        fontBig = ImageFont.truetype("Stem-Medium.ttf", 96)
+                        currentClass = clss.upper()
+                        clss = currentClass
+
+                        imgOut = Image.open("Bout.png")
+
+                        if currentClass == 'COMFORT':
+                            img = Image.open("boardingPassComfort.png")
+                        elif currentClass == 'BUSINESS':
+                            img = Image.open("boardingPassBusiness.png")
+                        elif currentClass == 'FIRST':
+                            img = Image.open("boardingPassFirst.png")
+                        else:
+                            img = Image.open("boardingPassEconomy.png")
+
+
+                        ImageDraw = ImageDraw.ImageDraw(img)
+
+                        ImageDraw.text((30, 170), flnum.upper()[:6], (255, 255, 255), font=fontBig)
+                        ImageDraw.text((500, 180), currentSeat.upper()[:3] if ' ' not in currentSeat else currentSeat.upper().split(' ')[0], (255, 255, 255),
+                                       font=font)
+                        ImageDraw.text((675, 180), date.upper()[:5], (255, 255, 255), font=font)
+                        ImageDraw.text((930, 180), dept.upper()[:5], (255, 255, 255), font=font)
+
+                        ImageDraw.text((1230, 180), deparpt.upper().split(' ')[0][:14] + ' ' + deparpt.upper()[-3:], (255, 255, 255), font=font)
+                        ImageDraw.text((1230, 360), dest.upper().split(' ')[0][:14] + ' ' + dest.upper()[-3:], (255, 255, 255), font=font)
+
+                        ImageDraw.text((30, 360), Game.upper()[:9], (255, 255, 255), font=font)
+                        ImageDraw.text((500, 360), disname.upper()[:14], (255, 255, 255), font=font)
+
+
+                        img.save(f'Bout.png')
 
                         await ctx.reply(GoogleTranslator(target=lang).translate('Create seat map (+|-):'))
                         notFoundReply = 1
@@ -1312,7 +1341,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                                 ImageDraw_B737.text((B737_row1, B737_lineB), ' B', '#ffffff', font=font)
                                 ImageDraw_B737.text((B737_row1, B737_lineA), ' A', '#ffffff', font=font)
 
-                                img_B737.save('SeatOutput.png')
+                                img_B737.save("SeatOutput.png")
 
 
                             elif aircraft.upper() == 'A350':
@@ -1419,7 +1448,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                                     ImageDraw_A350.text((A350_rowList[13], A350_lineB_2), ' E', '#ffffff', font=font)
                                     ImageDraw_A350.text((A350_rowList[13], A350_lineA_2), ' F', '#ffffff', font=font)
 
-                                img_A350.save('SeatOutput.png')
+                                img_A350.save("SeatOutput.png")
 
 
                             elif aircraft.upper() == 'B737R':
@@ -1511,11 +1540,15 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                                     ImageDraw_B737R.text((B737R_rowList[3], B737R_lineB_2), ' B', '#ffffff', font=font)
                                     ImageDraw_B737R.text((B737R_rowList[3], B737R_lineA_2), ' A', '#ffffff', font=font)
 
-                                img_B737R.save('SeatOutput.png')
+                                img_B737R.save("SeatOutput.png")
 
-                            await ctx.reply(file=discord.File('SeatOutput.png'))
 
-                        await ctx.reply(file=discord.File('Bout.png'))
+
+                            await ctx.reply(file=discord.File("SeatOutput.png"))
+                            await ctx.author.send(file=discord.File("SeatOutput.png"))
+
+                        await ctx.reply(file=discord.File(f'Bout.png'))
+                        await ctx.author.send(file=discord.File(f'Bout.png'))
 
                     else:
                         await ctx.reply('No permission')
@@ -1528,8 +1561,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif ('hi' in ctxcontent and len(
-                        ctxcontent) == 2) or 'hello' in ctxcontent or 'sup' in ctxcontent or 'helo' in ctxcontent or 'hey' in ctxcontent:
+                elif ('hi' in ctxcontent and len(ctxcontent) == 2) or 'hello' in ctxcontent.lower() or 'helo' in ctxcontent or 'hey' in ctxcontent:
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Hello, how may I help you?'))
 
@@ -1626,12 +1658,12 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Why should you be our partner'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Why should you be our partner (you have 2 minutes)'))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
-                                                     timeout=60.0)
+                                                     timeout=120.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
                         asyncio.as_completed()
@@ -1659,7 +1691,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
                 elif 'site' in ctxcontent:
                     notFoundReply = 1
-                    await ctx.reply(GoogleTranslator(target=lang).translate('[Our website here](https://sites.google.com/view/aurus-va/aurus)'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('[WEBSITE](https://sites.google.com/view/aurus-va/aurus)'))
 
 
 
@@ -1670,7 +1702,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
                 elif 'game' in ctxcontent:
                     notFoundReply = 1
-                    await ctx.reply(GoogleTranslator(target=lang).translate('~~We are flying in PTFS, Aeronautica, FlightLine, Ro-Av, X-Plane and MSFS'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('We are flying in PTFS, Aeronautica, FlightLine, Ro-Av, X-Plane and MSFS'))
 
 
 
@@ -1682,7 +1714,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
                 elif 'merch' in ctxcontent:
                     notFoundReply = 1
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Our merch will be available soon...'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Our merch will be available soon... (probably never tbh)'))
 
 
 
@@ -1693,38 +1725,151 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
                 elif ctx.content == '!schupd':
-                    notFoundReply = 1
-                    user = ctx.author
-                    role = discord.utils.find(lambda r: r.name == 'Schedule Editor', user.roles)
 
-                    if role in user.roles:
+                    flights = []
 
-                        await ctx.reply(GoogleTranslator(target=lang).translate('Schedule:'))
-                        notFoundReply = 1
+                    await ctx.reply("""Schedule:
+        ```AirlineRu  Fl.numRu  RouteRu  TimeRu  GateRu  StatusRu  GameRu  AirlineEn  Fl.numEn  RouteEn  TimeEn  GateEn  StatusEn  GameEn```""")
+                    try:
+                        message = await bot.wait_for("message",
+                                                     check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
+                                                     timeout=60.0)
+                    except asyncio.TimeoutError:
+                        await ctx.channel.send("You took to long to respond")
+                        asyncio.as_completed()
+                    else:
+                        flight = message.content
+                        if flight == 'cancel':
+                            await ctx.reply('Cancelled')
+                            asyncio.as_completed()
+                    flights.append(flight.split('  '))
+
+                    while flight != '.':
+                        await ctx.reply("""Schedule:
+        ```AirlineRu  Fl.numRu  RouteRu  TimeRu  GateRu  StatusRu  GameRu  AirlineEn  Fl.numEn  RouteEn  TimeEn  GateEn  StatusEn  GameEn```""")
                         try:
                             message = await bot.wait_for("message",
-                                                         check=lambda
-                                                             m: m.author == ctx.author and m.channel == ctx.channel,
+                                                         check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
                                                          timeout=60.0)
-                            flsched = message.content
-                            fl = message.content
-                            flf = open('schedule.txt', 'w')
-                            flf.write(fl.upper())
-                            flf.close()
-                            await ctx.reply(GoogleTranslator(target=lang).translate('Saved'))
                         except asyncio.TimeoutError:
                             await ctx.channel.send("You took to long to respond")
                             asyncio.as_completed()
                         else:
-                            flsched = message.content
-                            if flsched == 'cancel':
-                                await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled updating'))
+                            flight = message.content
+                            if flight == 'cancel':
+                                await ctx.reply('Cancelled')
                                 asyncio.as_completed()
-                        await ctx.reply(GoogleTranslator(target=lang).translate(f"```{fl}```"))
 
-                    else:
-                        notFoundReply = 1
-                        await ctx.reply(GoogleTranslator(target=lang).translate("No permission"))
+                        flights.append(flight.split('  '))
+
+                    from PIL import Image
+                    from PIL import ImageDraw
+                    from PIL import ImageFont
+                    import requests
+
+                    fontname = "Stem-Medium.ttf"
+                    fontsize = 36
+                    fontsizeBig = 42
+
+                    colorText = "#A6CEF4"
+                    colorOutline = "white"
+                    colorBackground = "white"
+
+                    font = ImageFont.truetype(fontname, fontsize)
+                    fontBig = ImageFont.truetype(fontname, fontsizeBig)
+                    width, height = 1920, 100 + 100 * len(flights)
+                    imgRu = Image.new('RGB', (width, height), '#0D2064')
+                    imgEn = Image.new('RGB', (width, height), '#0D2064')
+
+
+                    d = ImageDraw.Draw(imgRu)
+                    d.text((100, 90), 'А/К', fill=colorText, font=fontBig)  # airline РУ
+                    d.text((300, 90), 'Рейс', fill=colorText, font=fontBig)  # flnum РУ
+                    d.text((500, 90), 'Маршрут', fill=colorText, font=fontBig)  # route РУ
+                    d.text((1200, 90), 'Время', fill=colorText, font=fontBig)  # time РУ
+                    d.text((1375, 90), 'Гейт', fill=colorText, font=fontBig)  # gate РУ
+                    d.text((1500, 90), 'Статус', fill=colorText, font=fontBig)  # status РУ
+                    d.text((1750, 90), 'Игра', fill=colorText, font=fontBig)  # game РУ
+
+
+                    d = ImageDraw.Draw(imgEn)
+                    d.text((100, 90), 'Airline', fill=colorText, font=fontBig)  # airline EN
+                    d.text((300, 90), 'Fl. num', fill=colorText, font=fontBig)  # flnum EN
+                    d.text((500, 90), 'Route', fill=colorText, font=fontBig)  # route EN
+                    d.text((1200, 90), 'Time', fill=colorText, font=fontBig)  # time EN
+                    d.text((1375, 90), 'Gate', fill=colorText, font=fontBig)  # gate EN
+                    d.text((1500, 90), 'Status', fill=colorText, font=fontBig)  # status EN
+                    d.text((1750, 90), 'Game', fill=colorText, font=fontBig)  # game EN
+
+                    for flt in range(len(flights)-1):
+                        print(' | '.join(flights[flt][:7]), end='\n')
+                        d = ImageDraw.Draw(imgRu)
+                        # d.text((100, 100 + 100*(flt+1)), flights[flt][0], fill=colorText, font=font)  # airline РУ
+                        d.text((300, 100 + 100*(flt+1)), flights[flt][1], fill=colorText, font=font)  # flnum РУ
+                        d.text((500, 100 + 100*(flt+1)), flights[flt][2], fill=colorText, font=font)  # route РУ
+                        d.text((1200, 100 + 100*(flt+1)), flights[flt][3], fill=colorText, font=font)  # time РУ
+                        d.text((1375, 100 + 100*(flt+1)), flights[flt][4], fill=colorText, font=font)  # gate РУ
+                        d.text((1500, 100 + 100*(flt+1)), flights[flt][5], fill=colorText, font=font)  # status РУ
+                        d.text((1750, 100 + 100*(flt+1)), flights[flt][6], fill=colorText, font=font)  # game РУ
+
+                        print(' | '.join(flights[flt][7:]), end='\n')
+                        d = ImageDraw.Draw(imgEn)
+                        # d.text((100, 100 + 100*(flt+1)), flights[flt][7], fill=colorText, font=font)  # airline EN
+                        d.text((300, 100 + 100*(flt+1)), flights[flt][8], fill=colorText, font=font)  # flnum EN
+                        d.text((500, 100 + 100*(flt+1)), flights[flt][9], fill=colorText, font=font)  # route EN
+                        d.text((1200, 100 + 100*(flt+1)), flights[flt][10], fill=colorText, font=font)  # time EN
+                        d.text((1375, 100 + 100*(flt+1)), flights[flt][11], fill=colorText, font=font)  # gate EN
+                        d.text((1500, 100 + 100*(flt+1)), flights[flt][12], fill=colorText, font=font)  # status EN
+                        d.text((1750, 100 + 100*(flt+1)), flights[flt][13], fill=colorText, font=font)  # game EN
+
+
+                        try:
+                            airlineImg = Image.open(requests.get(flights[flt][0], stream=True).raw)
+                        except requests.exceptions.MissingSchema:
+                            d = ImageDraw.Draw(imgRu)
+                            d.text((100, 100 + 100 * (flt + 1)), '?', fill=colorText, font=font)
+                        else:
+                            imgRu.paste(airlineImg.crop((0, 0, 144, 48)), (100, 100 + 100*(flt+1)))
+
+                        try:
+                            airlineImg = Image.open(requests.get(flights[flt][7], stream=True).raw)
+                        except requests.exceptions.MissingSchema:
+                            d = ImageDraw.Draw(imgEn)
+                            d.text((100, 100 + 100*(flt+1)), '?', fill=colorText, font=font)
+                        else:
+                            imgEn.paste(airlineImg, (100, 100 + 100*(flt+1)))
+
+                    imgRu.save("scheduleRu.png")
+                    imgEn.save("scheduleEn.png")
+
+
+                    # делаем гифку емае
+                    frames = []
+
+                    frame = Image.open(f'scheduleRu.png')
+                    frames.append(frame)
+                    frame = Image.open(f'scheduleEn.png')
+                    frames.append(frame)
+
+                    frames[0].save(
+                        'schedule.gif',
+                        save_all=True,
+                        append_images=frames[0:],
+                        optimize=True,
+                        duration=2000,
+                        loop=300
+                    )
+
+                    await ctx.reply(file=discord.File(f'schedule.gif'))
+
+
+
+
+
+
+
+                elif 'entertainment' in ctxcontent or 'ife' in ctxcontent.lower():
+                    await ctx.reply("### [IFE](https://sites.google.com/view/aurus-va/ife)")
 
 
 
@@ -1734,10 +1879,6 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                # if 'airline' in ctxcontent:
-                #     await ctx.reply(GoogleTranslator(target=lang).translate("""We currently have 2 airlines in Aurus Group:
-                #         Aurus - main one, flies in X-Plane, MSFS, PTFS, operates flights in CIS
-                #         Siberian Regional - Aeronautica (Roblox)"""
 
                 elif ctxcontent == '!ping':
                     notFoundReply = 1
@@ -1771,11 +1912,11 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
                     await ctx.reply(GoogleTranslator(target=lang).translate("""Department:
                     Discord
-                    PTFS (Aurus)
-                    X-Plane (Aurus)
-                    MSFS (Aurus)
-                    Ro-Av (Aurus)
-                    Aeronautica (Siberian Regional)"""))
+                    PTFS
+                    X-Plane
+                    MSFS
+                    Ro-Av 
+                    """))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
@@ -1794,8 +1935,10 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                         Pilot / Copilot
                         Cabin crew
                         Gate & check-in agent
-                        ~~ATC~~
-                        ~~Moderation~~"""))
+                        ATC
+                        Moderation
+                        Coder
+                        I just want to help"""))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
@@ -1810,12 +1953,12 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                             await ctx.reply(GoogleTranslator(target=lang).translate('Cancelled'))
                             asyncio.as_completed()
 
-                    await ctx.reply(GoogleTranslator(target=lang).translate('Why should we choose you?'))
+                    await ctx.reply(GoogleTranslator(target=lang).translate('Why should we choose you? (you have 2 minutes)'))
                     notFoundReply = 1
                     try:
                         message = await bot.wait_for("message",
                                                      check=lambda m: m.author == ctx.author and m.channel == ctx.channel,
-                                                     timeout=60.0)
+                                                     timeout=120.0)
                     except asyncio.TimeoutError:
                         await ctx.channel.send("You took to long to respond")
                         asyncio.as_completed()
@@ -1841,7 +1984,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif ctxcontent == '!report':
+                elif ctx.content == '!report':
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Filling your report'))
 
@@ -1936,14 +2079,13 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif ctxcontent == '!jobs':
+                elif ctx.content == '!jobs':
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate("""
 
-                    Discord: Moderator, Support
+                    Discord: Moderator, Support, Designer, Coder, etc.
                     PTFS: Pilot, copilot, ATC, cabin crew, ground crew
                     X-Plane & MSFS: Pilot
-                    Aeronautica (Siberian Regiobal): Pilot
                     Ro-Av: Pilot, copilot, ATC, cabin crew, ground crew, airport staff
                     """))
 
@@ -1955,7 +2097,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif ctxcontent == '!fileflt':
+                elif ctx.content == '!fileflt':
                     notFoundReply = 1
                     await ctx.reply(GoogleTranslator(target=lang).translate('Flight number'))
                     notFoundReply = 1
@@ -2063,11 +2205,11 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif ctxcontent == '!fltrep':
+                elif ctx.content == '!fltrep':
                     notFoundReply = 1
                     fltreps = open('flights.txt')
                     flights = fltreps.read()
-                    await ctx.reply(GoogleTranslator(target=lang).translate(f'```{flights}```'))
+                    await ctx.reply(f'```{flights}```')
 
 
 
@@ -2081,7 +2223,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                     notFoundReply = 1
                     jobappl = open('jobs.txt')
                     jobapplc = jobappl.read()
-                    await ctx.reply(GoogleTranslator(target=lang).translate(f'```{jobapplc}```'))
+                    await ctx.reply(f'```{jobapplc}```')
 
 
 
@@ -2095,7 +2237,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                     notFoundReply = 1
                     partappl = open('partner.txt')
                     partapplc = partappl.read()
-                    await ctx.reply(GoogleTranslator(target=lang).translate(f'```{partapplc}```'))
+                    await ctx.reply(f'```{partapplc}```')
 
 
 
@@ -2105,58 +2247,9 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif 'sched' in ctxcontent or 'flight' in ctxcontent:
-                    notFoundReply = 1
-                    fl = open('schedule.txt')
 
-                    schedule = fl.read()
-
-                    if schedule == 'nothing scheduled':
-                        await ctx.reply(GoogleTranslator(target=lang).translate('```nothing scheduled```'))
-                    else:
-                        flight1, flight2, flight3, flight4 = schedule.split(' __ # __ ')
-
-                        fl1_clsgn, fl1_deparpt, fl1_arrarpt, fl1_deptime, fl1_gate, fl1_status, fl1_game = flight1.split(' __ ')
-                        fl2_clsgn, fl2_deparpt, fl2_arrarpt, fl2_deptime, fl2_gate, fl2_status, fl2_game = flight2.split(' __ ')
-                        fl3_clsgn, fl3_deparpt, fl3_arrarpt, fl3_deptime, fl3_gate, fl3_status, fl3_game = flight3.split(' __ ')
-                        fl4_clsgn, fl4_deparpt, fl4_arrarpt, fl4_deptime, fl4_gate, fl4_status, fl4_game = flight4.split(' __ ')
-
-                        schedule1 = str(
-                            f"{format(fl1_clsgn)}" + ' ' + '  ' + f"{format(fl1_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl1_deptime)}" + ' ' + '  ' + f"{format(fl1_gate)}" + ' ' + '' + '  ' + f"{format(fl1_status)}" + ' ' + '  ' + f"{format(fl1_game)}" + ' ')
-                        schedule2 = str(
-                            f"{format(fl2_clsgn)}" + ' ' + '  ' + f"{format(fl2_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl2_deptime)}" + ' ' + '  ' + f"{format(fl2_gate)}" + ' ' + ' ' + '  ' + f"{format(fl2_status)}" + ' ' + '  ' + f"{format(fl2_game)}" + ' ')
-                        schedule3 = str(
-                            f"{format(fl3_clsgn)}" + ' ' + '  ' + f"{format(fl3_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl3_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl3_deptime)}" + ' ' + '  ' + f"{format(fl3_gate)}" + ' ' + ' ' + '  ' + f"{format(fl3_status)}" + ' ' + '  ' + f"{format(fl3_game)}" + ' ')
-                        schedule4 = str(
-                            f"{format(fl4_clsgn)}" + ' ' + '  ' + f"{format(fl4_deparpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_arrarpt)}" + ' ' + ' ' + '  ' + f"{format(fl4_deptime)}" + ' ' + '  ' + f"{format(fl4_gate)}" + ' ' + ' ' + '  ' + f"{format(fl4_status)}" + ' ' + '  ' + f"{format(fl4_game)}" + ' ')
-
-                        schedule = "Flight  From   To     Time    Gate  Status    Game" + '\n' + '\n' + schedule1 + "\n" + '\n' + schedule2 + "\n" + '\n' + schedule3 + "\n" + '\n' + schedule4
-
-                        from PIL import Image
-                        from PIL import ImageDraw
-                        from PIL import ImageFont
-
-                        fontname = 'Consolas.ttf'
-                        fontsize = 36
-                        text = schedule
-
-                        colorText = "#FFC36A"
-                        colorOutline = "white"
-
-                        font = ImageFont.truetype(fontname, fontsize)
-                        width, height = 1200, 576
-                        img = Image.new('RGB', (width + 4, height + 4), '#0D2064')
-                        d = ImageDraw.ImageDraw(img)
-                        d.text((65, height - 440), text, fill=colorText, font=font)
-                        d.rectangle((0, 0, width + 3, height + 3), outline=colorOutline)
-
-                        img.save("schedule.png")
-
-                        await ctx.reply(file=discord.File('schedule.png'))
-
-                        # await ctx.reply(GoogleTranslator(target=lang).translate(f"```{schedule}```"))
-
-                    fl.close()
+                elif 'sched' in ctxcontent or 'info' in ctxcontent:
+                    await ctx.reply(file=discord.File(f'schedule.gif'))
 
 
 
@@ -2190,7 +2283,8 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
                             # await ctx.reply(f'<@{user}> = 0')
                             # balFileW.write(f"{balFile} $ {user} 0")
                             # balFileW.close()
-                            await ctx.reply('Account not found, read more here https://discord.com/channels/870625915275735040/990232151821799424/1249298867598528533')
+                            await ctx.reply(
+                                'Account not found, read more here https://discord.com/channels/870625915275735040/990232151821799424/1249298867598528533')
 
                     elif cmd == ".balChange":
                         notFoundReply = 1
@@ -2236,7 +2330,7 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
 
-                elif 'thanks' in ctxcontent or 'thank you' in ctxcontent:
+                elif ctx.content == 'ty' or 'thanks' in ctxcontent or 'thank you' in ctxcontent:
                     notFoundReply = 1
                     await ctx.reply('🥰')
 
@@ -2250,8 +2344,9 @@ Currently we support 'af', 'am', 'an', 'ar', 'as', 'az', 'be', 'bg', 'bn', 'br',
 
 
                 else:
-                    await ctx.add_reaction('<❓>')
-                    print(GoogleTranslator(source=lang, target='en').translate(ctx.content))
+                    if notFoundReply == 0:
+                        await ctx.add_reaction('<❓>')
+                        print(GoogleTranslator(source=lang, target='en').translate(ctx.content))
 
 
 bottoken = open('token.txt')
